@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Services.Interface;
+using Services.Concrete;
+using Services;
 
 namespace footballRebuildAPI
 {
@@ -29,6 +32,10 @@ namespace footballRebuildAPI
         {
             // Add framework services.
             services.AddMvc();
+
+            ServiceLayerBindings
+                .AddServiceLayerBindings(services, Configuration)
+                .AddScoped<IPlayerService, PlayerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
