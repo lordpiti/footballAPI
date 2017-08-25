@@ -23,6 +23,8 @@ namespace DataAccess.Models
         public string Posicion { get; set; }
         public string Pierna { get; set; }
 
+        public bool Married { get; set; }
+
         public virtual ICollection<Cambio> CambioCodJugadorEntraNavigation { get; set; }
         public virtual ICollection<Cambio> CambioCodJugadorSaleNavigation { get; set; }
         public virtual ICollection<Gol> Gol { get; set; }
