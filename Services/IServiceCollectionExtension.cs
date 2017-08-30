@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Text;
 using DataAccess;
 using Microsoft.Extensions.Configuration;
+using Football.DataAccess.Interface;
+using Football.DataAccess.Concrete;
 
 namespace Services
 {
@@ -16,7 +18,8 @@ namespace Services
         {
             return DataAccessLayerBindings
                 .AddDataAccessLayerBindings(services, configuration)
-                .AddScoped<IPlayerRepository, PlayerRepository>();
+                .AddScoped<IPlayerRepository, PlayerRepository>()
+                .AddScoped<ITeamRepository, TeamRepository>();
         }
     }
 

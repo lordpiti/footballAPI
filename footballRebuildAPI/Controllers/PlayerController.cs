@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Services.Concrete;
 using Crosscutting.ViewModels;
 using Services.Interface;
+using Football.Services.Interface;
+using Football.Crosscutting.ViewModels;
 
 namespace footballRebuildAPI.Controllers
 {
@@ -15,10 +17,12 @@ namespace footballRebuildAPI.Controllers
     public class PlayerController : Controller
     {
         private readonly IPlayerService _playerService;
-        
-        public PlayerController(IPlayerService playerService)
+        private readonly ITeamService _teamService;
+
+        public PlayerController(IPlayerService playerService, ITeamService teamService)
         {
             _playerService = playerService;
+            _teamService = teamService;
         }
         
         [HttpGet]
@@ -33,6 +37,13 @@ namespace footballRebuildAPI.Controllers
         public IEnumerable<Player> List()
         {
             return _playerService.GetPlayers();
+        }
+
+        [HttpGet]
+        [Route("Teams/{id}/year/{year}")]
+        public Team GetTeam(int id, int year)
+        {
+            return _teamService.GetTeamByIdAndYear(id, year);
         }
 
         // GET api/values/5

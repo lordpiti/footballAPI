@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Services.Interface;
 using Services.Concrete;
 using Services;
+using Football.Services.Interface;
+using Football.Services.Concrete;
 
 namespace footballRebuildAPI
 {
@@ -35,7 +37,8 @@ namespace footballRebuildAPI
 
             ServiceLayerBindings
                 .AddServiceLayerBindings(services, Configuration)
-                .AddScoped<IPlayerService, PlayerService>();
+                .AddScoped<IPlayerService, PlayerService>()
+                .AddScoped<ITeamService, TeamService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
