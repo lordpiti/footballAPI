@@ -46,6 +46,13 @@ namespace footballRebuildAPI.Controllers
             return _teamService.GetTeamByIdAndYear(id, year);
         }
 
+        [HttpGet]
+        [Route("Teams")]
+        public List<Team> GetAllTeams()
+        {
+            return _teamService.GetAllTeams();
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)

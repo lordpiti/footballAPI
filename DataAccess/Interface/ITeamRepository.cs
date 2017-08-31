@@ -8,5 +8,7 @@ namespace Football.DataAccess.Interface
     public interface ITeamRepository
     {
         Team GetTeamByIdAndYear(int id, int year);
+
+        List<Team> GetAllTeams();
     }
 }

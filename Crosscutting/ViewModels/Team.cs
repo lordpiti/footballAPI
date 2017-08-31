@@ -12,5 +12,7 @@ namespace Football.Crosscutting.ViewModels
         public List<Player> PlayerList { get; set; }
 
         public string Name { get; set; }
+
+        public string PictureUrl { get; set; }
     }
 }

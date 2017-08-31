@@ -40,5 +40,15 @@ namespace Football.DataAccess.Concrete
 
             return team;
         }
+
+        public List<Team> GetAllTeams()
+        {
+            return _context.Equipo.Select(equipo => new Team()
+            {
+                Id = equipo.CodEquipo,
+                Name = equipo.Nombre,
+                PictureUrl = equipo.FotoEscudo
+            }).ToList();
+        }
     }
 }

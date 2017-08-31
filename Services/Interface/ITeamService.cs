@@ -8,5 +8,7 @@ namespace Football.Services.Interface
     public interface ITeamService
     {
         Team GetTeamByIdAndYear(int id, int year);
+
+        List<Team> GetAllTeams();
     }
 }

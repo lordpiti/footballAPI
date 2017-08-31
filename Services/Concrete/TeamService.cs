@@ -20,5 +20,10 @@ namespace Football.Services.Concrete
         {
             return _teamRepository.GetTeamByIdAndYear(id, year);
         }
+
+        public List<Team> GetAllTeams()
+        {
+            return _teamRepository.GetAllTeams();
+        }
     }
 }
