@@ -395,11 +395,11 @@ namespace DataAccess.Models
 
                 entity.Property(e => e.FotoEscudo)
                     .HasColumnName("Foto_Escudo")
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("nvarchar(max)");
 
                 entity.Property(e => e.FotoPlantilla)
                     .HasColumnName("Foto_Plantilla")
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("nvarchar(max)");
 
                 entity.Property(e => e.Localidad).HasColumnType("varchar(20)");
 
