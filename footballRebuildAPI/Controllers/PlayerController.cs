@@ -8,6 +8,8 @@ using Crosscutting.ViewModels;
 using Services.Interface;
 using Football.Services.Interface;
 using Football.Crosscutting.ViewModels;
+using Football.Crosscutting;
+using Football.BlobStorage;
 
 namespace footballRebuildAPI.Controllers
 {
@@ -53,7 +55,48 @@ namespace footballRebuildAPI.Controllers
             return _teamService.GetAllTeams();
         }
 
+        //[Route("Files/Upload")]
+        //public string PostFile([FromBody] BlobData postData)
+        //{
+        //    string base64 = postData.Bytes.Substring(postData.Bytes.IndexOf(',') + 1);
+        //    byte[] data = Convert.FromBase64String(base64);
+
+        //    var container = _cloudStorageClient.GetContainerReference("mycontainer");
+
+        //    // Create the container if it doesn't already exist.
+        //    container.CreateIfNotExists();
+
+        //    container.SetPermissions(
+        //        new BlobContainerPermissions
+        //        {
+        //            PublicAccess = BlobContainerPublicAccessType.Blob
+        //        });
+
+        //    var blobName = postData.fileName;
+
+        //    // Retrieve reference to a blob with an specified name
+        //    CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
+        //    //TODO: if exists, then create another one
+        //    //blockBlob.Exists();
+        //    Stream fileStream = new MemoryStream(data);
+        //    blockBlob.UploadFromStream(fileStream);
+
+        //    //System.IO.File.WriteAllBytes("c:\\test\\jaja.png", data);
+
+        //    return blockBlob.Uri.ToString();
+        //}
+
         // GET api/values/5
+
+        [HttpGet]
+        [Route("images/get/{something}")]
+        public async Task<BlobData> GetBlobData(string something)
+        {
+            var hh = new BlobStorageService();
+
+            return await hh.GetBlobById(something);
+        }
+
         [HttpGet("{id}")]
         public string Get(int id)
         {
