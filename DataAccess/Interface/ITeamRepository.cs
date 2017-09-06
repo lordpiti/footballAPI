@@ -10,5 +10,7 @@ namespace Football.DataAccess.Interface
         Team GetTeamByIdAndYear(int id, int year);
 
         List<Team> GetAllTeams();
+
+        bool UpdateTeam(Team team);
     }
 }

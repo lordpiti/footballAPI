@@ -50,5 +50,15 @@ namespace Football.DataAccess.Concrete
                 PictureUrl = equipo.FotoEscudo
             }).ToList();
         }
+
+        public bool UpdateTeam(Team team)
+        {
+            var existingteam = _context.Equipo.FirstOrDefault(x=>x.CodEquipo == team.Id);
+
+            existingteam.Nombre = team.Name;
+            existingteam.FotoEscudo = team.PictureUrl;
+
+            return true;
+        }
     }
 }
