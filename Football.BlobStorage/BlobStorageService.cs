@@ -25,7 +25,7 @@ namespace Football.BlobStorage
             _cloudStorageClient = cloudStorageAccount.CreateCloudBlobClient();
         }
 
-        public async Task<string> PostBlob(byte[] data, string blobReference, string containerReference)
+        public async Task<BlobData> PostBlob(byte[] data, string blobReference, string containerReference)
         {
             var container = _cloudStorageClient.GetContainerReference(containerReference);
 
@@ -47,7 +47,11 @@ namespace Football.BlobStorage
 
             //System.IO.File.WriteAllBytes("c:\\test\\jaja.png", data);
 
-            return blockBlob.Uri.ToString();
+            return new BlobData()
+            {
+                FileName = blobReference,
+                Url = blockBlob.Uri.ToString()
+            };
         }
 
         public async Task<BlobData> GetBlobById(string blobReference, string blobContainerReference)
@@ -61,10 +65,19 @@ namespace Football.BlobStorage
             {
                 await blockBlob2.DownloadToStreamAsync(memoryStream);
 
-                var blob = new BlobData() { Bytes = memoryStream.ToArray(), FileName = blobReference };
+                var blob = new BlobData() {
+                    Bytes = memoryStream.ToArray(),
+                    FileName = blobReference,
+                    Url = blockBlob2.Uri.ToString()
+                };
 
                 return blob;
             }
+        }
+
+        public string GetUrlForBlog(string blobReference, string blobContainerReference)
+        {
+            return _cloudStorageClient.BaseUri+"/" + blobContainerReference + "/"+ blobReference;
         }
     }
 }

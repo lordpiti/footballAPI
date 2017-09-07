@@ -55,58 +55,6 @@ namespace footballRebuildAPI.Controllers
             return _teamService.GetAllTeams();
         }
 
-        //[Route("Files/Upload")]
-        //public string PostFile([FromBody] BlobData postData)
-        //{
-        //    string base64 = postData.Bytes.Substring(postData.Bytes.IndexOf(',') + 1);
-        //    byte[] data = Convert.FromBase64String(base64);
-
-        //    var container = _cloudStorageClient.GetContainerReference("mycontainer");
-
-        //    // Create the container if it doesn't already exist.
-        //    container.CreateIfNotExists();
-
-        //    container.SetPermissions(
-        //        new BlobContainerPermissions
-        //        {
-        //            PublicAccess = BlobContainerPublicAccessType.Blob
-        //        });
-
-        //    var blobName = postData.fileName;
-
-        //    // Retrieve reference to a blob with an specified name
-        //    CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
-        //    //TODO: if exists, then create another one
-        //    //blockBlob.Exists();
-        //    Stream fileStream = new MemoryStream(data);
-        //    blockBlob.UploadFromStream(fileStream);
-
-        //    //System.IO.File.WriteAllBytes("c:\\test\\jaja.png", data);
-
-        //    return blockBlob.Uri.ToString();
-        //}
-
-        // GET api/values/5
-
-        [HttpGet]
-        [Route("images/get/{something}")]
-        public async Task<BlobData> GetBlobData(string something)
-        {
-            var hh = new BlobStorageService();
-
-            return await hh.GetBlobById(something, "mycontainer");
-        }
-
-        [Route("UploadBase64Image")]
-        public async Task<string> PostBase64Image([FromBody] BlobData postData)
-        {
-            var hh = new BlobStorageService();
-
-            string base64 = postData.Base64String.Substring(postData.Base64String.IndexOf(',') + 1);
-            byte[] data = Convert.FromBase64String(base64);
-
-            return await hh.PostBlob(data, postData.FileName, "mycontainer");
-        }
 
         [Route("UpdateTeamPicture/{teamId}")]
         public void AddTeamPicture(int teamId, [FromBody]BlobData mediaItem)
@@ -114,28 +62,5 @@ namespace footballRebuildAPI.Controllers
             _teamService.AddTeamPicture(teamId, mediaItem);
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
