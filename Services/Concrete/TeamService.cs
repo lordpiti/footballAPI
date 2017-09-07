@@ -5,6 +5,7 @@ using Football.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Football.Services.Concrete
 {
@@ -17,24 +18,24 @@ namespace Football.Services.Concrete
             _teamRepository = teamRepository;
         }
 
-        public Team GetTeamByIdAndYear(int id, int year)
+        public async Task<Team> GetTeamByIdAndYear(int id, int year)
         {
-            return _teamRepository.GetTeamByIdAndYear(id, year);
+            return await _teamRepository.GetTeamByIdAndYear(id, year);
         }
 
-        public List<Team> GetAllTeams()
+        public async Task<List<Team>> GetAllTeams()
         {
-            return _teamRepository.GetAllTeams();
+            return await _teamRepository.GetAllTeams();
         }
 
-        public void AddTeamPicture(int teamId, BlobData mediaItem)
+        public async Task AddTeamPicture(int teamId, BlobData mediaItem)
         {
-            _teamRepository.AddTeamPicture(teamId, mediaItem);
+            await _teamRepository.AddTeamPicture(teamId, mediaItem);
         }
 
-        public bool UpdateTeam(Team team)
+        public async Task<int> UpdateTeam(Team team)
         {
-            throw new NotImplementedException();
+            return await _teamRepository.UpdateTeam(team);
         }
     }
 }

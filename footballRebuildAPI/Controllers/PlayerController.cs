@@ -43,16 +43,16 @@ namespace footballRebuildAPI.Controllers
 
         [HttpGet]
         [Route("Teams/{id}/year/{year}")]
-        public Team GetTeam(int id, int year)
+        public async Task<Team> GetTeam(int id, int year)
         {
-            return _teamService.GetTeamByIdAndYear(id, year);
+            return await _teamService.GetTeamByIdAndYear(id, year);
         }
 
         [HttpGet]
         [Route("Teams")]
-        public List<Team> GetAllTeams()
+        public async Task<List<Team>> GetAllTeams()
         {
-            return _teamService.GetAllTeams();
+            return await _teamService.GetAllTeams();
         }
 
 
@@ -62,5 +62,10 @@ namespace footballRebuildAPI.Controllers
             _teamService.AddTeamPicture(teamId, mediaItem);
         }
 
+        [Route("SaveTeamDetails")]
+        public async Task<int> SaveTeamDetails([FromBody]Team teamDetails)
+        {
+            return await _teamService.UpdateTeam(teamDetails);
+        }
     }
 }

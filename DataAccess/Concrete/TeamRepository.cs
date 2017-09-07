@@ -10,6 +10,7 @@ using DataAccess.Concrete;
 using Football.DataAccess.Interface;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting;
+using System.Threading.Tasks;
 
 namespace Football.DataAccess.Concrete
 {
@@ -19,12 +20,12 @@ namespace Football.DataAccess.Concrete
         {
         }
 
-        public Team GetTeamByIdAndYear(int id, int year)
+        public async Task<Team> GetTeamByIdAndYear(int id, int year)
         {
-            var teamFromBD = _context.Equipo
+            var teamFromBD = await _context.Equipo
                 .Include(x => x.Jugador)
                 .ThenInclude(x=>x.CodIntegranteNavigation.HcoIntegrante)
-                .FirstOrDefault(x => x.CodEquipo == id);
+                .FirstOrDefaultAsync(x => x.CodEquipo == id);
 
             var team = new Team()
             {
@@ -42,19 +43,19 @@ namespace Football.DataAccess.Concrete
             return team;
         }
 
-        public List<Team> GetAllTeams()
+        public async Task<List<Team>> GetAllTeams()
         {
-            return _context.Equipo.Select(equipo => new Team()
+            return await _context.Equipo.Select(equipo => new Team()
             {
                 Id = equipo.CodEquipo,
                 Name = equipo.Nombre,
                 PictureUrl = equipo.FotoEscudo
-            }).ToList();
+            }).ToListAsync();
         }
 
-        public void AddTeamPicture(int teamId, BlobData mediaItem)
+        public async Task AddTeamPicture(int teamId, BlobData mediaItem)
         {
-            var team = _context.Equipo.FirstOrDefault(x => x.CodEquipo == teamId);
+            var team = await _context.Equipo.FirstOrDefaultAsync(x => x.CodEquipo == teamId);
 
             team.TeamPicture = new GlobalMedia()
             {
@@ -63,17 +64,25 @@ namespace Football.DataAccess.Concrete
                 FileName = mediaItem.FileName
             };
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public bool UpdateTeam(Team team)
+        public async Task<int> UpdateTeam(Team team)
         {
-            var existingteam = _context.Equipo.FirstOrDefault(x=>x.CodEquipo == team.Id);
+            try
+            {
+                var existingteam = await _context.Equipo.FirstOrDefaultAsync(x => x.CodEquipo == team.Id);
 
-            existingteam.Nombre = team.Name;
-            existingteam.FotoEscudo = team.PictureUrl;
+                existingteam.Nombre = team.Name;
+                //existingteam.FotoEscudo = team.PictureUrl;
 
-            return true;
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                var h = 2;
+                throw ex;
+            }
         }
     }
 }

@@ -3,17 +3,18 @@ using Football.Crosscutting.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Football.DataAccess.Interface
 {
     public interface ITeamRepository
     {
-        Team GetTeamByIdAndYear(int id, int year);
+        Task<Team> GetTeamByIdAndYear(int id, int year);
 
-        List<Team> GetAllTeams();
+        Task<List<Team>> GetAllTeams();
 
-        bool UpdateTeam(Team team);
+        Task<int> UpdateTeam(Team team);
 
-        void AddTeamPicture(int teamId, BlobData mediaItem);
+        Task AddTeamPicture(int teamId, BlobData mediaItem);
     }
 }
