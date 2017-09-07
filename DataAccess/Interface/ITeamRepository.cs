@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting.ViewModels;
+﻿using Football.Crosscutting;
+using Football.Crosscutting.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +11,7 @@ namespace Football.DataAccess.Interface
         Team GetTeamByIdAndYear(int id, int year);
 
         List<Team> GetAllTeams();
+
+        void AddTeamPicture(int teamId, BlobData mediaItem);
     }
 }

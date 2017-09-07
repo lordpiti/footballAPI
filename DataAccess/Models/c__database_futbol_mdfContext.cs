@@ -39,6 +39,8 @@ namespace DataAccess.Models
         public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<ZonaEstadio> ZonaEstadio { get; set; }
 
+        public virtual DbSet<GlobalMedia> GlobalMedia { get; set; }
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.

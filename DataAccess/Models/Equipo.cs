@@ -27,6 +27,8 @@ namespace DataAccess.Models
         public string FotoEscudo { get; set; }
         public string FotoPlantilla { get; set; }
 
+        public GlobalMedia TeamPicture { get; set; }
+
         public virtual ICollection<Clasificacion> Clasificacion { get; set; }
         public virtual ICollection<Directivo> Directivo { get; set; }
         public virtual ICollection<Entrenador> Entrenador { get; set; }

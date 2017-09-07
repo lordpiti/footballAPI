@@ -94,7 +94,24 @@ namespace footballRebuildAPI.Controllers
         {
             var hh = new BlobStorageService();
 
-            return await hh.GetBlobById(something);
+            return await hh.GetBlobById(something, "mycontainer");
+        }
+
+        [Route("UploadBase64Image")]
+        public async Task<string> PostBase64Image([FromBody] BlobData postData)
+        {
+            var hh = new BlobStorageService();
+
+            string base64 = postData.Base64String.Substring(postData.Base64String.IndexOf(',') + 1);
+            byte[] data = Convert.FromBase64String(base64);
+
+            return await hh.PostBlob(data, postData.FileName, "mycontainer");
+        }
+
+        [Route("UpdateTeamPicture/{teamId}")]
+        public void AddTeamPicture(int teamId, [FromBody]BlobData mediaItem)
+        {
+            _teamService.AddTeamPicture(teamId, mediaItem);
         }
 
         [HttpGet("{id}")]

@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting.ViewModels;
+﻿using Football.Crosscutting;
+using Football.Crosscutting.ViewModels;
 using Football.DataAccess.Interface;
 using Football.Services.Interface;
 using System;
@@ -24,6 +25,11 @@ namespace Football.Services.Concrete
         public List<Team> GetAllTeams()
         {
             return _teamRepository.GetAllTeams();
+        }
+
+        public void AddTeamPicture(int teamId, BlobData mediaItem)
+        {
+            _teamRepository.AddTeamPicture(teamId, mediaItem);
         }
     }
 }

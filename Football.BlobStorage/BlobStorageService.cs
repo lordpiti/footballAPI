@@ -25,9 +25,9 @@ namespace Football.BlobStorage
             _cloudStorageClient = cloudStorageAccount.CreateCloudBlobClient();
         }
 
-        public async Task<string> PostBlob(byte[] data, string fileName)
+        public async Task<string> PostBlob(byte[] data, string blobReference, string containerReference)
         {
-            var container = _cloudStorageClient.GetContainerReference("mycontainer");
+            var container = _cloudStorageClient.GetContainerReference(containerReference);
 
             // Create the container if it doesn't already exist.
             await container.CreateIfNotExistsAsync();
@@ -39,7 +39,7 @@ namespace Football.BlobStorage
                 });
 
             // Retrieve reference to a blob with an specified name
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobReference);
             //TODO: if exists, then create another one
             //blockBlob.Exists();
             Stream fileStream = new MemoryStream(data);
@@ -50,11 +50,11 @@ namespace Football.BlobStorage
             return blockBlob.Uri.ToString();
         }
 
-        public async Task<BlobData> GetBlobById(string blobReference)
+        public async Task<BlobData> GetBlobById(string blobReference, string blobContainerReference)
         {
-            CloudBlobContainer container = _cloudStorageClient.GetContainerReference("mycontainer");
+            CloudBlobContainer container = _cloudStorageClient.GetContainerReference(blobContainerReference);
 
-            // Retrieve reference to a blob named "myblob.txt"
+            // Retrieve reference to a blob
             CloudBlockBlob blockBlob2 = container.GetBlockBlobReference(blobReference);
 
             using (var memoryStream = new MemoryStream())

@@ -9,6 +9,7 @@ using System.Linq;
 using DataAccess.Concrete;
 using Football.DataAccess.Interface;
 using Football.Crosscutting.ViewModels;
+using Football.Crosscutting;
 
 namespace Football.DataAccess.Concrete
 {
@@ -49,6 +50,20 @@ namespace Football.DataAccess.Concrete
                 Name = equipo.Nombre,
                 PictureUrl = equipo.FotoEscudo
             }).ToList();
+        }
+
+        public void AddTeamPicture(int teamId, BlobData mediaItem)
+        {
+            var team = _context.Equipo.FirstOrDefault(x => x.CodEquipo == teamId);
+
+            team.TeamPicture = new GlobalMedia()
+            {
+                BlobStorageContainer = "mycontainer",
+                BlobStorageReference = mediaItem.FileName,
+                FileName = mediaItem.FileName
+            };
+
+            _context.SaveChanges();
         }
     }
 }
