@@ -12,6 +12,8 @@ namespace Football.DataAccess.Interface
 
         List<Team> GetAllTeams();
 
+        bool UpdateTeam(Team team);
+
         void AddTeamPicture(int teamId, BlobData mediaItem);
     }
 }

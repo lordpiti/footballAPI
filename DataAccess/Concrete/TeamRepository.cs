@@ -65,5 +65,15 @@ namespace Football.DataAccess.Concrete
 
             _context.SaveChanges();
         }
+
+        public bool UpdateTeam(Team team)
+        {
+            var existingteam = _context.Equipo.FirstOrDefault(x=>x.CodEquipo == team.Id);
+
+            existingteam.Nombre = team.Name;
+            existingteam.FotoEscudo = team.PictureUrl;
+
+            return true;
+        }
     }
 }

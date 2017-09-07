@@ -31,5 +31,10 @@ namespace Football.Services.Concrete
         {
             _teamRepository.AddTeamPicture(teamId, mediaItem);
         }
+
+        public bool UpdateTeam(Team team)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
