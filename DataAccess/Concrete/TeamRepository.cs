@@ -95,8 +95,10 @@ namespace Football.DataAccess.Concrete
                 {
                     Position = x.Posicion,
                     GoalsAgainst = x.GolesContra,
-                    GoalsFor = x.GolesFavor
-                }).ToListAsync();
+                    GoalsFor = x.GolesFavor,
+                    Round = x.Jornada
+                })
+                .OrderBy(x=>x.Round).ToListAsync();
 
             var team = await _context.Equipo.FirstOrDefaultAsync(x => x.CodEquipo == teamId);
 

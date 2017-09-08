@@ -20,5 +20,7 @@ namespace Football.Crosscutting.ViewModels.Teams
         public int? GoalsFor { get; set; }
 
         public int? GoalsAgainst { get; set; }
+
+        public int Round { get; set; }
     }
 }
