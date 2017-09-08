@@ -1,5 +1,6 @@
 ﻿using Football.Crosscutting;
 using Football.Crosscutting.ViewModels;
+using Football.Crosscutting.ViewModels.Teams;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,5 +17,8 @@ namespace Football.DataAccess.Interface
         Task<int> UpdateTeam(Team team);
 
         Task AddTeamPicture(int teamId, BlobData mediaItem);
+
+        Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
+            string competitionName, string season);
     }
 }

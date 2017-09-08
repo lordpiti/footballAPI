@@ -1,5 +1,6 @@
 ﻿using Football.Crosscutting;
 using Football.Crosscutting.ViewModels;
+using Football.Crosscutting.ViewModels.Teams;
 using Football.DataAccess.Interface;
 using Football.Services.Interface;
 using System;
@@ -36,6 +37,12 @@ namespace Football.Services.Concrete
         public async Task<int> UpdateTeam(Team team)
         {
             return await _teamRepository.UpdateTeam(team);
+        }
+
+        public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
+            string competitionName, string season)
+        {
+            return await _teamRepository.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
         }
     }
 }

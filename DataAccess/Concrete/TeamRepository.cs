@@ -11,6 +11,7 @@ using Football.DataAccess.Interface;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting;
 using System.Threading.Tasks;
+using Football.Crosscutting.ViewModels.Teams;
 
 namespace Football.DataAccess.Concrete
 {
@@ -80,9 +81,31 @@ namespace Football.DataAccess.Concrete
             }
             catch (Exception ex)
             {
-                var h = 2;
                 throw ex;
             }
+        }
+
+        public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId, 
+            string competitionName, string season)
+        {
+            var clasificationSeasonData = await _context.Clasificacion.Include(x => x.CodCompeticionNavigation)
+                .Where(x => x.CodEquipo == teamId 
+                && x.CodCompeticionNavigation.Temporada == season 
+                && x.CodCompeticionNavigation.Nombre == competitionName).Select(x=>new ClasificationRoundData()
+                {
+                    Position = x.Posicion,
+                    GoalsAgainst = x.GolesContra,
+                    GoalsFor = x.GolesFavor
+                }).ToListAsync();
+
+            var team = await _context.Equipo.FirstOrDefaultAsync(x => x.CodEquipo == teamId);
+
+            return new ClasificationChartData()
+            {
+                Season = season,
+                TeamName = team.Nombre,
+                ClasificationSeasonData = clasificationSeasonData
+            };
         }
     }
 }

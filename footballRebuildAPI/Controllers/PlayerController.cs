@@ -11,6 +11,7 @@ using Football.Crosscutting.ViewModels;
 using Football.Crosscutting;
 using Football.BlobStorage;
 using Microsoft.Extensions.Options;
+using Football.Crosscutting.ViewModels.Teams;
 
 namespace footballRebuildAPI.Controllers
 {
@@ -67,6 +68,14 @@ namespace footballRebuildAPI.Controllers
         public async Task<int> SaveTeamDetails([FromBody]Team teamDetails)
         {
             return await _teamService.UpdateTeam(teamDetails);
+        }
+
+        [Route("Clasification/{teamId}/competition/{competitionName}/season/{season}")]
+        [HttpGet]
+        public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
+            string competitionName, string season)
+        {
+            return await _teamService.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
         }
     }
 }
