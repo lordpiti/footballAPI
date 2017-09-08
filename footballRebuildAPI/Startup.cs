@@ -13,6 +13,9 @@ using Services;
 using Football.Services.Interface;
 using Football.Services.Concrete;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Football.BlobStorage.Interfaces;
+using Football.BlobStorage;
+using Crosscutting.ViewModels;
 
 namespace footballRebuildAPI
 {
@@ -40,10 +43,14 @@ namespace footballRebuildAPI
             // Add framework services.
             services.AddMvc();
 
+            services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
+
             ServiceLayerBindings
                 .AddServiceLayerBindings(services, Configuration)
+                .AddOptions()
                 .AddScoped<IPlayerService, PlayerService>()
-                .AddScoped<ITeamService, TeamService>();
+                .AddScoped<ITeamService, TeamService>()
+                .AddScoped<IBlobStorageService, BlobStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

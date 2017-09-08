@@ -10,6 +10,7 @@ using Football.Services.Interface;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting;
 using Football.BlobStorage;
+using Microsoft.Extensions.Options;
 
 namespace footballRebuildAPI.Controllers
 {
@@ -21,7 +22,7 @@ namespace footballRebuildAPI.Controllers
         private readonly IPlayerService _playerService;
         private readonly ITeamService _teamService;
 
-        public PlayerController(IPlayerService playerService, ITeamService teamService)
+        public PlayerController(IPlayerService playerService, ITeamService teamService, IOptions<AppSettings> settings)
         {
             _playerService = playerService;
             _teamService = teamService;
