@@ -82,7 +82,13 @@ namespace Football.DataAccess.Concrete
                 var existingteam = await _context.Equipo.FirstOrDefaultAsync(x => x.CodEquipo == team.Id);
 
                 existingteam.Nombre = team.Name;
-                //existingteam.FotoEscudo = team.PictureUrl;
+
+                existingteam.TeamPicture = new GlobalMedia()
+                {
+                    BlobStorageContainer = "mycontainer",
+                    BlobStorageReference = team.PictureLogo.FileName,
+                    FileName = team.PictureLogo.FileName
+                };
 
                 return await _context.SaveChangesAsync();
             }
