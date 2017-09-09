@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting;
+﻿using Football.BlobStorage.Interfaces;
+using Football.Crosscutting;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Teams;
 using Football.DataAccess.Interface;
@@ -13,15 +14,24 @@ namespace Football.Services.Concrete
     public class TeamService : ITeamService
     {
         private readonly ITeamRepository _teamRepository;
+        private readonly IBlobStorageService _blobStorageService;
 
-        public TeamService(ITeamRepository teamRepository)
+        public TeamService(ITeamRepository teamRepository, IBlobStorageService blobStorageService)
         {
             _teamRepository = teamRepository;
+            _blobStorageService = blobStorageService;
         }
 
         public async Task<Team> GetTeamByIdAndYear(int id, int year)
         {
-            return await _teamRepository.GetTeamByIdAndYear(id, year);
+            var team = await _teamRepository.GetTeamByIdAndYear(id, year);
+
+            if (team!=null && team.PictureLogo != null)
+            {
+                team.PictureLogo.Url = _blobStorageService.GetUrlForBlog(team.PictureLogo.FileName, team.PictureLogo.ContainerReference);
+            }
+
+            return team;
         }
 
         public async Task<List<Team>> GetAllTeams()

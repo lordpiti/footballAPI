@@ -23,7 +23,7 @@ namespace Football.DataAccess.Concrete
 
         public async Task<Team> GetTeamByIdAndYear(int id, int year)
         {
-            var teamFromBD = await _context.Equipo
+            var teamFromBD = await _context.Equipo.Include(x=>x.TeamPicture)
                 .Include(x => x.Jugador)
                 .ThenInclude(x=>x.CodIntegranteNavigation.HcoIntegrante)
                 .FirstOrDefaultAsync(x => x.CodEquipo == id);
@@ -32,6 +32,10 @@ namespace Football.DataAccess.Concrete
             {
                 Id = id,
                 Name = teamFromBD.Nombre,
+                PictureLogo = teamFromBD.TeamPicture!=null?new BlobData() {
+                    ContainerReference = teamFromBD.TeamPicture.BlobStorageContainer,
+                    FileName = teamFromBD.TeamPicture.FileName
+                }: new BlobData() { },
                 PlayerList = teamFromBD.Jugador.Where(x=>x.CodIntegranteNavigation.HcoIntegrante.Any(hco=>hco.FechaInicio.Year == year))
                 .Select(x=>new Player()
                 {
@@ -50,7 +54,10 @@ namespace Football.DataAccess.Concrete
             {
                 Id = equipo.CodEquipo,
                 Name = equipo.Nombre,
-                PictureUrl = equipo.FotoEscudo
+                PictureLogo = new BlobData()
+                {
+                    
+                }
             }).ToListAsync();
         }
 

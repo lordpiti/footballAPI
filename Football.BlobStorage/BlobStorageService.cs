@@ -79,7 +79,15 @@ namespace Football.BlobStorage
 
         public string GetUrlForBlog(string blobReference, string blobContainerReference)
         {
-            return _cloudStorageClient.BaseUri+"/" + blobContainerReference + "/"+ blobReference;
+            if (!string.IsNullOrEmpty(blobReference) && !string.IsNullOrEmpty(blobContainerReference))
+            {
+                return _cloudStorageClient.BaseUri + blobContainerReference + "/" + blobReference;
+            }
+            else
+            {
+                return "/assets/img/no-image.png";
+            }
+            
         }
     }
 }

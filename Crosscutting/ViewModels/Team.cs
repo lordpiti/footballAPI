@@ -13,6 +13,6 @@ namespace Football.Crosscutting.ViewModels
 
         public string Name { get; set; }
 
-        public string PictureUrl { get; set; }
+        public BlobData PictureLogo { get; set; }
     }
 }
