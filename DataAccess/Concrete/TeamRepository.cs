@@ -109,5 +109,16 @@ namespace Football.DataAccess.Concrete
                 ClasificationSeasonData = clasificationSeasonData
             };
         }
+
+        public async Task<List<object>> GetCompetitionsByTeam(int teamId)
+        {
+           return await _context.EquiposParticipan.Include(x => x.Competicion)
+                .Where(x => x.CodEquipo == teamId)
+                .Select(x => new {
+                    CompetitionName = x.Competicion.Nombre,
+                    Season = x.Competicion.Temporada,
+                    Type = x.Competicion.Tipo
+                }).ToListAsync<object>();
+        }
     }
 }

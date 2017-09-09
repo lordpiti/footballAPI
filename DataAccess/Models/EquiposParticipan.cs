@@ -9,5 +9,6 @@ namespace DataAccess.Models
         public int CodEquipo { get; set; }
 
         public virtual Equipo CodEquipoNavigation { get; set; }
+        public virtual Competicion Competicion { get; set; }
     }
 }

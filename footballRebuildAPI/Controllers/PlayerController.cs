@@ -77,5 +77,12 @@ namespace footballRebuildAPI.Controllers
         {
             return await _teamService.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
         }
+
+        [Route("competitions/{teamId}")]
+        [HttpGet]
+        public async Task<List<object>> GetCompetitionsByTeam(int teamId)
+        {
+            return await _teamService.GetCompetitionsByTeam(teamId);
+        }
     }
 }
