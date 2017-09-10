@@ -29,6 +29,8 @@ namespace DataAccess.Models
 
         public GlobalMedia TeamPicture { get; set; }
 
+        public Estadio Stadium { get; set; }
+
         public virtual ICollection<Clasificacion> Clasificacion { get; set; }
         public virtual ICollection<Directivo> Directivo { get; set; }
         public virtual ICollection<Entrenador> Entrenador { get; set; }

@@ -11,9 +11,10 @@ using System;
 namespace Football.DataAccess.Migrations
 {
     [DbContext(typeof(c__database_futbol_mdfContext))]
-    partial class c__database_futbol_mdfContextModelSnapshot : ModelSnapshot
+    [Migration("20170910190907_addStadiumPicture")]
+    partial class addStadiumPicture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -416,8 +417,6 @@ namespace Football.DataAccess.Migrations
 
                     b.HasKey("CodEquipo")
                         .HasName("PK__Equipo__7E6CC920");
-
-                    b.HasIndex("CodEstadio");
 
                     b.HasIndex("TeamPictureGlobalMediaId");
 
@@ -1231,10 +1230,6 @@ namespace Football.DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.Equipo", b =>
                 {
-                    b.HasOne("DataAccess.Models.Estadio", "Stadium")
-                        .WithMany()
-                        .HasForeignKey("CodEstadio");
-
                     b.HasOne("DataAccess.Models.GlobalMedia", "TeamPicture")
                         .WithMany()
                         .HasForeignKey("TeamPictureGlobalMediaId");

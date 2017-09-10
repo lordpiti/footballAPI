@@ -17,6 +17,8 @@ namespace DataAccess.Models
         public string Tipo { get; set; }
         public string Foto { get; set; }
 
+        public GlobalMedia Picture { get; set; }
+
         public virtual ICollection<Partido> Partido { get; set; }
     }
 }
