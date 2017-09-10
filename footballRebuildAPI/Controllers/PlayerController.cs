@@ -21,12 +21,10 @@ namespace footballRebuildAPI.Controllers
     public class PlayerController : Controller
     {
         private readonly IPlayerService _playerService;
-        private readonly ITeamService _teamService;
 
-        public PlayerController(IPlayerService playerService, ITeamService teamService, IOptions<AppSettings> settings)
+        public PlayerController(IPlayerService playerService)
         {
             _playerService = playerService;
-            _teamService = teamService;
         }
         
         [HttpGet]
@@ -43,46 +41,5 @@ namespace footballRebuildAPI.Controllers
             return _playerService.GetPlayers();
         }
 
-        [HttpGet]
-        [Route("Teams/{id}/year/{year}")]
-        public async Task<Team> GetTeam(int id, int year)
-        {
-            return await _teamService.GetTeamByIdAndYear(id, year);
-        }
-
-        [HttpGet]
-        [Route("Teams")]
-        public async Task<List<Team>> GetAllTeams()
-        {
-            return await _teamService.GetAllTeams();
-        }
-
-
-        [Route("UpdateTeamPicture/{teamId}")]
-        public void AddTeamPicture(int teamId, [FromBody]BlobData mediaItem)
-        {
-            _teamService.AddTeamPicture(teamId, mediaItem);
-        }
-
-        [Route("SaveTeamDetails")]
-        public async Task<int> SaveTeamDetails([FromBody]Team teamDetails)
-        {
-            return await _teamService.UpdateTeam(teamDetails);
-        }
-
-        [Route("Clasification/{teamId}/competition/{competitionName}/season/{season}")]
-        [HttpGet]
-        public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
-            string competitionName, string season)
-        {
-            return await _teamService.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
-        }
-
-        [Route("competitions/{teamId}")]
-        [HttpGet]
-        public async Task<List<object>> GetCompetitionsByTeam(int teamId)
-        {
-            return await _teamService.GetCompetitionsByTeam(teamId);
-        }
     }
 }

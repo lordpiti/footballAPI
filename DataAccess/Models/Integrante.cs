@@ -17,6 +17,8 @@ namespace DataAccess.Models
         public DateTime? FechaNac { get; set; }
         public string Foto { get; set; }
 
+        public GlobalMedia Picture { get; set; }
+
         public virtual ICollection<HcoIntegrante> HcoIntegrante { get; set; }
         public virtual ICollection<Jugador> Jugador { get; set; }
     }
