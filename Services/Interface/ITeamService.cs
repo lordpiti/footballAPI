@@ -22,5 +22,7 @@ namespace Football.Services.Interface
             string competitionName, string season);
 
         Task<List<object>> GetCompetitionsByTeam(int teamId);
+
+        Task<List<TeamStatsRound>> GetClasificationByCompetitionRound(int competitionId, int round);
     }
 }

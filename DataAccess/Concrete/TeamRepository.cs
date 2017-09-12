@@ -140,5 +140,27 @@ namespace Football.DataAccess.Concrete
                     Type = x.Competicion.Tipo
                 }).ToListAsync<object>();
         }
+
+        public async Task<List<TeamStatsRound>> GetClasificationByCompetitionRound(int competitionId, int round)
+        {
+            return await _context.Clasificacion.Include(x => x.CodEquipoNavigation)
+                .Where(x => x.CodCompeticion == competitionId && x.Jornada == round)
+                .OrderBy(x => x.Posicion).Select(x=>new TeamStatsRound()
+                {
+                    Position = x.Posicion,
+                    TeamId = x.CodEquipo,
+                    TeamLogo = x.CodEquipoNavigation.TeamPicture !=null?new BlobData()
+                    {
+                         ContainerReference = x.CodEquipoNavigation.TeamPicture.BlobStorageContainer,
+                         FileName = x.CodEquipoNavigation.TeamPicture.BlobStorageReference
+                    }:new BlobData(),
+                    TeamName = x.CodEquipoNavigation.Nombre,
+                    GoalsAgainst = x.GolesContra,
+                    GoalsFor = x.GolesFavor,
+                    MatchesDraw = x.Empatados,
+                    MatchesLost = x.Perdidos,
+                    MatchesWon = x.Ganados
+                }).ToListAsync();
+        }
     }
 }

@@ -59,5 +59,10 @@ namespace Football.Services.Concrete
         {
             return await _teamRepository.GetCompetitionsByTeam(teamId);
         }
+
+        public async Task<List<TeamStatsRound>> GetClasificationByCompetitionRound(int competitionId, int round)
+        {
+            return await _teamRepository.GetClasificationByCompetitionRound(competitionId, round);
+        }
     }
 }
