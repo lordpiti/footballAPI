@@ -59,7 +59,7 @@ namespace Football.API.Controllers
         }
 
         [Route("competitions/{competitionId}/round/{round}")]
-        public async Task<List<TeamStatsRound>> GetClasificationByCompetitionRound(int competitionId, int round)
+        public async Task<CompetitionRoundData> GetClasificationByCompetitionRound(int competitionId, int round)
         {
             return await _teamService.GetClasificationByCompetitionRound(competitionId, round);
         }

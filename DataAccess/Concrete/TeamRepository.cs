@@ -141,9 +141,40 @@ namespace Football.DataAccess.Concrete
                 }).ToListAsync<object>();
         }
 
-        public async Task<List<TeamStatsRound>> GetClasificationByCompetitionRound(int competitionId, int round)
+        public async Task<CompetitionRoundData> GetClasificationByCompetitionRound(int competitionId, int round)
         {
-            return await _context.Clasificacion.Include(x => x.CodEquipoNavigation)
+            var matchList = await _context.Partido
+                .Include(x=>x.CodLocalNavigation).ThenInclude(x=>x.TeamPicture)
+                .Include(x=>x.CodVisitanteNavigation).ThenInclude(x=>x.TeamPicture)
+                .Where(x => x.CodCompeticion == competitionId && Convert.ToInt32(x.Jornada) == round)
+                .Select(x => new Calendar() {
+                     Localteam = new Team() {
+                         Name = x.CodLocalNavigation.Nombre,
+                         PictureLogo = x.CodLocalNavigation.TeamPicture!=null? new BlobData()
+                         {
+                             ContainerReference = x.CodLocalNavigation.TeamPicture.BlobStorageContainer,
+                             FileName = x.CodLocalNavigation.TeamPicture.FileName
+                         }: new BlobData(),
+                         Id = x.CodLocalNavigation.CodEquipo
+                     },
+                     AwayTeam = new Team()
+                     {
+                         Name = x.CodVisitanteNavigation.Nombre,
+                         PictureLogo = x.CodVisitanteNavigation.TeamPicture != null ? new BlobData()
+                         {
+                             ContainerReference = x.CodVisitanteNavigation.TeamPicture.BlobStorageContainer,
+                             FileName = x.CodVisitanteNavigation.TeamPicture.FileName
+                         } : new BlobData(),
+                         Id = x.CodVisitanteNavigation.CodEquipo
+                     },
+                    Date = x.Fecha,
+                    GoalsLocal = x.GolesLocal,
+                    GoalsAway = x.GolesVisitante
+                }).ToListAsync();
+
+
+
+            var clasificationData = await _context.Clasificacion.Include(x => x.CodEquipoNavigation)
                 .Where(x => x.CodCompeticion == competitionId && x.Jornada == round)
                 .OrderBy(x => x.Posicion).Select(x=>new TeamStatsRound()
                 {
@@ -161,6 +192,12 @@ namespace Football.DataAccess.Concrete
                     MatchesLost = x.Perdidos,
                     MatchesWon = x.Ganados
                 }).ToListAsync();
+
+            return new CompetitionRoundData()
+            {
+                MatchList = matchList,
+                TeamStatsRoundList = clasificationData
+            };
         }
     }
 }

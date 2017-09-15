@@ -77,7 +77,7 @@ namespace Football.BlobStorage
             }
         }
 
-        public string GetUrlForBlog(string blobReference, string blobContainerReference)
+        private string GetUrlForBlog(string blobReference, string blobContainerReference)
         {
             if (!string.IsNullOrEmpty(blobReference) && !string.IsNullOrEmpty(blobContainerReference))
             {
@@ -88,6 +88,14 @@ namespace Football.BlobStorage
                 return "/assets/img/no-image.png";
             }
             
+        }
+
+        public void PopulateUrlForBlob(BlobData data)
+        {
+            if (data != null)
+            {
+                data.Url = this.GetUrlForBlog(data.FileName, data.ContainerReference);
+            }
         }
     }
 }

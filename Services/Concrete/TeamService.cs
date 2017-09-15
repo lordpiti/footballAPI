@@ -26,9 +26,9 @@ namespace Football.Services.Concrete
         {
             var team = await _teamRepository.GetTeamByIdAndYear(id, year);
 
-            if (team!=null && team.PictureLogo != null)
+            if (team!=null)
             {
-                team.PictureLogo.Url = _blobStorageService.GetUrlForBlog(team.PictureLogo.FileName, team.PictureLogo.ContainerReference);
+                _blobStorageService.PopulateUrlForBlob(team.PictureLogo);
             }
 
             return team;
@@ -60,9 +60,22 @@ namespace Football.Services.Concrete
             return await _teamRepository.GetCompetitionsByTeam(teamId);
         }
 
-        public async Task<List<TeamStatsRound>> GetClasificationByCompetitionRound(int competitionId, int round)
+        public async Task<CompetitionRoundData> GetClasificationByCompetitionRound(int competitionId, int round)
         {
-            return await _teamRepository.GetClasificationByCompetitionRound(competitionId, round);
+            var bu = await _teamRepository.GetClasificationByCompetitionRound(competitionId, round);
+
+            foreach (var item in bu.MatchList)
+            {
+                _blobStorageService.PopulateUrlForBlob(item.Localteam.PictureLogo);
+                _blobStorageService.PopulateUrlForBlob(item.AwayTeam.PictureLogo);
+            }
+
+            foreach (var item in bu.TeamStatsRoundList)
+            {
+                _blobStorageService.PopulateUrlForBlob(item.TeamLogo);
+            }
+
+            return bu;
         }
     }
 }

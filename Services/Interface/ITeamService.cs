@@ -23,6 +23,6 @@ namespace Football.Services.Interface
 
         Task<List<object>> GetCompetitionsByTeam(int teamId);
 
-        Task<List<TeamStatsRound>> GetClasificationByCompetitionRound(int competitionId, int round);
+        Task<CompetitionRoundData> GetClasificationByCompetitionRound(int competitionId, int round);
     }
 }

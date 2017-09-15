@@ -12,6 +12,6 @@ namespace Football.Services.Interface
 
         Task<BlobData> GetBlobById(string blobReference, string blobContainerReference);
 
-        string GetUrlForBlog(string blobReference, string blobContainerReference);
+        //string GetUrlForBlog(string blobReference, string blobContainerReference);
     }
 }

@@ -22,10 +22,10 @@ namespace Football.Services.Concrete
             return await _blobStorageService.GetBlobById(blobReference, blobContainerReference);
         }
 
-        public string GetUrlForBlog(string blobReference, string blobContainerReference)
-        {
-            return _blobStorageService.GetUrlForBlog(blobReference, blobContainerReference);
-        }
+        //public string GetUrlForBlog(string blobReference, string blobContainerReference)
+        //{
+        //    return _blobStorageService.GetUrlForBlog(blobReference, blobContainerReference);
+        //}
 
         public async Task<BlobData> PostBlob(byte[] data, string blobReference, string containerReference)
         {
