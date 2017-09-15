@@ -50,6 +50,7 @@ namespace footballRebuildAPI
                 .AddOptions()
                 .AddScoped<IPlayerService, PlayerService>()
                 .AddScoped<ITeamService, TeamService>()
+                .AddScoped<ICompetitionService, CompetitionService>()
                 .AddScoped<IBlobStorageService, BlobStorageService>();
         }
 

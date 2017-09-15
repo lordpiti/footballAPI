@@ -55,11 +55,6 @@ namespace Football.Services.Concrete
             return await _teamRepository.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
         }
 
-        public async Task<List<object>> GetCompetitionsByTeam(int teamId)
-        {
-            return await _teamRepository.GetCompetitionsByTeam(teamId);
-        }
-
         public async Task<CompetitionRoundData> GetClasificationByCompetitionRound(int competitionId, int round)
         {
             var bu = await _teamRepository.GetClasificationByCompetitionRound(competitionId, round);

@@ -19,6 +19,7 @@ namespace Services
             return DataAccessLayerBindings
                 .AddDataAccessLayerBindings(services, configuration)
                 .AddScoped<IPlayerRepository, PlayerRepository>()
+                .AddScoped<ICompetitionRepository, CompetitionRepository>()
                 .AddScoped<ITeamRepository, TeamRepository>();
         }
     }
