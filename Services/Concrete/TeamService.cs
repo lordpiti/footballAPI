@@ -34,9 +34,9 @@ namespace Football.Services.Concrete
             return team;
         }
 
-        public async Task<List<Team>> GetAllTeams()
+        public async Task<List<Team>> GetAllTeams(int? competitionId = null)
         {
-            return await _teamRepository.GetAllTeams();
+            return await _teamRepository.GetAllTeams(competitionId);
         }
 
         public async Task AddTeamPicture(int teamId, BlobData mediaItem)

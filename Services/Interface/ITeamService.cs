@@ -12,7 +12,7 @@ namespace Football.Services.Interface
     {
         Task<Team> GetTeamByIdAndYear(int id, int year);
 
-        Task<List<Team>> GetAllTeams();
+        Task<List<Team>> GetAllTeams(int? competitionId = null);
 
         Task<int> UpdateTeam(Team team);
 

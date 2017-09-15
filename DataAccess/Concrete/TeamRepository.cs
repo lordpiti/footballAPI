@@ -55,15 +55,32 @@ namespace Football.DataAccess.Concrete
             return team;
         }
 
-        public async Task<List<Team>> GetAllTeams()
+        public async Task<List<Team>> GetAllTeams(int? competitionId = null)
         {
-            return await _context.Equipo.Select(equipo => new Team()
+            if (competitionId != null)
+            {
+                return await _context.EquiposParticipan.Where(x=>x.CodCompeticion == competitionId)
+                    .Include(x => x.CodEquipoNavigation)
+                    .Select(x => new Team()
+                    {
+                        Id = x.CodEquipoNavigation.CodEquipo,
+                        Name = x.CodEquipoNavigation.Nombre,
+                        PictureLogo = new BlobData()
+                        {
+                            FileName = x.CodEquipoNavigation.TeamPicture.FileName,
+                            ContainerReference = x.CodEquipoNavigation.TeamPicture.BlobStorageContainer
+                        }
+                    }).ToListAsync();
+            }
+
+            return await _context.Equipo.Include(x=>x.TeamPicture).Select(equipo => new Team()
             {
                 Id = equipo.CodEquipo,
                 Name = equipo.Nombre,
                 PictureLogo = new BlobData()
                 {
-                    
+                    FileName = equipo.TeamPicture.FileName,
+                    ContainerReference = equipo.TeamPicture.BlobStorageContainer
                 }
             }).ToListAsync();
         }

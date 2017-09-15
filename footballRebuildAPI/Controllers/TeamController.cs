@@ -31,10 +31,10 @@ namespace Football.API.Controllers
         }
 
         [HttpGet]
-        [Route("Teams")]
-        public async Task<List<Team>> GetAllTeams()
+        [Route("Teams/{competitionId?}")]
+        public async Task<List<Team>> GetAllTeams(int? competitionId=null)
         {
-            return await _teamService.GetAllTeams();
+            return await _teamService.GetAllTeams(competitionId);
         }
 
         [Route("SaveTeamDetails")]
