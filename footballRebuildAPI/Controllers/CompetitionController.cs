@@ -22,6 +22,7 @@ namespace Football.API.Controllers
 
         [HttpGet]
         [Route("team/{teamId?}/season/{season}")]
+        [Route("team/{teamId?}")]
         [Route("season/{season}")]
         [Route("")]
         public async Task<List<Competition>> GetCompetitions(int? teamId = null, string season = null)

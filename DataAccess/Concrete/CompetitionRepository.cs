@@ -32,7 +32,8 @@ namespace Football.DataAccess.Concrete
                 {
                     Id = x.CodCompeticion,
                     Name = x.Nombre,
-                    Season = x.Temporada
+                    Season = x.Temporada,
+                    Type = x.Tipo
                 }).ToList();
             }
 
@@ -41,7 +42,8 @@ namespace Football.DataAccess.Concrete
             .Select(x => new Competition{
                 Name = x.Competicion.Nombre,
                 Season = x.Competicion.Temporada,
-                Id = x.CodCompeticion
+                Id = x.CodCompeticion,
+                Type = x.Competicion.Tipo
             }).ToListAsync();
             
         }

@@ -11,5 +11,7 @@ namespace Football.Crosscutting.ViewModels.Competition
         public string Name { get; set; }
 
         public string Season { get; set; }
+
+        public string Type { get; set; }
     }
 }
