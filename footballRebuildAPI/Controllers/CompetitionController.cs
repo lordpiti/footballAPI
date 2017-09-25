@@ -29,5 +29,12 @@ namespace Football.API.Controllers
         {
             return await _competitionService.GetCompetitions(teamId, season);
         }
+
+        [HttpGet]
+        [Route("{competitionId}/round/{round}")]
+        public async Task<List<MatchGeneralInfo>> GetMatches(int competitionId, string round)
+        {
+            return await _competitionService.GetMatches(competitionId, round);
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace Football.Services.Interface
     public interface ICompetitionService
     {
         Task<List<Competition>> GetCompetitions(int? teamId = null, string season = null);
+
+        Task<List<MatchGeneralInfo>> GetMatches(int competitionId, string round);
     }
 }

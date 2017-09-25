@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.Services", "Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.Crosscutting", "Crosscutting\Football.Crosscutting.csproj", "{B41F4A27-A836-4F22-9191-20ADB92F2375}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.BlobStorage", "Football.BlobStorage\Football.BlobStorage.csproj", "{49898D11-E52D-4860-BA42-36DE2C6BBA33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.BlobStorage", "Football.BlobStorage\Football.BlobStorage.csproj", "{49898D11-E52D-4860-BA42-36DE2C6BBA33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.MigrationTool", "Football.MigrationTool\Football.MigrationTool.csproj", "{AC878627-E388-41DD-ABDC-24FD9268713A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{49898D11-E52D-4860-BA42-36DE2C6BBA33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49898D11-E52D-4860-BA42-36DE2C6BBA33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49898D11-E52D-4860-BA42-36DE2C6BBA33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC878627-E388-41DD-ABDC-24FD9268713A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC878627-E388-41DD-ABDC-24FD9268713A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC878627-E388-41DD-ABDC-24FD9268713A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC878627-E388-41DD-ABDC-24FD9268713A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

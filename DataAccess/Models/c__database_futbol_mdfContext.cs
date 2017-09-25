@@ -6,6 +6,11 @@ namespace DataAccess.Models
 {
     public partial class c__database_futbol_mdfContext : DbContext
     {
+        //public c__database_futbol_mdfContext(DbContextOptions options)
+        //: base(options)
+        //{
+        //}
+
         public virtual DbSet<Abono> Abono { get; set; }
         public virtual DbSet<Agenda> Agenda { get; set; }
         public virtual DbSet<Arbitro> Arbitro { get; set; }

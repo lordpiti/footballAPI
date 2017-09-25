@@ -24,5 +24,10 @@ namespace Football.Services.Concrete
         {
             return await _competitionRepository.GetCompetitions(teamId, season);
         }
+
+        public async Task<List<MatchGeneralInfo>> GetMatches(int competitionId, string round)
+        {
+            return await _competitionRepository.GetMatches(competitionId, round);
+        }
     }
 }

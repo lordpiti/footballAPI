@@ -13,5 +13,7 @@ namespace Crosscutting.ViewModels
         public int VisitorGoals { get; set; }
 
         public int RecoveredBalls { get; set; }
+
+        public int Id { get; set; }
     }
 }

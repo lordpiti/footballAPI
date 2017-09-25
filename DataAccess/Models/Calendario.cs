@@ -11,5 +11,7 @@ namespace DataAccess.Models
         public int CodLocal { get; set; }
         public int CodVisitante { get; set; }
         public DateTime? Fecha { get; set; }
+
+        public Partido Match { get; set; }
     }
 }
