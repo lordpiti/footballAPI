@@ -24,5 +24,7 @@ namespace Football.Crosscutting.ViewModels.Teams
         public int? MatchesDraw { get; set; }
 
         public int? MatchesLost { get; set; }
+
+        public int? Points { get; set; }
     }
 }

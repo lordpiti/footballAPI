@@ -21,6 +21,5 @@ namespace Football.Services.Interface
         Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
             string competitionName, string season);
 
-        Task<CompetitionRoundData> GetClasificationByCompetitionRound(int competitionId, int round);
     }
 }

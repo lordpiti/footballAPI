@@ -1,4 +1,5 @@
 ﻿using Football.BlobStorage.Interfaces;
+using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Competition;
 using Football.DataAccess.Interface;
 using Football.Services.Interface;
@@ -25,9 +26,22 @@ namespace Football.Services.Concrete
             return await _competitionRepository.GetCompetitions(teamId, season);
         }
 
-        public async Task<List<MatchGeneralInfo>> GetMatches(int competitionId, string round)
+        public async Task<CompetitionRoundData> GetCompetitionRoundData(int competitionId, string round)
         {
-            return await _competitionRepository.GetMatches(competitionId, round);
+            var bu = await _competitionRepository.GetCompetitionRoundData(competitionId, round);
+
+            foreach (var item in bu.MatchList)
+            {
+                _blobStorageService.PopulateUrlForBlob(item.LocalTeam.PictureLogo);
+                _blobStorageService.PopulateUrlForBlob(item.VisitorTeam.PictureLogo);
+            }
+
+            foreach (var item in bu.TeamStatsRoundList)
+            {
+                _blobStorageService.PopulateUrlForBlob(item.TeamLogo);
+            }
+
+            return bu;
         }
     }
 }

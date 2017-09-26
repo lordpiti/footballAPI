@@ -54,23 +54,5 @@ namespace Football.Services.Concrete
         {
             return await _teamRepository.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
         }
-
-        public async Task<CompetitionRoundData> GetClasificationByCompetitionRound(int competitionId, int round)
-        {
-            var bu = await _teamRepository.GetClasificationByCompetitionRound(competitionId, round);
-
-            foreach (var item in bu.MatchList)
-            {
-                _blobStorageService.PopulateUrlForBlob(item.Localteam.PictureLogo);
-                _blobStorageService.PopulateUrlForBlob(item.AwayTeam.PictureLogo);
-            }
-
-            foreach (var item in bu.TeamStatsRoundList)
-            {
-                _blobStorageService.PopulateUrlForBlob(item.TeamLogo);
-            }
-
-            return bu;
-        }
     }
 }

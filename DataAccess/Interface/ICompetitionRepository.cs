@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting.ViewModels.Competition;
+﻿using Football.Crosscutting.ViewModels;
+using Football.Crosscutting.ViewModels.Competition;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,5 +12,7 @@ namespace Football.DataAccess.Interface
         Task<List<Competition>> GetCompetitions(int? teamId = null, string season = null);
 
         Task<List<MatchGeneralInfo>> GetMatches(int competitionId, string round);
+
+        Task<CompetitionRoundData> GetCompetitionRoundData(int competitionId, string round);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Football.Services.Interface;
 using Football.Crosscutting.ViewModels.Competition;
+using Football.Crosscutting.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,9 +33,9 @@ namespace Football.API.Controllers
 
         [HttpGet]
         [Route("{competitionId}/round/{round}")]
-        public async Task<List<MatchGeneralInfo>> GetMatches(int competitionId, string round)
+        public async Task<CompetitionRoundData> GetMatches(int competitionId, string round)
         {
-            return await _competitionService.GetMatches(competitionId, round);
+            return await _competitionService.GetCompetitionRoundData(competitionId, round);
         }
     }
 }
