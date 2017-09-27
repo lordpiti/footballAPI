@@ -12,6 +12,7 @@ using Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Teams;
 using Football.Crosscutting;
+using Football.Crosscutting.ViewModels.Match;
 
 namespace Football.DataAccess.Concrete
 {
@@ -163,6 +164,75 @@ namespace Football.DataAccess.Concrete
                 MatchList = matchList,
                 TeamStatsRoundList = clasificationData
             };
+        }
+
+        public async Task<MatchOverview> GetMatchOverview(int matchId)
+        {
+            var match = await _context.Partido
+                .Include(x => x.CodLocalNavigation.TeamPicture)
+                .Include(x => x.CodLocalNavigation.Stadium)
+                .Include(x => x.CodVisitanteNavigation.TeamPicture)
+                .Include(x => x.CodVisitanteNavigation.Stadium)
+                .FirstOrDefaultAsync(x=>x.CodPartido == matchId);
+
+            var players = await _context.PartidoJugado
+                .Include(x => x.CodPartidoNavigation)
+                .Include(x=>x.CodJugadorNavigation).ThenInclude(x=>x.CodIntegranteNavigation).ThenInclude(x=>x.HcoIntegrante)
+                .Where(x => x.CodPartido == matchId)
+                    .Select(x=>new Player()
+                    {
+                        Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
+                        Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos,
+                        TeamId = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
+                            .FirstOrDefault().CodEquipo,
+                        Dorsal = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
+                            .FirstOrDefault().Dorsal
+                        //These are the right queries, but the database is not properly populated yet ... so i stick to the version above for the moment
+                        //TeamId = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
+                        //    .FirstOrDefault(y => y.FechaInicio < x.CodPartidoNavigation.Fecha && (y.FechaFin > x.CodPartidoNavigation.Fecha || y.FechaFin == null)).CodEquipo,
+                        //Dorsal = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
+                        //    .FirstOrDefault(y=>y.FechaInicio<x.CodPartidoNavigation.Fecha && (y.FechaFin>x.CodPartidoNavigation.Fecha || y.FechaFin == null)).Dorsal
+                    })
+                    .ToListAsync();
+
+            var matchOverview = new MatchOverview()
+            {
+                Players = players,
+                MatchGeneralInfo = new MatchGeneralInfo()
+                {
+                    Date = match.Fecha,
+                    GoalsLocal = match.GolesLocal,
+                    GoalsVisitor = match.GolesVisitante,
+                    MatchId = match.CodPartido,
+                    LocalTeam = new Team()
+                    {
+                        Name = match.CodLocalNavigation.Nombre,
+                        Id = match.CodLocalNavigation.CodEquipo,
+                        PictureLogo = match.CodLocalNavigation.TeamPicture!=null? new Crosscutting.BlobData()
+                        {
+                            ContainerReference = match.CodLocalNavigation.TeamPicture.BlobStorageContainer,
+                            FileName = match.CodLocalNavigation.TeamPicture.BlobStorageReference
+                        }: new Crosscutting.BlobData()
+                    },
+                    VisitorTeam = new Team()
+                    {
+                        Name = match.CodVisitanteNavigation.Nombre,
+                        Id = match.CodVisitanteNavigation.CodEquipo,
+                        PictureLogo = match.CodVisitanteNavigation.TeamPicture!=null?new Crosscutting.BlobData()
+                        {
+                            ContainerReference = match.CodVisitanteNavigation.TeamPicture.BlobStorageContainer,
+                            FileName = match.CodVisitanteNavigation.TeamPicture.BlobStorageReference
+                        } : new Crosscutting.BlobData()
+                    },
+                    Stadium = new Stadium()
+                    {
+                        Id = match.CodEstadioNavigation.CodEstadio,
+                        Name = match.CodEstadioNavigation.Nombre
+                    }
+                }
+            };
+
+            return matchOverview;
         }
     }
 }

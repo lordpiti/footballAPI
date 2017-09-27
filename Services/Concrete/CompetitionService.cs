@@ -1,6 +1,7 @@
 ﻿using Football.BlobStorage.Interfaces;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Competition;
+using Football.Crosscutting.ViewModels.Match;
 using Football.DataAccess.Interface;
 using Football.Services.Interface;
 using System;
@@ -42,6 +43,11 @@ namespace Football.Services.Concrete
             }
 
             return bu;
+        }
+
+        public async Task<MatchOverview> GetMatchOverview(int matchId)
+        {
+            return await _competitionRepository.GetMatchOverview(matchId);
         }
     }
 }

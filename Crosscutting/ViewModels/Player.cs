@@ -11,5 +11,9 @@ namespace Crosscutting.ViewModels
         public string Surname { get; set; }
 
         public string TeamName { get; set; }
+
+        public int TeamId { get; set; }
+
+        public int? Dorsal { get; set; }
     }
 }
