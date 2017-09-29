@@ -17,5 +17,7 @@ namespace Football.DataAccess.Interface
         Task<CompetitionRoundData> GetCompetitionRoundData(int competitionId, string round);
 
         Task<MatchOverview> GetMatchOverview(int matchId);
+
+        Task<Competition> GetCompetitionById(int competitionId);
     }
 }

@@ -169,6 +169,7 @@ namespace Football.DataAccess.Concrete
         public async Task<MatchOverview> GetMatchOverview(int matchId)
         {
             var match = await _context.Partido
+                .Include(x=>x.CodEstadioNavigation)
                 .Include(x => x.CodLocalNavigation.TeamPicture)
                 .Include(x => x.CodLocalNavigation.Stadium)
                 .Include(x => x.CodVisitanteNavigation.TeamPicture)
@@ -181,6 +182,7 @@ namespace Football.DataAccess.Concrete
                 .Where(x => x.CodPartido == matchId)
                     .Select(x=>new Player()
                     {
+                        PlayerId = x.CodJugador,
                         Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
                         Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos,
                         TeamId = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
@@ -195,9 +197,43 @@ namespace Football.DataAccess.Concrete
                     })
                     .ToListAsync();
 
+            var bookings = await _context.Tarjeta.Include(x => x.CodJugadorNavigation).ThenInclude(x=>x.CodIntegranteNavigation)
+                .Where(x => x.CodPartido == matchId)
+                .Select(x => new Booking()
+                {
+                    Minute = x.Minuto,
+                    Type = x.Tipo,
+                    Player = new Player()
+                     {
+                        PlayerId = x.CodJugador,
+                        Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
+                        Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
+                     }
+                }).ToListAsync();
+
+            var goals = await _context.Gol.Include(x => x.CodJugadorNavigation).ThenInclude(x => x.CodIntegranteNavigation)
+                .Where(x => x.CodPartido == matchId)
+                .Select(x => new Goal()
+                {
+                    Minute = x.Minuto,
+                    Type = x.Tipo,
+                    VideoUrl =x.Video,
+                    Player = new Player()
+                    {
+                        PlayerId = x.CodJugador,
+                        Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
+                        Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
+                    }
+                }).ToListAsync();
+
             var matchOverview = new MatchOverview()
             {
                 Players = players,
+                StatisticsIncidences = new StatisticsIncidences()
+                {
+                    Bookings = bookings,
+                    Goals = goals
+                },
                 MatchGeneralInfo = new MatchGeneralInfo()
                 {
                     Date = match.Fecha,
@@ -208,17 +244,17 @@ namespace Football.DataAccess.Concrete
                     {
                         Name = match.CodLocalNavigation.Nombre,
                         Id = match.CodLocalNavigation.CodEquipo,
-                        PictureLogo = match.CodLocalNavigation.TeamPicture!=null? new Crosscutting.BlobData()
+                        PictureLogo = match.CodLocalNavigation.TeamPicture != null ? new Crosscutting.BlobData()
                         {
                             ContainerReference = match.CodLocalNavigation.TeamPicture.BlobStorageContainer,
                             FileName = match.CodLocalNavigation.TeamPicture.BlobStorageReference
-                        }: new Crosscutting.BlobData()
+                        } : new Crosscutting.BlobData()
                     },
                     VisitorTeam = new Team()
                     {
                         Name = match.CodVisitanteNavigation.Nombre,
                         Id = match.CodVisitanteNavigation.CodEquipo,
-                        PictureLogo = match.CodVisitanteNavigation.TeamPicture!=null?new Crosscutting.BlobData()
+                        PictureLogo = match.CodVisitanteNavigation.TeamPicture != null ? new Crosscutting.BlobData()
                         {
                             ContainerReference = match.CodVisitanteNavigation.TeamPicture.BlobStorageContainer,
                             FileName = match.CodVisitanteNavigation.TeamPicture.BlobStorageReference
@@ -233,6 +269,23 @@ namespace Football.DataAccess.Concrete
             };
 
             return matchOverview;
+        }
+
+        public async Task<Competition> GetCompetitionById(int competitionId)
+        {
+            var competition = await _context.Competicion.Include(x=>x.CompetitionLogo).FirstOrDefaultAsync(x=>x.CodCompeticion == competitionId);
+
+            return new Competition()
+            {
+                Id = competition.CodCompeticion,
+                Name = competition.Nombre,
+                Season = competition.Temporada,
+                Type = competition.Tipo, Logo = competition.CompetitionLogo!=null?new BlobData()
+                {
+                    ContainerReference = competition.CompetitionLogo.BlobStorageContainer,
+                    FileName = competition.CompetitionLogo.BlobStorageReference
+                }:new BlobData()
+            };
         }
     }
 }

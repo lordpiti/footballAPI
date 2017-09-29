@@ -11,5 +11,7 @@ namespace Football.Crosscutting.ViewModels.Match
         public List<Player> Players { get; set; }
 
         public MatchGeneralInfo MatchGeneralInfo { get; set; }
+
+        public StatisticsIncidences StatisticsIncidences { get; set; }
     }
 }

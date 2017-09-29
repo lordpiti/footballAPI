@@ -13,5 +13,7 @@ namespace Football.Crosscutting.ViewModels.Competition
         public string Season { get; set; }
 
         public string Type { get; set; }
+
+        public BlobData Logo { get; set; }
     }
 }

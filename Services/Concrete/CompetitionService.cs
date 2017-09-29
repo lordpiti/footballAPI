@@ -49,5 +49,14 @@ namespace Football.Services.Concrete
         {
             return await _competitionRepository.GetMatchOverview(matchId);
         }
+
+        public async Task<Competition> GetCompetitionById(int competitionId)
+        {
+            var competition = await _competitionRepository.GetCompetitionById(competitionId);
+
+            _blobStorageService.PopulateUrlForBlob(competition.Logo);
+
+            return competition;
+        }
     }
 }
