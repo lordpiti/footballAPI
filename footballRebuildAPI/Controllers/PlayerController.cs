@@ -12,6 +12,7 @@ using Football.Crosscutting;
 using Football.BlobStorage;
 using Microsoft.Extensions.Options;
 using Football.Crosscutting.ViewModels.Teams;
+using Football.Crosscutting.ViewModels.Match;
 
 namespace footballRebuildAPI.Controllers
 {
@@ -41,5 +42,11 @@ namespace footballRebuildAPI.Controllers
             return _playerService.GetPlayers();
         }
 
+        [HttpGet]
+        [Route("{playerId}/MatchPlayedStatistics/{matchId}")]
+        public async Task<MatchPlayerStatistics> MatchPlayerStatistics(int playerId, int matchId)
+        {
+            return await _playerService.GetMatchPlayerStatistics(playerId, matchId);
+        }
     }
 }

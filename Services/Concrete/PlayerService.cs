@@ -1,10 +1,12 @@
 ﻿using Crosscutting.ViewModels;
 using DataAccess.Concrete;
 using DataAccess.Interface;
+using Football.Crosscutting.ViewModels.Match;
 using Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.Concrete
 {
@@ -26,6 +28,11 @@ namespace Services.Concrete
         public List<MatchPlayedInfo> GetMatchesPlayed(int id )
         {
             return _playerRepository.GetMatchesPlayed(id);
+        }
+
+        public async Task<MatchPlayerStatistics> GetMatchPlayerStatistics(int playerId, int matchId)
+        {
+            return await _playerRepository.GetMatchPlayerStatistics(playerId, matchId);
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Linq;
+using Football.Crosscutting.ViewModels.Match;
+using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
 {
@@ -39,6 +41,23 @@ namespace DataAccess.Concrete
                 }).ToList();
 
             return toReturn;
+        }
+
+        public async Task<MatchPlayerStatistics> GetMatchPlayerStatistics(int playerId, int matchId)
+        {
+            var dbData = await _context.PartidoJugado.FirstOrDefaultAsync(x => x.CodJugador == playerId && x.CodPartido == matchId);
+
+            return new MatchPlayerStatistics()
+            {
+                Assistances = dbData.Asistencias,
+                Fauls = dbData.FaltasCometidas,
+                FaulsReceived = dbData.FaltasRecibidas,
+                Minutes = dbData.Minutos,
+                MissedBalls = dbData.BalonesPerdidos,
+                RecoveredBalls = dbData.BalonesRecuperados,
+                Shots = dbData.Remates,
+                ShotsOnTarget = dbData.RematesPorteria
+            };
         }
     }
 }
