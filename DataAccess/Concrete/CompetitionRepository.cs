@@ -188,7 +188,8 @@ namespace Football.DataAccess.Concrete
                         TeamId = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
                             .FirstOrDefault().CodEquipo,
                         Dorsal = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
-                            .FirstOrDefault().Dorsal
+                            .FirstOrDefault().Dorsal,
+                        Start = x.Titular == "Titular"
                         //These are the right queries, but the database is not properly populated yet ... so i stick to the version above for the moment
                         //TeamId = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
                         //    .FirstOrDefault(y => y.FechaInicio < x.CodPartidoNavigation.Fecha && (y.FechaFin > x.CodPartidoNavigation.Fecha || y.FechaFin == null)).CodEquipo,
@@ -226,13 +227,40 @@ namespace Football.DataAccess.Concrete
                     }
                 }).ToListAsync();
 
+            var substitutions = await _context.Cambio.Include(x => x.CodJugadorSaleNavigation).ThenInclude(x => x.CodIntegranteNavigation)
+                .Include(x => x.CodJugadorEntraNavigation).ThenInclude(x => x.CodIntegranteNavigation)
+                .Where(x => x.CodPartido == matchId)
+                .Select(x => new Substitution()
+                {
+                    Minute = x.Minuto,
+                    PlayerIn = new Player()
+                    {
+                        PlayerId = x.CodJugadorEntra,
+                        Name = x.CodJugadorEntraNavigation.CodIntegranteNavigation.Nombre,
+                        Surname = x.CodJugadorEntraNavigation.CodIntegranteNavigation.Apellidos
+                    },
+                    PlayerOut = new Player()
+                    {
+                        PlayerId = x.CodJugadorSale,
+                        Name = x.CodJugadorSaleNavigation.CodIntegranteNavigation.Nombre,
+                        Surname = x.CodJugadorSaleNavigation.CodIntegranteNavigation.Apellidos
+                    }
+                }).ToListAsync();
+
             var matchOverview = new MatchOverview()
             {
                 Players = players,
                 StatisticsIncidences = new StatisticsIncidences()
                 {
                     Bookings = bookings,
-                    Goals = goals
+                    Goals = goals,
+                    Substitutions = substitutions,
+                    CornersLocal = match.CornersLocal,
+                    CornersVisitor = match.CornersVisitante,
+                    OffsideLocal = match.FuerasJuegoLocal,
+                    OffsideVisitor = match.FuerasJuegoVisitante,
+                    PosessionLocal = match.PosesionLocal,
+                    PosessionVisitor = match.PosesionVisitante
                 },
                 MatchGeneralInfo = new MatchGeneralInfo()
                 {

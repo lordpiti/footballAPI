@@ -17,5 +17,7 @@ namespace Crosscutting.ViewModels
         public int TeamId { get; set; }
 
         public int? Dorsal { get; set; }
+
+        public bool Start { get; set; }
     }
 }
