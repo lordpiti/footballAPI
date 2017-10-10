@@ -303,10 +303,13 @@ namespace Football.DataAccess.Concrete
         {
             var competition = await _context.Competicion.Include(x=>x.CompetitionLogo).FirstOrDefaultAsync(x=>x.CodCompeticion == competitionId);
 
+            var rounds = await _context.Calendario.Where(x => x.CodCompeticion == competitionId).Select(x => x.Jornada).Distinct().OrderBy(x=>x.Length).ThenBy(x=>x).ToListAsync();
+
             return new Competition()
             {
                 Id = competition.CodCompeticion,
                 Name = competition.Nombre,
+                RoundList = rounds,
                 Season = competition.Temporada,
                 Type = competition.Tipo, Logo = competition.CompetitionLogo!=null?new BlobData()
                 {

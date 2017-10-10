@@ -15,5 +15,7 @@ namespace Football.Crosscutting.ViewModels.Competition
         public string Type { get; set; }
 
         public BlobData Logo { get; set; }
+
+        public List<string> RoundList { get; set; }
     }
 }
