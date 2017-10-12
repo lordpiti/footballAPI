@@ -52,5 +52,12 @@ namespace Football.API.Controllers
         {
             return await _competitionService.GetCompetitionById(competitionId);
         }
+
+        [HttpGet]
+        [Route("{competitionId}/scorers")]
+        public async Task<object> GetTopScorers(int competitionId)
+        {
+            return await _competitionService.GetTopScorers(competitionId);
+        }
     }
 }

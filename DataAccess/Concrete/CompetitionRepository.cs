@@ -318,5 +318,36 @@ namespace Football.DataAccess.Concrete
                 }:new BlobData()
             };
         }
+
+        public async Task<object> GetTopScorers(int competitionId)
+        {
+            try
+            {
+                var scorersGrouped = await _context.Gol.Include(x => x.CodPartidoNavigation).ThenInclude(x => x.CodCompeticionNavigation)
+                    .Include(x => x.CodJugadorNavigation).ThenInclude(x=>x.CodIntegranteNavigation)
+                    .Include(x => x.CodJugadorNavigation).ThenInclude(x => x.CodEquipoNavigation)
+                    .Where(x => x.CodPartidoNavigation.CodCompeticion == competitionId)
+                    .GroupBy(x => x.CodJugadorNavigation).ToListAsync();
+
+                var result = scorersGrouped.Select(x => new {
+                    hehe = new Player() {
+                        Name = x.Key.CodIntegranteNavigation.Nombre,
+                        Surname = x.Key.CodIntegranteNavigation.Apellidos,
+                        PlayerId = x.Key.CodJugador,
+                        TeamId = (int)x.Key.CodEquipo,
+                        TeamName = x.Key.CodEquipoNavigation.Nombre
+                    },
+                    goals = x.Count() })
+                    .OrderByDescending(x=>x.goals).ToList();
+                    
+                return result;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+
+            
+        }
     }
 }

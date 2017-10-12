@@ -58,5 +58,10 @@ namespace Football.Services.Concrete
 
             return competition;
         }
+
+        public async Task<object> GetTopScorers(int competitionId)
+        {
+            return await _competitionRepository.GetTopScorers(competitionId);
+        }
     }
 }
