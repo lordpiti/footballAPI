@@ -34,7 +34,7 @@ namespace Football.API.Controllers
 
         [HttpGet]
         [Route("{competitionId}/round/{round}")]
-        public async Task<CompetitionRoundData> GetMatches(int competitionId, string round)
+        public async Task<CompetitionRoundData> GetCompetitionRoundData(int competitionId, string round)
         {
             return await _competitionService.GetCompetitionRoundData(competitionId, round);
         }
@@ -54,10 +54,10 @@ namespace Football.API.Controllers
         }
 
         [HttpGet]
-        [Route("{competitionId}/scorers")]
-        public async Task<object> GetTopScorers(int competitionId)
+        [Route("{competitionId}/round/{round}/scorers")]
+        public async Task<List<Scorer>> GetTopScorers(int competitionId, string round)
         {
-            return await _competitionService.GetTopScorers(competitionId);
+            return await _competitionService.GetTopScorers(competitionId, round);
         }
     }
 }

@@ -18,6 +18,6 @@ namespace Football.Services.Interface
 
         Task<Competition> GetCompetitionById(int competitionId);
 
-        Task<object> GetTopScorers(int competitionId);
+        Task<List<Scorer>> GetTopScorers(int competitionId, string round);
     }
 }

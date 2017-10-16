@@ -10,6 +10,8 @@ namespace Football.Crosscutting.ViewModels
     {
         public List<TeamStatsRound> TeamStatsRoundList { get; set; }
 
-        public List<MatchGeneralInfo> MatchList {get;set;}
+        public List<MatchGeneralInfo> MatchList { get; set; }
+
+        public List<Scorer> Scorers { get; set; }
     }
 }

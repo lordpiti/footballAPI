@@ -29,20 +29,23 @@ namespace Football.Services.Concrete
 
         public async Task<CompetitionRoundData> GetCompetitionRoundData(int competitionId, string round)
         {
-            var bu = await _competitionRepository.GetCompetitionRoundData(competitionId, round);
+            var competitionData = await _competitionRepository.GetCompetitionRoundData(competitionId, round);
 
-            foreach (var item in bu.MatchList)
+            foreach (var item in competitionData.MatchList)
             {
                 _blobStorageService.PopulateUrlForBlob(item.LocalTeam.PictureLogo);
                 _blobStorageService.PopulateUrlForBlob(item.VisitorTeam.PictureLogo);
             }
 
-            foreach (var item in bu.TeamStatsRoundList)
+            foreach (var item in competitionData.TeamStatsRoundList)
             {
                 _blobStorageService.PopulateUrlForBlob(item.TeamLogo);
             }
 
-            return bu;
+            var scorers = await _competitionRepository.GetTopScorers(competitionId, round);
+            competitionData.Scorers = scorers;
+
+            return competitionData;
         }
 
         public async Task<MatchOverview> GetMatchOverview(int matchId)
@@ -59,9 +62,9 @@ namespace Football.Services.Concrete
             return competition;
         }
 
-        public async Task<object> GetTopScorers(int competitionId)
+        public async Task<List<Scorer>> GetTopScorers(int competitionId, string round)
         {
-            return await _competitionRepository.GetTopScorers(competitionId);
+            return await _competitionRepository.GetTopScorers(competitionId, round);
         }
     }
 }
