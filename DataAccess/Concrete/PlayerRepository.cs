@@ -23,7 +23,9 @@ namespace DataAccess.Concrete
             {
                 Name = x.CodIntegranteNavigation.Nombre,
                 Surname = x.CodIntegranteNavigation.Apellidos,
-                TeamName = x.CodEquipoNavigation.Nombre
+                TeamName = x.CodEquipoNavigation.Nombre,
+                PlayerId = x.CodJugador,
+                TeamId = (int)x.CodEquipo
             }).ToList();
         }
 
