@@ -51,7 +51,8 @@ namespace footballRebuildAPI
                 .AddScoped<IPlayerService, PlayerService>()
                 .AddScoped<ITeamService, TeamService>()
                 .AddScoped<ICompetitionService, CompetitionService>()
-                .AddScoped<IBlobStorageService, BlobStorageService>();
+                .AddScoped<IBlobStorageService, BlobStorageService>()
+                .AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

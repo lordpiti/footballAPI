@@ -9,6 +9,8 @@ using DataAccess;
 using Microsoft.Extensions.Configuration;
 using Football.DataAccess.Interface;
 using Football.DataAccess.Concrete;
+using Football.DataAccessNoSQL.Concrete;
+using Football.DataAccessNoSQL.Interface;
 
 namespace Services
 {
@@ -20,7 +22,8 @@ namespace Services
                 .AddDataAccessLayerBindings(services, configuration)
                 .AddScoped<IPlayerRepository, PlayerRepository>()
                 .AddScoped<ICompetitionRepository, CompetitionRepository>()
-                .AddScoped<ITeamRepository, TeamRepository>();
+                .AddScoped<ITeamRepository, TeamRepository>()
+                .AddScoped<IUserRepository, UserRepository>();
         }
     }
 

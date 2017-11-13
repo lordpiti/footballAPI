@@ -8,6 +8,7 @@
     <ProjectReference Include="..\Crosscutting\Football.Crosscutting.csproj" />
     <ProjectReference Include="..\DataAccess\Football.DataAccess.csproj" />
     <ProjectReference Include="..\Football.BlobStorage\Football.BlobStorage.csproj" />
+    <ProjectReference Include="..\Football.DataAccessNoSQL\Football.DataAccessNoSQL.csproj" />
   </ItemGroup>
 
 </Project>
