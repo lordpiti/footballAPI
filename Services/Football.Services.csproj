@@ -9,6 +9,7 @@
     <ProjectReference Include="..\DataAccess\Football.DataAccess.csproj" />
     <ProjectReference Include="..\Football.BlobStorage\Football.BlobStorage.csproj" />
     <ProjectReference Include="..\Football.DataAccessNoSQL\Football.DataAccessNoSQL.csproj" />
+    <ProjectReference Include="..\Football.Facebook\Football.Facebook.csproj" />
   </ItemGroup>
 
 </Project>
