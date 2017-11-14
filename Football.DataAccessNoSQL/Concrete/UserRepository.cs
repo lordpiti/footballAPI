@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Spacehive.DataCollection.DataAccess.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Football.DataAccessNoSQL.Concrete
@@ -57,7 +58,7 @@ namespace Football.DataAccessNoSQL.Concrete
             return allUsers;
         }
 
-        public UserData CreateOrUpdateUser(FacebookResponse facebookResponse)
+        public UserData FindOrCreateUser(FacebookResponse facebookResponse)
         {
             //var document = BsonSerializer.Deserialize<BsonDocument>(item);
 
@@ -66,25 +67,40 @@ namespace Football.DataAccessNoSQL.Concrete
                 TypeNameHandling = TypeNameHandling.Auto
             };
 
-            var newUser = new UserData()
+            var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
+
+            var user = users.FirstOrDefault(x => x.Email == facebookResponse.Email);
+
+            if (user != null)
             {
-                Email = facebookResponse.Email,
-                FacebookUserId = facebookResponse.Id,
-                Name = facebookResponse.Name
-            };
+                return user;
+            }
+            else
+            {
+                var newUser = new UserData()
+                {
+                    Email = facebookResponse.Email,
+                    FacebookUserId = facebookResponse.Id,
+                    Name = facebookResponse.Name
+                };
 
-            var collection = _mongoDb.GetCollection<BsonDocument>("users");
+                var collection = _mongoDb.GetCollection<BsonDocument>("users");
 
-            //if (newSnapshot != null)
-            //{
-            //    collection.DeleteOne(Builders<BsonDocument>.Filter.Eq("ProjectId", newSnapshot.ProjectId));
-            //}
+                var userDocument = newUser.ToBsonDocument();
 
-            var userDocument = newUser.ToBsonDocument();
+                collection.InsertOne(userDocument);
 
-            collection.InsertOne(userDocument);
+                return newUser;
+            }
+        }
 
-            return newUser;
+        public UserData FindUserByFacebookUserId(string facebookUserId)
+        {
+            var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
+
+            var user = users.FirstOrDefault(x => x.FacebookUserId == facebookUserId);
+
+            return user;
         }
     }
 }

@@ -14,7 +14,7 @@ using Football.API.Filters;
 namespace Football.API.Controllers
 {
     [Route("api/[controller]")]
-    [AuthorizationRequired]
+    [ServiceFilter(typeof(AuthorizationRequiredAttribute))]
     public class CompetitionController : Controller
     {
         private readonly ICompetitionService _competitionService;

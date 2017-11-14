@@ -18,7 +18,7 @@ namespace Football.Services.Concrete
             this._userRepository = userRepository;
         }
 
-        public async Task<FacebookResponse> Login(string userId, string accessToken)
+        public async Task<FacebookResponse> Login(string userId, string accessToken, bool login = true)
         {
             var me = new FacebookResponse();
             HttpClient client = new HttpClient();
@@ -49,7 +49,24 @@ namespace Football.Services.Concrete
                     me.Name = userObj["name"];
                     me.IsVerified = true;
                 //}
-                _userRepository.CreateOrUpdateUser(me);
+                if (login)
+                {
+                    _userRepository.FindOrCreateUser(me);
+                }
+                else
+                {
+                    var user = _userRepository.FindUserByFacebookUserId(me.Id);
+
+                    if (user!=null && user.FacebookUserId == me.Id)
+                    {
+                        return me;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                
 
                 return me;
             }

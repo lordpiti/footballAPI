@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Football.BlobStorage.Interfaces;
 using Football.BlobStorage;
 using Crosscutting.ViewModels;
+using Football.API.Filters;
+using MongoDB.Bson.Serialization.Conventions;
 
 namespace footballRebuildAPI
 {
@@ -29,6 +31,13 @@ namespace footballRebuildAPI
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            #region Mongodb driver set up to ignore properties (like the _id) stored in the mongodb collection when deserialising to POCO objects
+
+            var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
+            ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
+
+            #endregion
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -53,6 +62,10 @@ namespace footballRebuildAPI
                 .AddScoped<ICompetitionService, CompetitionService>()
                 .AddScoped<IBlobStorageService, BlobStorageService>()
                 .AddScoped<IUserService, UserService>();
+
+            //Because the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
+            //If the action filters were used directly, this would not be required.
+            services.AddScoped<AuthorizationRequiredAttribute>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

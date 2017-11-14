@@ -9,6 +9,8 @@ namespace Football.DataAccessNoSQL.Interface
     {
         List<Object> UserList();
 
-        UserData CreateOrUpdateUser(FacebookResponse facebookResponse);
+        UserData FindOrCreateUser(FacebookResponse facebookResponse);
+
+        UserData FindUserByFacebookUserId(string facebookUserId);
     }
 }

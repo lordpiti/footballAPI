@@ -10,6 +10,6 @@ namespace Football.Services.Interface
     {
         List<Object> UserList();
 
-        Task<FacebookResponse> Login(string userId, string authToken);
+        Task<FacebookResponse> Login(string userId, string authToken, bool login = true);
     }
 }
