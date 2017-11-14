@@ -11,5 +11,7 @@ namespace Crosscutting.ViewModels
         public string BlobStorageConnectionString { get; set; }
 
         public string MongoConnection { get; set; }
+
+        public string FacebookAppId { get; set; }
     }
 }

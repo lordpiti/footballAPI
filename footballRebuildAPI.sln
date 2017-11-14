@@ -15,11 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.BlobStorage", "Foo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.MigrationTool", "Football.MigrationTool\Football.MigrationTool.csproj", "{AC878627-E388-41DD-ABDC-24FD9268713A}"
 EndProject
-<<<<<<< HEAD
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.DataAccessNoSQL", "Football.DataAccessNoSQL\Football.DataAccessNoSQL.csproj", "{649CF302-8021-4E44-9819-4C974A0286CB}"
-=======
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Facebook", "Football.Facebook\Football.Facebook.csproj", "{D3B621C0-27E3-4DB5-9346-C914C56349C8}"
->>>>>>> facebook project
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.DataAccessNoSQL", "Football.DataAccessNoSQL\Football.DataAccessNoSQL.csproj", "{649CF302-8021-4E44-9819-4C974A0286CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,17 +47,10 @@ Global
 		{AC878627-E388-41DD-ABDC-24FD9268713A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC878627-E388-41DD-ABDC-24FD9268713A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC878627-E388-41DD-ABDC-24FD9268713A}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{649CF302-8021-4E44-9819-4C974A0286CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{649CF302-8021-4E44-9819-4C974A0286CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{649CF302-8021-4E44-9819-4C974A0286CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{649CF302-8021-4E44-9819-4C974A0286CB}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{D3B621C0-27E3-4DB5-9346-C914C56349C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3B621C0-27E3-4DB5-9346-C914C56349C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3B621C0-27E3-4DB5-9346-C914C56349C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3B621C0-27E3-4DB5-9346-C914C56349C8}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> facebook project
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

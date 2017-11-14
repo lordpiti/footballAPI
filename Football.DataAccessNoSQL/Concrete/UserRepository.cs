@@ -1,7 +1,10 @@
 ﻿using Crosscutting.ViewModels;
+using Football.Crosscutting.ViewModels.User;
 using Football.DataAccessNoSQL.Interface;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using Spacehive.DataCollection.DataAccess.Concrete;
 using System;
 using System.Collections.Generic;
@@ -52,6 +55,36 @@ namespace Football.DataAccessNoSQL.Concrete
             var allUsers = _mongoDb.GetCollection<Object>("users").AsQueryable().ToList();
 
             return allUsers;
+        }
+
+        public UserData CreateOrUpdateUser(FacebookResponse facebookResponse)
+        {
+            //var document = BsonSerializer.Deserialize<BsonDocument>(item);
+
+            var jsonSerializerSettings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            };
+
+            var newUser = new UserData()
+            {
+                Email = facebookResponse.Email,
+                FacebookUserId = facebookResponse.Id,
+                Name = facebookResponse.Name
+            };
+
+            var collection = _mongoDb.GetCollection<BsonDocument>("users");
+
+            //if (newSnapshot != null)
+            //{
+            //    collection.DeleteOne(Builders<BsonDocument>.Filter.Eq("ProjectId", newSnapshot.ProjectId));
+            //}
+
+            var userDocument = newUser.ToBsonDocument();
+
+            collection.InsertOne(userDocument);
+
+            return newUser;
         }
     }
 }
