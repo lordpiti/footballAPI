@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Football.Crosscutting.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Football.Crosscutting.ViewModels.User
 {
-    public class FacebookResponse
+    public class LoginResponse
     {
         public string Id { get; set; }
 
@@ -13,5 +14,7 @@ namespace Football.Crosscutting.ViewModels.User
         public bool IsVerified { get; set; }
 
         public string Name { get; set; }
+
+        public LoginTypeEnum AuthenticationType { get; set; }
     }
 }

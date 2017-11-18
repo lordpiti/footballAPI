@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting.ViewModels.User;
+﻿using Football.Crosscutting.Enums;
+using Football.Crosscutting.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +10,8 @@ namespace Football.DataAccessNoSQL.Interface
     {
         List<Object> UserList();
 
-        UserData FindOrCreateUser(FacebookResponse facebookResponse);
+        UserData FindOrCreateUser(LoginResponse facebookResponse);
 
-        UserData FindUserByFacebookUserId(string facebookUserId);
+        UserData FindUserByFacebookUserId(LoginTypeEnum authenticationType, string facebookUserId);
     }
 }

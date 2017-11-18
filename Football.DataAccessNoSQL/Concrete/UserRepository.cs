@@ -1,4 +1,5 @@
 ﻿using Crosscutting.ViewModels;
+using Football.Crosscutting.Enums;
 using Football.Crosscutting.ViewModels.User;
 using Football.DataAccessNoSQL.Interface;
 using Microsoft.Extensions.Options;
@@ -58,7 +59,7 @@ namespace Football.DataAccessNoSQL.Concrete
             return allUsers;
         }
 
-        public UserData FindOrCreateUser(FacebookResponse facebookResponse)
+        public UserData FindOrCreateUser(LoginResponse loginResponse)
         {
             //var document = BsonSerializer.Deserialize<BsonDocument>(item);
 
@@ -69,7 +70,7 @@ namespace Football.DataAccessNoSQL.Concrete
 
             var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
 
-            var user = users.FirstOrDefault(x => x.Email == facebookResponse.Email);
+            var user = users.FirstOrDefault(x => x.Email == loginResponse.Email && x.AuthenticationType == loginResponse.AuthenticationType);
 
             if (user != null)
             {
@@ -79,9 +80,10 @@ namespace Football.DataAccessNoSQL.Concrete
             {
                 var newUser = new UserData()
                 {
-                    Email = facebookResponse.Email,
-                    FacebookUserId = facebookResponse.Id,
-                    Name = facebookResponse.Name
+                    Email = loginResponse.Email,
+                    UserId = loginResponse.Id,
+                    Name = loginResponse.Name,
+                    AuthenticationType = loginResponse.AuthenticationType
                 };
 
                 var collection = _mongoDb.GetCollection<BsonDocument>("users");
@@ -94,11 +96,11 @@ namespace Football.DataAccessNoSQL.Concrete
             }
         }
 
-        public UserData FindUserByFacebookUserId(string facebookUserId)
+        public UserData FindUserByFacebookUserId(LoginTypeEnum authenticationType, string userId)
         {
             var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
 
-            var user = users.FirstOrDefault(x => x.FacebookUserId == facebookUserId);
+            var user = users.FirstOrDefault(x => x.UserId == userId);
 
             return user;
         }

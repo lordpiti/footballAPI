@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Football.Crosscutting.ViewModels.User
 {
-    public class FacebookLoginData
+    public class LoginData
     {
         public string UserId { get; set; }
 

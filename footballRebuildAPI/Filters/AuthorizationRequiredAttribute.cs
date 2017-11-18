@@ -24,7 +24,7 @@ namespace Football.API.Filters
             {
                 var token = filterContext.HttpContext.Request.Headers.FirstOrDefault(x=>x.Key==Token).Value;
 
-                var task = Task.Run(() => _userService.Login("", token, false));
+                var task = Task.Run(() => _userService.Login(Crosscutting.Enums.LoginTypeEnum.Facebook, "", token, false));
                 var eo = task.Result;
 
                 if (eo == null)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Football.Services.Interface;
 using Football.Crosscutting.ViewModels.User;
+using Football.Crosscutting.Enums;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,9 +30,16 @@ namespace Football.API.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<FacebookResponse> Login([FromBody]FacebookLoginData facebookLoginData)
+        public async Task<LoginResponse> Login([FromBody]LoginData facebookLoginData)
         {
-            return await _userService.Login(facebookLoginData.UserId, facebookLoginData.AccessToken);
+            return await _userService.Login(LoginTypeEnum.Facebook, facebookLoginData.UserId, facebookLoginData.AccessToken);
+        }
+
+        [HttpPost]
+        [Route("LoginGoogle")]
+        public async Task<LoginResponse> LoginGoogle([FromBody]LoginData googleLoginData)
+        {
+            return await _userService.Login(LoginTypeEnum.Google, googleLoginData.UserId, googleLoginData.AccessToken);
         }
     }
 }

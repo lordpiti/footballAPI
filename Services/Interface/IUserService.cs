@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting.ViewModels.User;
+﻿using Football.Crosscutting.Enums;
+using Football.Crosscutting.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,6 @@ namespace Football.Services.Interface
     {
         List<Object> UserList();
 
-        Task<FacebookResponse> Login(string userId, string authToken, bool login = true);
+        Task<LoginResponse> Login(LoginTypeEnum loginType, string userId, string authToken, bool login = true);
     }
 }
