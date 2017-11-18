@@ -1,6 +1,8 @@
-﻿using Football.Services.Interface;
+﻿using Football.Crosscutting.ViewModels.User;
+using Football.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +24,17 @@ namespace Football.API.Filters
         {
             if (filterContext.HttpContext.Request.Headers.Any(x=>x.Key==Token && !string.IsNullOrEmpty(x.Value)))
             {
-                var token = filterContext.HttpContext.Request.Headers.FirstOrDefault(x=>x.Key==Token).Value;
+                var tokenAndAuthenticationTypeJSON = filterContext.HttpContext.Request.Headers.FirstOrDefault(x=>x.Key==Token).Value;
 
-                var task = Task.Run(() => _userService.Login(Crosscutting.Enums.LoginTypeEnum.Facebook, "", token, false));
+                var jsonSerializerSettings = new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.Auto
+                };
+
+                var token = JsonConvert.DeserializeObject<TokenAuthenticationType>(tokenAndAuthenticationTypeJSON, jsonSerializerSettings);
+                
+
+                var task = Task.Run(() => _userService.Login(token.AuthenticationType, "", token.Token, false));
                 var eo = task.Result;
 
                 if (eo == null)
