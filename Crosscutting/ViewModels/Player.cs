@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Football.Crosscutting;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,5 +20,11 @@ namespace Crosscutting.ViewModels
         public int? Dorsal { get; set; }
 
         public bool Start { get; set; }
+
+        public DateTime? BirthDate { get; set; }
+
+        public BlobData Picture { get; set; }
+
+        public float? Height { get; set; }
     }
 }

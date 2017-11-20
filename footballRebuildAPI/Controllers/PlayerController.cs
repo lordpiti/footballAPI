@@ -48,5 +48,12 @@ namespace footballRebuildAPI.Controllers
         {
             return await _playerService.GetMatchPlayerStatistics(playerId, matchId);
         }
+
+        [HttpGet]
+        [Route("{playerId}")]
+        public async Task<Player> GetPlayer(int playerId)
+        {
+            return await _playerService.GetPlayer(playerId);
+        }
     }
 }

@@ -34,5 +34,10 @@ namespace Services.Concrete
         {
             return await _playerRepository.GetMatchPlayerStatistics(playerId, matchId);
         }
+
+        public async Task<Player> GetPlayer(int playerId)
+        {
+            return await _playerRepository.GetPlayer(playerId);
+        }
     }
 }

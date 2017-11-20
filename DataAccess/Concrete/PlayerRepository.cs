@@ -8,6 +8,7 @@ using System.Text;
 using System.Linq;
 using Football.Crosscutting.ViewModels.Match;
 using System.Threading.Tasks;
+using Football.Crosscutting;
 
 namespace DataAccess.Concrete
 {
@@ -59,6 +60,22 @@ namespace DataAccess.Concrete
                 RecoveredBalls = dbData.BalonesRecuperados,
                 Shots = dbData.Remates,
                 ShotsOnTarget = dbData.RematesPorteria
+            };
+        }
+
+        public async Task<Player> GetPlayer(int playerId)
+        {
+            var playerFromDb = await _context.Jugador.FirstOrDefaultAsync(x => x.CodJugador == playerId);
+
+            return new Player()
+            {
+                BirthDate = playerFromDb.CodIntegranteNavigation.FechaNac,
+                Name = playerFromDb.CodIntegranteNavigation.Nombre,
+                Picture = playerFromDb.CodIntegranteNavigation.Picture!=null ? new BlobData() {
+                    FileName = playerFromDb.CodIntegranteNavigation.Picture.FileName,
+                    ContainerReference = playerFromDb.CodIntegranteNavigation.Picture.BlobStorageContainer
+                }: new BlobData() { }, Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
+                Height = playerFromDb.Altura
             };
         }
     }

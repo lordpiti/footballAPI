@@ -19,6 +19,8 @@ namespace DataAccess.Models
 
         public GlobalMedia Picture { get; set; }
 
+        public string BirthPlace { get; set; }
+
         public virtual ICollection<HcoIntegrante> HcoIntegrante { get; set; }
         public virtual ICollection<Jugador> Jugador { get; set; }
     }

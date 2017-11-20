@@ -11,9 +11,10 @@ using System;
 namespace Football.DataAccess.Migrations
 {
     [DbContext(typeof(c__database_futbol_mdfContext))]
-    partial class c__database_futbol_mdfContextModelSnapshot : ModelSnapshot
+    [Migration("20171120111441_AddBirthPlace")]
+    partial class AddBirthPlace
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

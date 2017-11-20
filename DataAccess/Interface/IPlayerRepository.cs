@@ -14,5 +14,7 @@ namespace DataAccess.Interface
         List<MatchPlayedInfo> GetMatchesPlayed(int id);
 
         Task<MatchPlayerStatistics> GetMatchPlayerStatistics(int playerId, int matchId);
+
+        Task<Player> GetPlayer(int playerId);
     }
 }
