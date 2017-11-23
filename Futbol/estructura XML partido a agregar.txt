@@ -1,0 +1,12 @@
+<jornada>
+<partido>
+	<datosPartido competicion="" jornada="" equipoLocal="" equipoVisitante="" fecha="" clima=""
+	golesLocal="" golesVisitante="" posesionLocal="" posesionVisitante="" cornersLocal=""
+	cornersVisitante="" fuerasJuegoLocal="" fuerasJuegoVisitante="" asistencia="" arbitro=""
+	estadio=""/>
+	<partidoJugado codJugador="" titular="" minutos="" faltas=""/>
+	<gol codJugador="" minuto="" tipo=""/>
+	<tarjeta codJugador="" minuto="" tipo=""/>
+	<cambio jugEntra="" jugSale="" minuto=""/>
+</partido>
+</jornada>	

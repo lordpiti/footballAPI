@@ -19,7 +19,7 @@ namespace Football.MigrationTool
 
             var context = new c__database_futbol_mdfContext((DbContextOptions<c__database_futbol_mdfContext>)_contextOptions);
 
-            var b = context.Calendario.ToList();
+            var b = context.Calendario;
 
             foreach(var item in b)
             {
