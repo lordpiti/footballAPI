@@ -38,6 +38,7 @@ namespace Football.API.Controllers
         }
 
         [Route("SaveTeamDetails")]
+        [HttpPost]
         public async Task<int> SaveTeamDetails([FromBody]Team teamDetails)
         {
             return await _teamService.UpdateTeam(teamDetails);

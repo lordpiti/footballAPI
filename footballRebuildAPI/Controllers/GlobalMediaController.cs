@@ -45,6 +45,7 @@ namespace Football.API.Controllers
         }
 
         [Route("UploadBase64Image")]
+        [HttpPost]
         public async Task<BlobData> PostBase64Image([FromBody] BlobData postData)
         {
             string base64 = postData.Base64String.Substring(postData.Base64String.IndexOf(',') + 1);

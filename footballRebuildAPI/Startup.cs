@@ -18,6 +18,7 @@ using Football.BlobStorage;
 using Crosscutting.ViewModels;
 using Football.API.Filters;
 using MongoDB.Bson.Serialization.Conventions;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace footballRebuildAPI
 {
@@ -66,6 +67,10 @@ namespace footballRebuildAPI
             //Because the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
             //If the action filters were used directly, this would not be required.
             services.AddScoped<AuthorizationRequiredAttribute>();
+
+
+            // Inject an implementation of ISwaggerProvider with defaulted settings applied
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() { Title="jojo", Description="jeje" }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +82,9 @@ namespace footballRebuildAPI
             app.UseCors("AllowAll");
 
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","swagger"));
         }
     }
 }
