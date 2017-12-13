@@ -12,5 +12,7 @@ namespace Football.Services.Interface
         List<Object> UserList();
 
         Task<LoginResponse> Login(LoginTypeEnum loginType, string userId, string authToken, bool login = true);
+
+        object TryApiCall(string locationIdentifier, string sortType, int index, string tenure);
     }
 }

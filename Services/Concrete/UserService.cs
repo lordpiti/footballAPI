@@ -3,6 +3,7 @@ using Football.Crosscutting.ViewModels.User;
 using Football.DataAccessNoSQL.Interface;
 using Football.Services.Interface;
 using Newtonsoft.Json.Linq;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Football.Services.Concrete
 {
@@ -132,6 +134,34 @@ namespace Football.Services.Concrete
         public List<object> UserList()
         {
             return _userRepository.UserList();
+        }
+
+        public object TryApiCall(string locationIdentifier, string sortType, int index, string tenure)
+        {
+            HttpClient qclient = new HttpClient();
+            try
+            {
+                locationIdentifier = locationIdentifier.Replace("^", "%5E");
+
+                var originalUrl = @"http://www.rightmove.co.uk/api/";
+
+                var requestUrl = @"_search?locationIdentifier={0}&sortType={1}&index={2}&viewType=LIST&channel={3}&areaSizeUnit=sqft&currencyCode=GBP";
+
+                var formattedRequestUrl = string.Format(requestUrl, locationIdentifier, sortType, index, tenure);
+
+                var client = new RestClient(originalUrl+formattedRequestUrl);
+
+                var request = new RestRequest(formattedRequestUrl, Method.GET);
+                IRestResponse response = client.Get(request);
+                var content = response.Content;
+                return content;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
         }
     }
 }

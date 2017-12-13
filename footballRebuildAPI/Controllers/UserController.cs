@@ -41,5 +41,12 @@ namespace Football.API.Controllers
         {
             return await _userService.Login(LoginTypeEnum.Google, googleLoginData.UserId, googleLoginData.AccessToken);
         }
+
+        [HttpGet]
+        [Route("rightmove/{locationIdentifier}/sortType/{sortType}/index/{index}/tenure/{tenure}")]
+        public object TestApi(string locationIdentifier, string sortType, int index, string tenure)
+        {
+            return _userService.TryApiCall(locationIdentifier, sortType, index, tenure);
+        }
     }
 }

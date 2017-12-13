@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Crosscutting\Football.Crosscutting.csproj" />
     <ProjectReference Include="..\DataAccess\Football.DataAccess.csproj" />
     <ProjectReference Include="..\Football.BlobStorage\Football.BlobStorage.csproj" />
