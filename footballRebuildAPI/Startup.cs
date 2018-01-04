@@ -19,6 +19,7 @@ using Crosscutting.ViewModels;
 using Football.API.Filters;
 using MongoDB.Bson.Serialization.Conventions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Football.API.Config;
 
 namespace footballRebuildAPI
 {
@@ -55,14 +56,15 @@ namespace footballRebuildAPI
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
-            ServiceLayerBindings
-                .AddServiceLayerBindings(services, Configuration)
-                .AddOptions()
-                .AddScoped<IPlayerService, PlayerService>()
-                .AddScoped<ITeamService, TeamService>()
-                .AddScoped<ICompetitionService, CompetitionService>()
-                .AddScoped<IBlobStorageService, BlobStorageService>()
-                .AddScoped<IUserService, UserService>();
+            //ServiceLayerBindings
+            //    .AddServiceLayerBindings(services, Configuration)
+            //    .AddOptions()
+            //    .AddScoped<IPlayerService, PlayerService>()
+            //    .AddScoped<ITeamService, TeamService>()
+            //    .AddScoped<ICompetitionService, CompetitionService>()
+            //    .AddScoped<IBlobStorageService, BlobStorageService>()
+            //    .AddScoped<IUserService, UserService>();
+            ServiceConfiguration.ConfigureAPIServices(services);
 
             //Because the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
             //If the action filters were used directly, this would not be required.
