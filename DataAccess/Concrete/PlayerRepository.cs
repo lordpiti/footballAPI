@@ -75,21 +75,29 @@ namespace DataAccess.Concrete
                     FileName = playerFromDb.CodIntegranteNavigation.Picture.FileName,
                     ContainerReference = playerFromDb.CodIntegranteNavigation.Picture.BlobStorageContainer
                 }: new BlobData() { }, Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
-                Height = playerFromDb.Altura
+                Height = playerFromDb.Altura,
+                PlayerId = playerId
             };
         }
 
         public async Task<int> UpdatePlayer(Player player)
         {
-            var playerToUpdate = await _context.Jugador.Include(x=>x.CodIntegranteNavigation).FirstOrDefaultAsync(x => x.CodJugador == player.PlayerId);
+            try
+            {
+                var playerToUpdate = await _context.Jugador.Include(x => x.CodIntegranteNavigation).FirstOrDefaultAsync(x => x.CodJugador == player.PlayerId);
 
-            playerToUpdate.CodIntegranteNavigation.Nombre = player.Name;
-            playerToUpdate.CodIntegranteNavigation.Apellidos = player.Surname;
-            playerToUpdate.CodIntegranteNavigation.FechaNac = player.BirthDate;
-            playerToUpdate.Altura = player.Height;
-            playerToUpdate.Posicion = player.Position;
+                playerToUpdate.CodIntegranteNavigation.Nombre = player.Name;
+                playerToUpdate.CodIntegranteNavigation.Apellidos = player.Surname;
+                playerToUpdate.CodIntegranteNavigation.FechaNac = player.BirthDate;
+                playerToUpdate.Altura = player.Height;
+                playerToUpdate.Posicion = player.Position??"Forward";
 
-            return await _context.SaveChangesAsync();
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

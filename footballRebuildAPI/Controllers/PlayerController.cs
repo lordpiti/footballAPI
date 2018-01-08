@@ -57,10 +57,10 @@ namespace footballRebuildAPI.Controllers
         }
 
         [HttpPost]
-        [Route("{playerId}/save")]
-        public async Task<int> UpdatePlayer(Player player)
+        [Route("savePlayerDetails")]
+        public async Task<int> UpdatePlayer([FromBody]Player playerDetails)
         {
-            return await _playerService.UpdatePlayer(player);
+            return await _playerService.UpdatePlayer(playerDetails);
         }
     }
 }
