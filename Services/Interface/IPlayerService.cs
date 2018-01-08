@@ -16,5 +16,7 @@ namespace Services.Interface
         Task<MatchPlayerStatistics> GetMatchPlayerStatistics(int playerId, int matchId);
 
         Task<Player> GetPlayer(int playerId);
+
+        Task<int> UpdatePlayer(Player player);
     }
 }
