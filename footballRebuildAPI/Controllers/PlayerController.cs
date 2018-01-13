@@ -14,18 +14,20 @@ using Microsoft.Extensions.Options;
 using Football.Crosscutting.ViewModels.Teams;
 using Football.Crosscutting.ViewModels.Match;
 using Football.API.Filters;
+using Microsoft.AspNetCore.SignalR;
+using AspNetCoreSignalr.SignalRHubs;
 
 namespace footballRebuildAPI.Controllers
 {
     //https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing
 
     [Route("api/[controller]")]
-    [ServiceFilter(typeof(AuthorizationRequiredAttribute))]
+    //[ServiceFilter(typeof(AuthorizationRequiredAttribute))]
     public class PlayerController : Controller
     {
         private readonly IPlayerService _playerService;
 
-        public PlayerController(IPlayerService playerService)
+        public PlayerController(IPlayerService playerService, IHubContext<LoopyHub> context)
         {
             _playerService = playerService;
         }

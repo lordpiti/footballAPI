@@ -170,8 +170,7 @@ namespace Simulador
             }
 
 
-
-
+            #region Copa
 
             //ahora creamos una competicion de copa
             int numeroEquipos2 = 16;
@@ -181,8 +180,6 @@ namespace Simulador
             {
                 listaEquipos2.Add(i);
             }
-
-            #region Copa
 
             CompeticionTotalCO comp3 = new CompeticionTotalCO(new CompeticionVO("Copa del Rey", "2014-2015", generador.generarFechaAleatoriaPartido(),
     generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/copaeuropa.jpg", "Playoff"),
@@ -225,11 +222,6 @@ namespace Simulador
             }
 
             #endregion
-
-
-            //PARTEBUENAESLODEANTES
-
-
 
         }
     }

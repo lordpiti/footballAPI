@@ -20,6 +20,7 @@ using Football.API.Filters;
 using MongoDB.Bson.Serialization.Conventions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Football.API.Config;
+using AspNetCoreSignalr.SignalRHubs;
 
 namespace footballRebuildAPI
 {
@@ -54,6 +55,8 @@ namespace footballRebuildAPI
             // Add framework services.
             services.AddMvc();
 
+            services.AddSignalR();
+
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
             //ServiceLayerBindings
@@ -78,15 +81,27 @@ namespace footballRebuildAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            Provider = app.ApplicationServices;
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+
+
             loggerFactory.AddDebug();
 
             app.UseCors("AllowAll");
 
             app.UseMvc();
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<LoopyHub>("loopy");
+            });
+
+
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","swagger"));
         }
+
+        public static IServiceProvider Provider { get; private set; }
     }
 }

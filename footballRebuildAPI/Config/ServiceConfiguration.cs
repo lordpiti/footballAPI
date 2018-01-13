@@ -73,6 +73,8 @@ namespace Football.API.Config
             var services = new ServiceCollection();
             ConfigureServices(services);
 
+            services.AddSignalR();
+
             //// Badgers
             //services.AddScoped<TestBadger>();
             //services.AddScoped<AmazonCleanupBadger>();

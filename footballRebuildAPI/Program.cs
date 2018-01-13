@@ -10,9 +10,9 @@ using System.Threading;
 using Football.API.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Services.Concrete;
-using Football.Services.Concrete;
 using Football.Services.Interface;
+using AspNetCoreSignalr.SignalRHubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace footballRebuildAPI
 {
@@ -35,27 +35,27 @@ namespace footballRebuildAPI
             var serviceProvider = ServiceConfiguration.ConfigureConsoleServices();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-            //new Thread(() =>
-            //{
-            //    bool running = true;
+            new Thread(() =>
+            {
+                bool running = true;
 
-            //    //Get DI services
-            //    while (running)
-            //    {
-            //        try
-            //        {
-            //            //logger.LogInformation("Task badger services starting");
-            //            Start();
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            //logger.LogError("Error running task badger startup");
-            //            //logger.LogInformation(e.Message);
-            //            Thread.Sleep(10000);
-            //        }
-            //    }
+                //Get DI services
+                while (running)
+                {
+                    try
+                    {
+                        Start();
+                        Thread.Sleep(10000);
+                    }
+                    catch (Exception e)
+                    {
+                        //logger.LogError("Error running task badger startup");
+                        //logger.LogInformation(e.Message);
+                        Thread.Sleep(10000);
+                    }
+                }
 
-            //}).Start();
+            }).Start();
 
             BuildWebHost(args).Run();
         }
@@ -63,12 +63,22 @@ namespace footballRebuildAPI
         public static void Start()
         {
             var serviceProvider = ServiceConfiguration.ConsoleProvider;
-            System.Reflection.Assembly asm = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName() { Name = "Football.Services" });
-
+            //System.Reflection.Assembly asm = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName() { Name = "Football.Services" });
+            //var playerService2 = serviceProvider.GetService(asm.GetType($"Services.Concrete.UserService"));
 
             var playerService = serviceProvider.GetService<IUserService>();
-            var playerService2 = serviceProvider.GetService(asm.GetType($"Services.Concrete.UserService"));
+            
+            try
+            {
+                var chatHub = serviceProvider.GetService<IHubContext<LoopyHub>>();
+                var bubu = Startup.Provider.GetService<IHubContext<LoopyHub>>();
 
+                Task.Run( async () => await bubu.Clients.All.InvokeAsync("Send", "Hellow folks"));
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
