@@ -19,6 +19,8 @@ using Crosscutting.ViewModels;
 using Football.API.Filters;
 using MongoDB.Bson.Serialization.Conventions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Football.API.Config;
+using AspNetCoreSignalr.SignalRHubs;
 
 namespace footballRebuildAPI
 {
@@ -53,16 +55,11 @@ namespace footballRebuildAPI
             // Add framework services.
             services.AddMvc();
 
+            services.AddSignalR();
+
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
-            ServiceLayerBindings
-                .AddServiceLayerBindings(services, Configuration)
-                .AddOptions()
-                .AddScoped<IPlayerService, PlayerService>()
-                .AddScoped<ITeamService, TeamService>()
-                .AddScoped<ICompetitionService, CompetitionService>()
-                .AddScoped<IBlobStorageService, BlobStorageService>()
-                .AddScoped<IUserService, UserService>();
+            ServiceConfiguration.ConfigureAPIServices(services);
 
             //Because the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
             //If the action filters were used directly, this would not be required.
@@ -76,15 +73,28 @@ namespace footballRebuildAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //Added this to be able to use DI for the SignalR Hubs on the background service
+            //https://github.com/aspnet/SignalR/issues/972
+            Provider = app.ApplicationServices;
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+
+
             loggerFactory.AddDebug();
 
             app.UseCors("AllowAll");
 
             app.UseMvc();
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<LoopyHub>("loopy");
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","swagger"));
         }
+
+        public static IServiceProvider Provider { get; private set; }
     }
 }

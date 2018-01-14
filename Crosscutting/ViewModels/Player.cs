@@ -26,5 +26,7 @@ namespace Crosscutting.ViewModels
         public BlobData Picture { get; set; }
 
         public float? Height { get; set; }
+
+        public string Position { get; set; }
     }
 }

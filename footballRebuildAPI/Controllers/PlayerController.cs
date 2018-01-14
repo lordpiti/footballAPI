@@ -13,17 +13,21 @@ using Football.BlobStorage;
 using Microsoft.Extensions.Options;
 using Football.Crosscutting.ViewModels.Teams;
 using Football.Crosscutting.ViewModels.Match;
+using Football.API.Filters;
+using Microsoft.AspNetCore.SignalR;
+using AspNetCoreSignalr.SignalRHubs;
 
 namespace footballRebuildAPI.Controllers
 {
     //https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing
 
     [Route("api/[controller]")]
+    //[ServiceFilter(typeof(AuthorizationRequiredAttribute))]
     public class PlayerController : Controller
     {
         private readonly IPlayerService _playerService;
 
-        public PlayerController(IPlayerService playerService)
+        public PlayerController(IPlayerService playerService, IHubContext<LoopyHub> context)
         {
             _playerService = playerService;
         }
@@ -54,6 +58,13 @@ namespace footballRebuildAPI.Controllers
         public async Task<Player> GetPlayer(int playerId)
         {
             return await _playerService.GetPlayer(playerId);
+        }
+
+        [HttpPost]
+        [Route("savePlayerDetails")]
+        public async Task<int> UpdatePlayer([FromBody]Player playerDetails)
+        {
+            return await _playerService.UpdatePlayer(playerDetails);
         }
     }
 }
