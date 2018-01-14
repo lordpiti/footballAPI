@@ -74,7 +74,7 @@ namespace Simulador
          * de los jugadores que participan en el
          * */
         public PartidoTotalCO generarPartidoCompleto(int codCompeticion, String jornada, 
-            int codLocal, int codVisitante)
+            int codLocal, int codVisitante, bool saveChangesInBD = true)
         {
             
 
@@ -174,15 +174,16 @@ namespace Simulador
             tarjetasLocal.AddRange(tarjetasVisitante);
 
 
-
-
             PartidoTotalCO partidoCompleto = new PartidoTotalCO(partido, listaPartidosJugados,
                 golesLocal,cambiosLocal,tarjetasLocal);
             
-            PartidoTotalCO partidoTotal=fachada.pruebaCrearPartidoTotal(partidoCompleto);
-            
-            return partidoTotal;
-            
+            if (saveChangesInBD)
+            {
+                PartidoTotalCO partidoTotal=fachada.pruebaCrearPartidoTotal(partidoCompleto);
+                return partidoTotal;
+            }
+
+            return partidoCompleto;
         }
 
 

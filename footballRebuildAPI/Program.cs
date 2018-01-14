@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -10,9 +9,9 @@ using System.Threading;
 using Football.API.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Football.Services.Interface;
-using AspNetCoreSignalr.SignalRHubs;
-using Microsoft.AspNetCore.SignalR;
+using Football.API.TaskRunner.Interfaces;
+using Football.API.TaskRunner;
+using Football.API.TaskRunner.Services;
 
 namespace footballRebuildAPI
 {
@@ -25,6 +24,8 @@ namespace footballRebuildAPI
 
             new Thread(() =>
             {
+                Thread.Sleep(10000);
+
                 bool running = true;
 
                 //Get DI services
@@ -37,7 +38,7 @@ namespace footballRebuildAPI
                     }
                     catch (Exception e)
                     {
-                        //logger.LogError("Error running task badger startup");
+                        //logger.LogError("Error running task runner startup");
                         //logger.LogInformation(e.Message);
                         Thread.Sleep(10000);
                     }
@@ -51,22 +52,59 @@ namespace footballRebuildAPI
         public static void Start()
         {
             var serviceProvider = ServiceConfiguration.ConsoleProvider;
-            //System.Reflection.Assembly asm = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName() { Name = "Football.Services" });
-            //var playerService2 = serviceProvider.GetService(asm.GetType($"Services.Concrete.UserService"));
+            //var logger = serviceProvider.GetService<ILoggerService>();
 
-            var playerService = serviceProvider.GetService<IUserService>();
-            
-            try
+            //Make sure all services have been killed off before starting up again, this should not happen but better to be safe.
+            if (ThreadManager.Services.Count > 0)
             {
-                var chatHub = serviceProvider.GetService<IHubContext<LoopyHub>>();
-                var bubu = Startup.Provider.GetService<IHubContext<LoopyHub>>();
-
-                Task.Run( async () => await bubu.Clients.All.InvokeAsync("Send", "Hello folks"));
+                ThreadManager.Services.ForEach(x => x.Stop());
+                ThreadManager.Services = new List<IBaseJob>();
             }
-            catch (Exception ex)
+
+
+            System.Reflection.Assembly asm = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName() { Name = "Football.API" });
+
+            // Load service objects
+            var configService = serviceProvider.GetService<JobRunnerConfigService>();
+            List<IBaseJob> services = new List<IBaseJob>();
+            foreach (var item in configService.Config.Jobs.Where(x => x.Enabled))
             {
+                var serviceType = asm.GetType($"Football.API.TaskRunner.Jobs.{item.Name}");
 
+
+                var instance = serviceProvider.GetService(serviceType) as IBaseJob;
+                if (instance != null)
+                {
+                    instance.Setup(item);
+                    services.Add(instance);
+                }
+                else
+                {
+                    // Failed to load a given service
+                    //logger.LogError($"Failed to find service type: {item.Name}");
+                }
             }
+
+
+            //Services loaded, lets start them up!
+            foreach (var item in services)
+            {
+                //logger.LogInformation("Loading service: " + item.Name);
+                item.Start();
+                ThreadManager.Services.Add(item);
+            }
+
+
+            //logger.LogInformation("All services started up and running （ ^_^）o自自o（^_^ ）");
+
+            //Now sit and loop for as long as any threads are running
+            while (ThreadManager.Services.Any(x => !x.Task.IsCompleted))
+            {
+                Thread.Sleep(1000);
+            }
+
+            //logger.LogError("All services closed, restarting in 10 seconds.");
+            Thread.Sleep(10000);
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

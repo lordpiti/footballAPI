@@ -1,4 +1,6 @@
 ﻿using Crosscutting.ViewModels;
+using Football.API.TaskRunner.Jobs;
+using Football.API.TaskRunner.Services;
 using Football.BlobStorage;
 using Football.BlobStorage.Interfaces;
 using Football.Services.Concrete;
@@ -72,6 +74,9 @@ namespace Football.API.Config
 
             var services = new ServiceCollection();
             ConfigureServices(services);
+
+            services.AddSingleton<JobRunnerConfigService>()
+                .AddScoped<CreateMatchesJob>();
 
             services.AddSignalR();
 
