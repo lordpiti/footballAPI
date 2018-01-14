@@ -18,18 +18,6 @@ namespace footballRebuildAPI
 {
     public class Program
     {
-        //public static void Main(string[] args)
-        //{
-        //    var host = new WebHostBuilder()
-        //        .UseKestrel()
-        //        .UseContentRoot(Directory.GetCurrentDirectory())
-        //        .UseIISIntegration()
-        //        .UseStartup<Startup>()
-        //        .UseApplicationInsights()
-        //        .Build();
-
-        //    host.Run();
-        //}
         public static void Main(string[] args)
         {
             var serviceProvider = ServiceConfiguration.ConfigureConsoleServices();
@@ -73,7 +61,7 @@ namespace footballRebuildAPI
                 var chatHub = serviceProvider.GetService<IHubContext<LoopyHub>>();
                 var bubu = Startup.Provider.GetService<IHubContext<LoopyHub>>();
 
-                Task.Run( async () => await bubu.Clients.All.InvokeAsync("Send", "Hellow folks"));
+                Task.Run( async () => await bubu.Clients.All.InvokeAsync("Send", "Hello folks"));
             }
             catch (Exception ex)
             {

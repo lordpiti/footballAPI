@@ -23,7 +23,7 @@ using Futbol.Model.FachadaPartidos;
 using Futbol.Model.FachadaDatos;
 using Futbol;
 using Util.Log;
-
+using Futbol.Model.Competicion.VO;
 
 namespace Simulador
 {
@@ -67,11 +67,7 @@ namespace Simulador
         
         }
 
-
-
-
-
-
+        
 
         /*genera un PartidoTotalCO con todos los datos de un partido
          * tanto el PartidoVO como la lista de GolVOs y PartidoJugadoVOs
@@ -191,65 +187,59 @@ namespace Simulador
 
 
         //genera una liga completa
-        public void generarLigaCompleta(int cod_Competicion,int numeroEquipos)
+        public void generarLigaCompleta(int numeroEquipos)
         {
             ArrayList listaCodigosEquipos = new ArrayList();
             ArrayList clasificacion = new ArrayList();
 
-            for (int i = 1; i <= numeroEquipos; i++) 
+            for (int i = 1; i <= numeroEquipos; i++)
             {
                 listaCodigosEquipos.Add(i);
-                clasificacion.Add(new ClasificacionVO(cod_Competicion, 0, i, i,0,0,0, 0, 0, 0));
             }
-
 
             ArrayList calendario = generador.generaLiga(listaCodigosEquipos);
+            ArrayList calendarioLiga = generaListaCalendarioVOsLiga(calendario);
+
+            CompeticionTotalCO comp1 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 14-15", "2014-2015", generador.generarFechaAleatoriaPartido(),
+                generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/eurocopa.jpg", "Liga"),
+                calendarioLiga, listaCodigosEquipos);
+
+            comp1 = fachada.crearCompeticionTotal(comp1);
 
             int numeroJornada = 1;
-            ArrayList listaCalendarioJornada=new ArrayList();
+
+            PartidoTotalCO partido;        
 
             foreach (ArrayList jornada in calendario)
             {
                 foreach (Jornada part in jornada)
                 {
-                    CalendarioVO calendarioJornada = new CalendarioVO(cod_Competicion,
-                        Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, 
-                        generador.generarFechaAleatoriaPartido());
-                    listaCalendarioJornada.Add(calendarioJornada);
+                    partido=generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante);
                 }
+
                 //ojo con esta linea ...
-                fachada.crearCalendarioCompeticionJornada(listaCalendarioJornada);
-                listaCalendarioJornada.Clear();
+                fachada.actualizarClasificacionCompeticion(comp1.Competicion.Cd_Competicion);
                 numeroJornada++;
             }
-
-
-
-            numeroJornada = 1;
-            PartidoTotalCO partido;
-            
-
-            foreach (ArrayList jornada in calendario)
-            {
-                foreach (Jornada part in jornada)
-                {
-                    partido=generarPartidoCompleto(cod_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante);
-
-                    //clasificaciones
-                    clasificacion=fachada.actualizarClasificacionTrasPartido(numeroJornada, partido.Partido, clasificacion);
-                
-                }
-                //ojo con esta linea ...
-                fachada.crearClasificacionJornada(clasificacion);
-                numeroJornada++;
-            }
-
         }
 
 
         //genera una copa completa con todos los partidos y rondas
-        public void generarCopaCompleta(int cod_Competicion,int numeroEquipos)
+        public void generarCopaCompleta(int numeroEquipos)
         {
+            ArrayList listaEquipos = new ArrayList();
+
+            for (int i = 1; i <= numeroEquipos; i++)
+            {
+                listaEquipos.Add(i);
+            }
+
+            CompeticionTotalCO comp3 = new CompeticionTotalCO(new CompeticionVO("Copa del Rey", "2014-2015", generador.generarFechaAleatoriaPartido(),
+                generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/copaeuropa.jpg", "Playoff"),
+                null, listaEquipos);
+
+            comp3 = fachada.crearCompeticionTotal(comp3);
+
             ArrayList listaCodigosEquipos = new ArrayList();
             ArrayList rondaActual = new ArrayList();
             ArrayList auxiliar=new ArrayList();
@@ -280,7 +270,7 @@ namespace Simulador
                 {
                     auxiliar.Add(item.Local);
                     auxiliar.Add(item.Visitante);
-                    partido=generarPartidoCompleto(cod_Competicion, nombreRonda, (int)item.Local, (int)item.Visitante);
+                    partido=generarPartidoCompleto(comp3.Competicion.Cd_Competicion, nombreRonda, (int)item.Local, (int)item.Visitante);
                     int ganador = (int)auxiliar[rand.Next(0, 2)];
                     auxiliar.Clear();
                     listaCodigosEquipos.Remove(ganador);
@@ -313,42 +303,6 @@ namespace Simulador
             }
 
             return listaCalendario;
-
-        }
-
-        /*Dada una lista de CalendarioVOs y una competicion de liga, simula los partidos de
-        la liga , actualiza las clasificaciones etc */
-        public void simularLiga(CompeticionTotalCO competicion,ArrayList calendario)
-        {
-            int numeroJornada = 1;
-            
-            ArrayList clasificacion = new ArrayList();
-            PartidoTotalCO partido;
-            int cod_Competicion=competicion.Competicion.Cd_Competicion;
-            int numeroEquipos = competicion.ListaEquipos.Count;
-            
-
-            for (int i = 1; i <= numeroEquipos; i++)
-            {
-                clasificacion.Add(new ClasificacionVO(cod_Competicion, 0, i, i, 0, 0, 0, 0, 0, 0));
-            }
-
-
-
-            foreach (ArrayList jornada in calendario)
-            {
-                foreach (Jornada part in jornada)
-                {
-                    partido = generarPartidoCompleto(cod_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante);
-
-                    //clasificaciones
-                    clasificacion = fachada.actualizarClasificacionTrasPartido(numeroJornada, partido.Partido, clasificacion);
-                }
-                //ojo con esta linea ...
-                fachada.crearClasificacionJornada(clasificacion);
-                numeroJornada++;
-            }
-
 
         }
 

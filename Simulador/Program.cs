@@ -51,7 +51,7 @@ namespace Simulador
                 listaEquipos.Add(i);
             }
 
-
+            #region Referees
 
             ////Genera x arbitros
             //ArrayList listaArbitros = new ArrayList();
@@ -63,6 +63,9 @@ namespace Simulador
             //foreach (ArbitroVO item in listaArbitros)
             //    fachadaAdmin.crearArbitro(item);
 
+            #endregion
+
+            #region Stadiums
 
             ////Genera x estadios
             //ArrayList listaEstadiosVO = new ArrayList();
@@ -77,7 +80,9 @@ namespace Simulador
             //foreach (EstadioVO item in listaEstadiosVO)
             //    fachadaAdmin.crearEstadio(item);
 
+            #endregion
 
+            #region Teams
 
             ////Genera x equipos completos
             //ArrayList listaEquiposVO = new ArrayList();
@@ -102,9 +107,6 @@ namespace Simulador
             //listaEquiposVO.Add(new EquipoVO("Getafe", "Getafe", 4, "~/images/equipos/escudos/getafe.gif", "~/images/equipos/plantillas/plantilla-0708.jpg"));
             //listaEquiposVO.Add(new EquipoVO("Recreativo de Huelva", "Huelva", 4, "~/images/equipos/escudos/recre.gif", "~/images/equipos/plantillas/plantilla-0708.jpg"));
 
-
-
-
             //for (int i = 1; i <= numeroEquipos; i++)
             //{
             //    EquipoTotalCO equipoTotal = new EquipoTotalCO(listaEquiposVO[i - 1] as EquipoVO, generadorJug.generaPlantilla(i),
@@ -114,112 +116,91 @@ namespace Simulador
             //    fachadaAdmin.crearEquipoTotal(equipoTotal);
             //}
 
+            #endregion
 
+            #region League
 
-            //esto es el cacho bueno
-            ArrayList calendarioJornadas = generador.generaLiga(listaEquipos);
-            ArrayList calendarioJornadas2 = generador.generaLiga(listaEquipos);
+            generadorPartidos.generarLigaCompleta(20);
 
-            ArrayList calendarioLiga = generadorPartidos.generaListaCalendarioVOsLiga(calendarioJornadas);
-            CompeticionTotalCO comp1 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 14-15", "2014-2015", generador.generarFechaAleatoriaPartido(),
-    generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/eurocopa.jpg", "Liga"),
-    calendarioLiga, listaEquipos);
+            #region Second League
 
+            //ArrayList calendarioJornadas2 = generador.generaLiga(listaEquipos);
 
-            ArrayList calendarioLiga2 = generadorPartidos.generaListaCalendarioVOsLiga(calendarioJornadas);
-            CompeticionTotalCO comp2 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 15-16", "2015-2016", generador.generarFechaAleatoriaPartido(),
-    generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/copamundo.jpg", "Liga"),
-    calendarioLiga2, listaEquipos);
+            //ArrayList calendarioLiga2 = generadorPartidos.generaListaCalendarioVOsLiga(calendarioJornadas2);
+            //CompeticionTotalCO comp2 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 15-16", "2015-2016", generador.generarFechaAleatoriaPartido(),
+            //    generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/copamundo.jpg", "Liga"),
+            //    calendarioLiga2, listaEquipos);
+            //comp2 = fachadaPartidos.crearCompeticionTotal(comp2);
 
+            //numeroJornada = 1;
 
+            //foreach (ArrayList jornada in calendarioJornadas2)
+            //{
+            //    foreach (Jornada part in jornada)
+            //    {
+            //        partido = generadorPartidos.generarPartidoCompleto(comp2.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante);
+            //    }
+
+            //    fachadaPartidos.actualizarClasificacionCompeticion(comp2.Competicion.Cd_Competicion);
+            //    numeroJornada++;
+            //}
+
+            #endregion
+
+            #endregion
+
+            #region Cup
+
+            //generadorPartidos.generarCopaCompleta(16);
+
+            ////ahora creamos una competicion de copa
+            //int numeroEquipos2 = 16;
+            //ArrayList listaEquipos2 = new ArrayList();
+
+            //for (int i = 1; i <= numeroEquipos2; i++)
+            //{
+            //    listaEquipos2.Add(i);
+            //}
+
+            //CompeticionTotalCO comp3 = new CompeticionTotalCO(new CompeticionVO("Copa del Rey", "2014-2015", generador.generarFechaAleatoriaPartido(),
+            //    generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/copaeuropa.jpg", "Playoff"),
+            //    null, listaEquipos2);
+
+            //comp3 = fachadaPartidos.crearCompeticionTotal(comp3);
+
+            //ArrayList listiLLa = new ArrayList();
+            //ArrayList auxiliar = new ArrayList();
+            //ArrayList rondaActual = new ArrayList();
+            //Random rand = new Random();
             
-       //PARTE BUENAAAAAAAAAAAAAAAA     
+            //String nombreRonda = "Fase Previa";
+            //foreach (int item in comp3.ListaEquipos)
+            //{
+            //    listiLLa.Add(item);
+            //}
 
+            //while (listiLLa.Count > 1)
+            //{
+            //    rondaActual = generador.generarRondaCopa(listiLLa);
 
-       
-        
-            //esto simula la liga completa
-            comp1=fachadaPartidos.crearCompeticionTotal(comp1);
-            comp2 = fachadaPartidos.crearCompeticionTotal(comp2);
-
-            int numeroJornada = 1;
-            PartidoTotalCO partido;
-            foreach (ArrayList jornada in calendarioJornadas)
-            {
-                foreach (Jornada part in jornada)
-                {
-                    partido = generadorPartidos.generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante);
-                }
-
-                fachadaPartidos.actualizarClasificacionCompeticion(comp1.Competicion.Cd_Competicion);
-                numeroJornada++;
-            }
-
-
-            numeroJornada = 1;
-            
-            foreach (ArrayList jornada in calendarioJornadas2)
-            {
-                foreach (Jornada part in jornada)
-                {
-                    partido = generadorPartidos.generarPartidoCompleto(comp2.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante);
-                }
-
-                fachadaPartidos.actualizarClasificacionCompeticion(comp2.Competicion.Cd_Competicion);
-                numeroJornada++;
-            }
-
-
-            #region Copa
-
-            //ahora creamos una competicion de copa
-            int numeroEquipos2 = 16;
-            ArrayList listaEquipos2 = new ArrayList();
-
-            for (int i = 1; i <= numeroEquipos2; i++)
-            {
-                listaEquipos2.Add(i);
-            }
-
-            CompeticionTotalCO comp3 = new CompeticionTotalCO(new CompeticionVO("Copa del Rey", "2014-2015", generador.generarFechaAleatoriaPartido(),
-    generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/copaeuropa.jpg", "Playoff"),
-    calendarioLiga, listaEquipos2);
-
-            comp3 = fachadaPartidos.crearCompeticionTotal(comp3);
-
-            ArrayList listiLLa = new ArrayList();
-            ArrayList auxiliar = new ArrayList();
-            ArrayList rondaActual = new ArrayList();
-            Random rand = new Random();
-            
-            String nombreRonda = "Fase Previa";
-            foreach (int item in comp3.ListaEquipos)
-            {
-                listiLLa.Add(item);
-            }
-
-            while (listiLLa.Count > 1)
-            {
-                rondaActual = generador.generarRondaCopa(listiLLa);
-
-                //obtenemos el nombre de la ronda actual, en funcion del numero de equipos
-                nombreRonda = generador.obtenerNombreRondaCopa(listiLLa.Count);
+            //    //obtenemos el nombre de la ronda actual, en funcion del numero de equipos
+            //    nombreRonda = generador.obtenerNombreRondaCopa(listiLLa.Count);
 
 
 
-                //genera los partidos de la ronda de copa actual
+            //    //genera los partidos de la ronda de copa actual
 
-                foreach (Jornada item in rondaActual)
-                {
-                    auxiliar.Add(item.Local);
-                    auxiliar.Add(item.Visitante);
-                    partido = generadorPartidos.generarPartidoCompleto(comp3.Competicion.Cd_Competicion, nombreRonda, (int)item.Local, (int)item.Visitante);
-                    int ganador = (int)auxiliar[rand.Next(0, 2)];
-                    auxiliar.Clear();
-                    listiLLa.Remove(ganador);
-                }
+            //    foreach (Jornada item in rondaActual)
+            //    {
+            //        auxiliar.Add(item.Local);
+            //        auxiliar.Add(item.Visitante);
+            //        generadorPartidos.generarPartidoCompleto(comp3.Competicion.Cd_Competicion, nombreRonda, (int)item.Local, (int)item.Visitante);
+            //        int ganador = (int)auxiliar[rand.Next(0, 2)];
+            //        auxiliar.Clear();
+            //        listiLLa.Remove(ganador);
+            //    }
 
-            }
+            //}
 
             #endregion
 
