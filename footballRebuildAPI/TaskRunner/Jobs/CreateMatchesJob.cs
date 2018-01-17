@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Football.API.TaskRunner.Jobs
 {
@@ -27,13 +28,20 @@ namespace Football.API.TaskRunner.Jobs
             try
             {
                 //TODO: create matches
-
                 var serviceProvider = ServiceConfiguration.ConsoleProvider;
 
                 var chatHub = serviceProvider.GetService<IHubContext<LoopyHub>>();
                 var bubu = Startup.Provider.GetService<IHubContext<LoopyHub>>();
 
-                await bubu.Clients.All.InvokeAsync("Send", "Hello folks");
+                //Create 10 different parallel threads to do stuff
+                for(int i = 0; i < 10; i++)
+                {
+                    new Thread(async () =>
+                    {
+                        await bubu.Clients.All.InvokeAsync("Send", "Hello folks");
+
+                    }).Start();
+                }
 
             }
             catch (Exception ex)

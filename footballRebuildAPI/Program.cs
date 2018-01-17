@@ -34,7 +34,6 @@ namespace footballRebuildAPI
                     try
                     {
                         Start();
-                        Thread.Sleep(10000);
                     }
                     catch (Exception e)
                     {
