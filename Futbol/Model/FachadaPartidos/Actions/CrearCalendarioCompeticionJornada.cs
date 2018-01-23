@@ -6,7 +6,7 @@ using System.Data.Common;
 using Futbol.Model.Calendario.DAO;
 using Futbol.Model.Calendario.VO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaPartidos.Actions

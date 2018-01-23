@@ -10,7 +10,7 @@ using Futbol.Model.Entrenador.VO;
 using Futbol.Model.Directivo.VO;
 using Futbol.Model.FachadaAdmin.COs;
 using Futbol;
-using Util.Log;
+
 
 namespace Simulador
 {

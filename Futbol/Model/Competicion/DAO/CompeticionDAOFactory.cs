@@ -9,7 +9,7 @@ using System.Data.Common;
 
 /* For Testing only */
 using Futbol.Model.Competicion.VO;
-using Util.Log;
+
 using System.Collections;
 
 namespace Futbol.Model.Competicion.DAO

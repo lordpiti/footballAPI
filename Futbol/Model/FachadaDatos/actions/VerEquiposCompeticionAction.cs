@@ -8,7 +8,7 @@ using Futbol.Model.Equipo.DAO;
 using Futbol.Model.EquiposParticipan.DAO;
 using Futbol.Model.EquiposParticipan.VO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaDatos.Actions

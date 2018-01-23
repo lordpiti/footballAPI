@@ -6,7 +6,7 @@ using System.Data.Common;
 using Futbol.Model.Directivo.VO;
 using Futbol.Model.Directivo.DAO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaDatos.Actions

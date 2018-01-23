@@ -1,20 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Util.Exceptions;
-using Util.Log;
-using System.Configuration;
-using System.Data.Common;
-using System.Collections;
-using System.Xml;
-using Futbol.Model.Estadio.VO;
-using Futbol.Model.Integrante.VO;
+using Futbol.Model.Cambio.VO;
+using Futbol.Model.Gol.VO;
 using Futbol.Model.Jugador.VO;
-using Futbol.Model.Competicion.VO;
-using Futbol.Model.Equipo.VO;
 using Futbol.Model.Partido.VO;
-using Futbol.Model.PartidoJugado.VO;
-using Futbol.Model.HcoIntegrante.VO;
+using Futbol.Model.Tarjeta.VO;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Futbol.Model.FachadaPartidos
 {
@@ -22,39 +12,37 @@ namespace Futbol.Model.FachadaPartidos
     {
         private PartidoVO partido;
         private ArrayList partidosJugados;
-        private ArrayList goles;
-        private ArrayList cambios;
-        private ArrayList tarjetas;
+        public List<JugadorVO> playersLocal { get; set; }
+        public List<JugadorVO> playersVisitor { get; set; }
 
 
         public PartidoTotalCO(PartidoVO partidoVO, ArrayList partidosJugadosVO,
-            ArrayList goles)
+            List<GolVO> goles)
         {
             this.partido = partidoVO;
             this.partidosJugados = partidosJugadosVO;
-            this.goles = goles;
-            
+            this.Goles = goles;
         }
 
 
         public PartidoTotalCO(PartidoVO partidoVO, ArrayList partidosJugadosVO,
-    ArrayList goles, ArrayList cambios)
+    List<GolVO> goles, List<CambioVO> cambios)
         {
             this.partido = partidoVO;
             this.partidosJugados = partidosJugadosVO;
-            this.goles = goles;
-            this.cambios = cambios;
+            this.Goles = goles;
+            this.Cambios = cambios;
         }
 
 
         public PartidoTotalCO(PartidoVO partidoVO, ArrayList partidosJugadosVO,
-ArrayList goles, ArrayList cambios, ArrayList tarjetas)
+List<GolVO> goles, List<CambioVO> cambios, List<TarjetaVO> tarjetas)
         {
             this.partido = partidoVO;
             this.partidosJugados = partidosJugadosVO;
-            this.goles = goles;  
-            this.cambios = cambios;            
-            this.tarjetas = tarjetas;
+            this.Goles = goles;  
+            this.Cambios = cambios;            
+            this.Tarjetas = tarjetas;
             
         }
 
@@ -74,27 +62,15 @@ ArrayList goles, ArrayList cambios, ArrayList tarjetas)
         }
 
 
-        public ArrayList Goles
-        {
-            get { return goles; }
-            set { goles = value; }
-        }
+        public List<GolVO> Goles { get; set; }
 
 
 
-        public ArrayList Cambios
-        {
-            get { return cambios; }
-            set { cambios = value; }
-        }
+        public List<CambioVO> Cambios { get; set; }
 
         
 
-        public ArrayList Tarjetas
-        {
-            get { return tarjetas; }
-            set { tarjetas = value; }
-        }
+        public List<TarjetaVO> Tarjetas { get; set; }
 
 
     }

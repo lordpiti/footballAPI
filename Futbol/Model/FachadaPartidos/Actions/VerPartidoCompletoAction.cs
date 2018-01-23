@@ -21,7 +21,7 @@ using Futbol.Model.Arbitro.DAO;
 using Futbol.Model.Tarjeta.VO;
 using Futbol.Model.Tarjeta.DAO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaPartidos.Actions

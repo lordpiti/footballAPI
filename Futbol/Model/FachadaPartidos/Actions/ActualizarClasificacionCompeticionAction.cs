@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections;
 using Util.Exceptions;
 using System.Data.Common;
-using Util.Log;
+
 using Futbol.Model.Partido.DAO;
 using Futbol.Model.Partido.VO;
 using Futbol.Model.Clasificacion.DAO;

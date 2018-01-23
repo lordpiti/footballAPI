@@ -10,7 +10,7 @@ using Futbol.Model.Clasificacion.VO;
 using Futbol.Model.Gol.VO;
 using Futbol.Model.Gol.DAO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaPartidos.Actions
