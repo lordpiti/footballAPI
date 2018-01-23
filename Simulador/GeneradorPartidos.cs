@@ -83,8 +83,8 @@ namespace Simulador
             ArrayList jugadoresLocal = generar11Titular(codLocal);
             ArrayList jugadoresVisitante = generar11Titular(codVisitante);
             ArrayList listaPartidosJugados = new ArrayList();
-            ArrayList golesLocal=new ArrayList();
-            ArrayList golesVisitante = new ArrayList();
+            var golesLocal=new List<GolVO>();
+            var golesVisitante = new List<GolVO>();
 
             
            
@@ -103,10 +103,10 @@ namespace Simulador
 
 
             //aqui se crean los cambios equipo local
-            ArrayList cambiosLocal = new ArrayList();
+            var cambiosLocal = new List<CambioVO>();
             for (int i = 0; i < numeroCambios; i++)
             {
-                CambioVO cambio=new CambioVO(((JugadorVO)jugadoresLocal[11 + i]).Cod_Jugador,
+                var cambio=new CambioVO(((JugadorVO)jugadoresLocal[11 + i]).Cod_Jugador,
                     ((JugadorVO)jugadoresLocal[1 + i]).Cod_Jugador, rand.Next(0, 90));
                 cambiosLocal.Add(cambio);
             }
@@ -126,26 +126,26 @@ namespace Simulador
             }
 
             //aqui se crean los cambios equipo visitante
-            ArrayList cambiosVisitante = new ArrayList();
+            var cambiosVisitante = new List<CambioVO>();
             for (int i = 0; i < numeroCambios; i++)
             {
-                CambioVO cambio = new CambioVO(((JugadorVO)jugadoresVisitante[11 + i]).Cod_Jugador,
+                var cambio = new CambioVO(((JugadorVO)jugadoresVisitante[11 + i]).Cod_Jugador,
                     ((JugadorVO)jugadoresVisitante[1 + i]).Cod_Jugador, rand.Next(0, 90));
                 cambiosVisitante.Add(cambio);
             }
 
             //aqui generamos las tarjetas del equipo local
-            ArrayList tarjetasLocal = new ArrayList();
+            var tarjetasLocal = new List<TarjetaVO>();
             int numeroTarjetas = rand.Next(0, 6);
             for (int i = 0; i < numeroTarjetas; i++)
             {
-                TarjetaVO tarjeta = new TarjetaVO(((JugadorVO)jugadoresLocal[i]).Cod_Jugador,
+                var tarjeta = new TarjetaVO(((JugadorVO)jugadoresLocal[i]).Cod_Jugador,
                     rand.Next(0, 90), "Amarilla", "Juego violento");
                 tarjetasLocal.Add(tarjeta);
             }
 
             //aqui generamos las tarjetas del equipo visitante
-            ArrayList tarjetasVisitante = new ArrayList();
+            var tarjetasVisitante = new List<TarjetaVO>();
             numeroTarjetas = rand.Next(0, 6);
             for (int i = 0; i < numeroTarjetas; i++)
             {

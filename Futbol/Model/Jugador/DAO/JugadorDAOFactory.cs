@@ -54,8 +54,8 @@ namespace Futbol.Model.Jugador.DAO
         public static JugadorDAO GetDAO() {
 
             try {
-                String daoClassName = ConfigurationManager.
-                    AppSettings[DAO_CLASS_NAME_PARAMETER];
+                String daoClassName = "Futbol.Model.Jugador.DAO.JugadorDAO";
+                    //ConfigurationManager.AppSettings[DAO_CLASS_NAME_PARAMETER];
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
 

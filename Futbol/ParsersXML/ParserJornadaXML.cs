@@ -34,9 +34,9 @@ new ValidationEventHandler(MyValidationEventHandler);
             XmlReader xmlReader = XmlReader.Create(rutaFichero, settings);
             PartidoVO partido = null;
             ArrayList partidosJugados = new ArrayList();
-            ArrayList goles = new ArrayList();
-            ArrayList cambios = new ArrayList();
-            ArrayList tarjetas = new ArrayList();
+            var goles = new List<GolVO>();
+            var cambios = new List<CambioVO>();
+            var tarjetas = new List<TarjetaVO>();
 
 
 

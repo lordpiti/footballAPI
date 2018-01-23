@@ -41,9 +41,9 @@ namespace Futbol.Model.FachadaPartidos.Actions
 
             PartidoVO partidoVO = partidoTotalCO.Partido;         
             ArrayList listaPartidoJugado = partidoTotalCO.PartidosJugados;
-            ArrayList listaGoles = partidoTotalCO.Goles;
-            ArrayList listaCambios = partidoTotalCO.Cambios; 
-            ArrayList listaTarjetas = partidoTotalCO.Tarjetas;
+            var listaGoles = partidoTotalCO.Goles;
+            var listaCambios = partidoTotalCO.Cambios; 
+            var listaTarjetas = partidoTotalCO.Tarjetas;
             
             /*se crea el partido y se obtiene su identificador*/
             partidoVO = partidoDAO.create(connection, transaction, partidoTotalCO.Partido);
