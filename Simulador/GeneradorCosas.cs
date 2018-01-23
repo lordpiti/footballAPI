@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Text;
 using Util;
-using Util.Log;
+
 
 namespace Simulador
 {
@@ -183,17 +183,17 @@ namespace Simulador
 
         //Genera un ArrayList con el calendario de una liga
 
-        public ArrayList generaLiga(ArrayList equipos) 
+        public List<List<Jornada>> generaLiga(List<int> equipos) 
         {
         
-            ArrayList lista1 = new ArrayList();
+            var lista1 = new List<int>();
             for (int p = 0; p < equipos.Count/2; p++) 
             {
                 lista1.Add(equipos[p]);
             }
 
             
-            ArrayList lista2 = new ArrayList();
+            var lista2 = new List<int>();
             for (int p = equipos.Count/2; p < equipos.Count; p++)
             {
                 lista2.Add(equipos[p]);
@@ -202,16 +202,15 @@ namespace Simulador
             
             lista2.Reverse();
 
-            ArrayList jornada = new ArrayList();
-            ArrayList liga = new ArrayList();
-            ArrayList temporal = new ArrayList();
+            var liga = new List<List<Jornada>>();
+            var temporal = new List<int>();
             int tamano=equipos.Count-1;
-            Object ultimo,primero;
+            int ultimo,primero;
 
             for (int j = 0; j < tamano; j++)
             {
 
-                jornada = new ArrayList();
+                var jornada = new List<Jornada>();
                 for (int i = 0; i < (equipos.Count)/2; i++)
                 {
                     jornada.Add(new Jornada(lista1[i], lista2[i]));
@@ -233,30 +232,24 @@ namespace Simulador
                 lista2.RemoveAt(0);              
                 lista2.Add(ultimo);
 
-
-               
-
                 liga.Add(jornada);
-
-
-
             }
 
 
             //Ahora generamos los partidos de vuelta
-            ArrayList vuelta;
-            //int contador = 1;
-            ArrayList ligaDef = new ArrayList();
 
-            foreach (ArrayList item in liga)
+            //int contador = 1;
+            var ligaDef = new List<List<Jornada>>();
+
+            foreach (var item in liga)
             {
                 ligaDef.Add(item);
             }
 
-            foreach (ArrayList item in liga)
+            foreach (var item in liga)
             {
-                vuelta=new ArrayList();
-                foreach (Jornada jor in item)
+                var vuelta = new List<Jornada>();
+                foreach (var jor in item)
                 {
                     vuelta.Add(new Jornada(jor.Visitante, jor.Local));
                 }

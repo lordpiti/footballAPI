@@ -6,7 +6,7 @@ using System.Data.Common;
 using Futbol.Model.Jugador.VO;
 using Futbol.Model.Jugador.DAO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaDatos.Actions

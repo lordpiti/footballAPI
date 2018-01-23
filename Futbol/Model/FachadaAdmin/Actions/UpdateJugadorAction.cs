@@ -9,7 +9,7 @@ using Futbol.Model.Directivo.DAO;
 using Futbol.Model.Integrante.DAO;
 using Futbol.Model.HcoIntegrante.DAO;
 using Futbol.Model.FachadaAdmin.COs;
-using Util.Log;
+
 using Futbol.Model.HcoIntegrante.VO;
 
 namespace Futbol.Model.FachadaAdmin.Actions

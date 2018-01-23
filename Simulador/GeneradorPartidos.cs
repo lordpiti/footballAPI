@@ -1,29 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using Util;
-using Futbol.Model.Partido;
-using Futbol.Model.Partido.VO;
-using Futbol.Model.PartidoJugado;
-using Futbol.Model.PartidoJugado.VO;
 using Futbol.Model.Calendario.VO;
-using Futbol.Model.Calendario.DAO;
+using Futbol.Model.Cambio.VO;
+using Futbol.Model.Competicion.VO;
+using Futbol.Model.FachadaDatos;
+using Futbol.Model.FachadaPartidos;
+using Futbol.Model.Gol.VO;
 using Futbol.Model.Jugador.DAO;
 using Futbol.Model.Jugador.VO;
-using Futbol.Model.Equipo.DAO;
-using Futbol.Model.Equipo.VO;
-using Futbol.Model.Gol.DAO;
-using Futbol.Model.Gol.VO;
-using Futbol.Model.Cambio.VO;
+using Futbol.Model.Partido.VO;
+using Futbol.Model.PartidoJugado.VO;
 using Futbol.Model.Tarjeta.VO;
-using Futbol.Model.Clasificacion.DAO;
-using Futbol.Model.Clasificacion.VO;
-using Futbol.Model.FachadaPartidos;
-using Futbol.Model.FachadaDatos;
-using Futbol;
-using Util.Log;
-using Futbol.Model.Competicion.VO;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Simulador
 {
@@ -83,8 +72,8 @@ namespace Simulador
             ArrayList jugadoresLocal = generar11Titular(codLocal);
             ArrayList jugadoresVisitante = generar11Titular(codVisitante);
             ArrayList listaPartidosJugados = new ArrayList();
-            ArrayList golesLocal=new ArrayList();
-            ArrayList golesVisitante = new ArrayList();
+            var golesLocal=new List<GolVO>();
+            var golesVisitante = new List<GolVO>();
 
             
            
@@ -103,10 +92,10 @@ namespace Simulador
 
 
             //aqui se crean los cambios equipo local
-            ArrayList cambiosLocal = new ArrayList();
+            var cambiosLocal = new List<CambioVO>();
             for (int i = 0; i < numeroCambios; i++)
             {
-                CambioVO cambio=new CambioVO(((JugadorVO)jugadoresLocal[11 + i]).Cod_Jugador,
+                var cambio=new CambioVO(((JugadorVO)jugadoresLocal[11 + i]).Cod_Jugador,
                     ((JugadorVO)jugadoresLocal[1 + i]).Cod_Jugador, rand.Next(0, 90));
                 cambiosLocal.Add(cambio);
             }
@@ -126,26 +115,26 @@ namespace Simulador
             }
 
             //aqui se crean los cambios equipo visitante
-            ArrayList cambiosVisitante = new ArrayList();
+            var cambiosVisitante = new List<CambioVO>();
             for (int i = 0; i < numeroCambios; i++)
             {
-                CambioVO cambio = new CambioVO(((JugadorVO)jugadoresVisitante[11 + i]).Cod_Jugador,
+                var cambio = new CambioVO(((JugadorVO)jugadoresVisitante[11 + i]).Cod_Jugador,
                     ((JugadorVO)jugadoresVisitante[1 + i]).Cod_Jugador, rand.Next(0, 90));
                 cambiosVisitante.Add(cambio);
             }
 
             //aqui generamos las tarjetas del equipo local
-            ArrayList tarjetasLocal = new ArrayList();
+            var tarjetasLocal = new List<TarjetaVO>();
             int numeroTarjetas = rand.Next(0, 6);
             for (int i = 0; i < numeroTarjetas; i++)
             {
-                TarjetaVO tarjeta = new TarjetaVO(((JugadorVO)jugadoresLocal[i]).Cod_Jugador,
+                var tarjeta = new TarjetaVO(((JugadorVO)jugadoresLocal[i]).Cod_Jugador,
                     rand.Next(0, 90), "Amarilla", "Juego violento");
                 tarjetasLocal.Add(tarjeta);
             }
 
             //aqui generamos las tarjetas del equipo visitante
-            ArrayList tarjetasVisitante = new ArrayList();
+            var tarjetasVisitante = new List<TarjetaVO>();
             numeroTarjetas = rand.Next(0, 6);
             for (int i = 0; i < numeroTarjetas; i++)
             {
@@ -183,6 +172,9 @@ namespace Simulador
                 return partidoTotal;
             }
 
+            partidoCompleto.playersLocal = jugadoresLocal.Cast<JugadorVO>().ToList();
+            partidoCompleto.playersVisitor = jugadoresVisitante.Cast<JugadorVO>().ToList();
+
             return partidoCompleto;
         }
 
@@ -190,16 +182,16 @@ namespace Simulador
         //genera una liga completa
         public void generarLigaCompleta(int numeroEquipos)
         {
-            ArrayList listaCodigosEquipos = new ArrayList();
-            ArrayList clasificacion = new ArrayList();
+            var listaCodigosEquipos = new List<int>();
+            var clasificacion = new ArrayList();
 
             for (int i = 1; i <= numeroEquipos; i++)
             {
                 listaCodigosEquipos.Add(i);
             }
 
-            ArrayList calendario = generador.generaLiga(listaCodigosEquipos);
-            ArrayList calendarioLiga = generaListaCalendarioVOsLiga(calendario);
+            var calendario = generador.generaLiga(listaCodigosEquipos);
+            var calendarioLiga = generaListaCalendarioVOsLiga(calendario);
 
             CompeticionTotalCO comp1 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 14-15", "2014-2015", generador.generarFechaAleatoriaPartido(),
                 generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/eurocopa.jpg", "Liga"),
@@ -211,9 +203,9 @@ namespace Simulador
 
             PartidoTotalCO partido;        
 
-            foreach (ArrayList jornada in calendario)
+            foreach (var jornada in calendario)
             {
-                foreach (Jornada part in jornada)
+                foreach (var part in jornada)
                 {
                     partido=generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante);
                 }
@@ -228,7 +220,7 @@ namespace Simulador
         //genera una copa completa con todos los partidos y rondas
         public void generarCopaCompleta(int numeroEquipos)
         {
-            ArrayList listaEquipos = new ArrayList();
+            var listaEquipos = new List<int>();
 
             for (int i = 1; i <= numeroEquipos; i++)
             {
@@ -285,17 +277,17 @@ namespace Simulador
 
 
         //Dado un calendario de jornadas de liga, genera una lista de CalendarioVOs
-        public ArrayList generaListaCalendarioVOsLiga(ArrayList calendario)
+        public List<CalendarioVO> generaListaCalendarioVOsLiga(List<List<Jornada>> calendario)
         {
 
             int numeroJornada = 1;
-            ArrayList listaCalendario = new ArrayList();
+            var listaCalendario = new List<CalendarioVO>();
 
-            foreach (ArrayList jornada in calendario)
+            foreach (var jornada in calendario)
             {
                 foreach (Jornada part in jornada)
                 {
-                    CalendarioVO calendarioJornada = new CalendarioVO(1,Convert.ToString(numeroJornada),
+                    var calendarioJornada = new CalendarioVO(1,Convert.ToString(numeroJornada),
                         (int)part.Local, (int)part.Visitante,generador.generarFechaAleatoriaPartido());
                     listaCalendario.Add(calendarioJornada);
                 }

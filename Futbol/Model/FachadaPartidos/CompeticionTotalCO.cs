@@ -10,11 +10,11 @@ namespace Futbol.Model.FachadaPartidos
     public class CompeticionTotalCO
     {
         private CompeticionVO competicion;
-        private ArrayList calendario;
-        private ArrayList listaEquipos;
+        private List<CalendarioVO> calendario;
+        private List<int> listaEquipos;
 
-        public CompeticionTotalCO(CompeticionVO competicionVO, ArrayList calendario,
-            ArrayList listaEquipos)
+        public CompeticionTotalCO(CompeticionVO competicionVO, List<CalendarioVO> calendario,
+            List<int> listaEquipos)
         {
             this.competicion = competicionVO;
             this.calendario = calendario;
@@ -22,13 +22,13 @@ namespace Futbol.Model.FachadaPartidos
         }
 
 
-        public ArrayList Calendario
+        public List<CalendarioVO> Calendario
         {
             get { return calendario; }
             set { calendario = value; }
         }
 
-        public ArrayList ListaEquipos
+        public List<int> ListaEquipos
         {
             get { return listaEquipos; }
             set { listaEquipos = value; }

@@ -12,7 +12,7 @@ using Futbol.Model.HcoIntegrante.VO;
 using Futbol.Model.Equipo.VO;
 using Futbol.Model.Equipo.DAO;
 using System.Collections;
-using Util.Log;
+
 using Futbol.Model.FachadaAdmin.COs;
 
 

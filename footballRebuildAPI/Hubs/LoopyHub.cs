@@ -10,5 +10,10 @@ namespace AspNetCoreSignalr.SignalRHubs
         {
             return Clients.All.InvokeAsync("Send", data);
         }
+
+        public Task SendCreateMatch(string data)
+        {
+            return Clients.All.InvokeAsync("SendCreateMatch", data);
+        }
     }
 }

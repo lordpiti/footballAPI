@@ -7,7 +7,7 @@ using Futbol.Model.EquiposParticipan.DAO;
 using Futbol.ActionProcessor;
 using System.Collections;
 using System.Data.Common;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaAdmin.Actions
@@ -26,7 +26,6 @@ namespace Futbol.Model.FachadaAdmin.Actions
         
         public object execute(DbConnection connection)
         {
-            LogManager.RecordMessage("" + cod_Competicion + " " + jornada, LogManager.MessageType.INFO);
             ClasificacionDAO clasificacionDAO = ClasificacionDAOFactory.GetDAO();
             PartidoDAO partidoDAO=PartidoDAOFactory.GetDAO();
             EquiposParticipanDAO equiposParticipanDAO=EquiposParticipanDAOFactory.GetDAO();
@@ -51,20 +50,17 @@ namespace Futbol.Model.FachadaAdmin.Actions
 
             if (listaPartidosCompeticion == null)
             {
-                LogManager.RecordMessage("a1", LogManager.MessageType.INFO);
                 return false;
             }
             //Si ya ha acabado la temporada , se acabó
             if (listaPartidosCompeticion.Count == numeroPartidosCompeticion)
             {
-                LogManager.RecordMessage("a2", LogManager.MessageType.INFO);
                 return false;
             }
 
             //si no ha empezado la temporada, no se puede actualizar nada
             if (listaPartidosJornada == null)
             {
-                LogManager.RecordMessage("a3", LogManager.MessageType.INFO);
                 return false;
             }
             

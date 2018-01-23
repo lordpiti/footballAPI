@@ -9,7 +9,7 @@ using Futbol.Model.HcoIntegrante.DAO;
 using Futbol.Model.HcoIntegrante;
 using Futbol.Model.PartidoJugado.DAO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaDatos.Actions
