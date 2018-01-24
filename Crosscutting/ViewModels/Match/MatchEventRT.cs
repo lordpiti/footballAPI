@@ -9,6 +9,8 @@ namespace Football.Crosscutting.ViewModels.Match
 {
     public class MatchEventRT
     {
+        public int MatchId { get; set; }
+
         public MatchEventTypeEnum MatchEventType { get; set; }
 
         public int Minute { get; set; }

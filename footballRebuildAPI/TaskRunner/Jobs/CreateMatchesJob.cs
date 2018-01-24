@@ -73,16 +73,19 @@ namespace Football.API.TaskRunner.Jobs
                     calendarioLiga, listaCodigosEquipos);
 
                 int numeroJornada = 1;
+                int matchId = 1;
 
                 var matchSet = (ArrayList)calendario[0];
 
                 foreach (Jornada part in matchSet)
                 {
+                    var temp = matchId;
                     new Thread(async () =>
                     {
                         var match = generador.generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, false);
+                        await bubu.Clients.All.InvokeAsync("Send", new { matchToCreate = match, matchId = temp });
 
-                        var events = GenerateEventListForGame(match);
+                        var events = GenerateEventListForGame(match, temp);
 
                         var currentMinute = 0;
 
@@ -96,7 +99,7 @@ namespace Football.API.TaskRunner.Jobs
                         
                         await bubu.Clients.All.InvokeAsync("Send", "The game is over");
                     }).Start();
-                    numeroJornada++;
+                    matchId++;
                 }
 
 
@@ -110,7 +113,7 @@ namespace Football.API.TaskRunner.Jobs
             return true;
         }
 
-        private List<MatchEventRT> GenerateEventListForGame(PartidoTotalCO partido)
+        private List<MatchEventRT> GenerateEventListForGame(PartidoTotalCO partido, int matchId)
         {
             var events = new List<MatchEventRT>();
 
@@ -118,21 +121,24 @@ namespace Football.API.TaskRunner.Jobs
             {
                 Description = "",
                 MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.RedCard,
-                Minute = x.Minuto
+                Minute = x.Minuto,
+                MatchId = matchId
             });
 
             var substitutions = partido.Cambios.Select(x => new MatchEventRT()
             {
                 Description = "",
                 MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.Substitution,
-                Minute = x.Minuto
+                Minute = x.Minuto,
+                MatchId = matchId
             });
 
             var goals = partido.Cambios.Select(x => new MatchEventRT()
             {
                 Description = "",
                 MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.Goal,
-                Minute = x.Minuto
+                Minute = x.Minuto,
+                MatchId = matchId
             });
 
             events.AddRange(cards);
