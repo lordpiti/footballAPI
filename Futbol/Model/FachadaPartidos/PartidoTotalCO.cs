@@ -1,5 +1,6 @@
 using Futbol.Model.Cambio.VO;
 using Futbol.Model.Gol.VO;
+using Futbol.Model.Jugador.VO;
 using Futbol.Model.Partido.VO;
 using Futbol.Model.Tarjeta.VO;
 using System.Collections;
@@ -11,6 +12,8 @@ namespace Futbol.Model.FachadaPartidos
     {
         private PartidoVO partido;
         private ArrayList partidosJugados;
+        public List<JugadorVO> playersLocal { get; set; }
+        public List<JugadorVO> playersVisitor { get; set; }
 
 
         public PartidoTotalCO(PartidoVO partidoVO, ArrayList partidosJugadosVO,

@@ -8,7 +8,7 @@ using Futbol.Model.Arbitro.VO;
 using Futbol.Model.Arbitro.DAO;
 using Futbol.Model.Partido.DAO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaDatos.Actions

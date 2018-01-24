@@ -6,7 +6,7 @@ using System.Configuration;
 using System.Data.Common;
 using System.Collections;
 using System.Xml;
-using Util.Log;
+
 using System.Data;
 
 namespace Futbol.ActionProcessor

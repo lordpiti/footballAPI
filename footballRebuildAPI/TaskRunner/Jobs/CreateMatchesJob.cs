@@ -43,63 +43,51 @@ namespace Football.API.TaskRunner.Jobs
                 var generadorCosas = new GeneradorCosas();
                 var generador = new GeneradorPartidos();
 
-                //Create 10 different parallel threads to do stuff
-                //for(int i = 0; i < 10; i++)
-                //{
-                //    new Thread(async () =>
-                //    {
-
-
-
-                //        await bubu.Clients.All.InvokeAsync("Send", "Hello folks");
-
-                //    }).Start();
-                //}
-
-
-                ArrayList listaCodigosEquipos = new ArrayList();
-                ArrayList clasificacion = new ArrayList();
+                var listaCodigosEquipos = new ArrayList();
+                var clasificacion = new ArrayList();
 
                 for (int i = 1; i <= 20; i++)
                 {
                     listaCodigosEquipos.Add(i);
                 }
 
-                ArrayList calendario = generadorCosas.generaLiga(listaCodigosEquipos);
-                ArrayList calendarioLiga = generador.generaListaCalendarioVOsLiga(calendario);
+                var calendario = generadorCosas.generaLiga(listaCodigosEquipos);
+                var calendarioLiga = generador.generaListaCalendarioVOsLiga(calendario);
 
                 var comp1 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 14-15", "2014-2015", generadorCosas.generarFechaAleatoriaPartido(),
                     generadorCosas.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/eurocopa.jpg", "Liga"),
                     calendarioLiga, listaCodigosEquipos);
 
                 int numeroJornada = 1;
-                int matchId = 1;
 
                 var matchSet = (ArrayList)calendario[0];
 
-                foreach (Jornada part in matchSet)
+                for (int i=1;i<10;i++)
                 {
-                    var temp = matchId;
+                    var cont = i;
+                    var part = (Jornada)matchSet[cont];
+                    
                     new Thread(async () =>
                     {
                         var match = generador.generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, false);
-                        await bubu.Clients.All.InvokeAsync("Send", new { matchToCreate = match, matchId = temp });
 
-                        var events = GenerateEventListForGame(match, temp);
+                        var events = GenerateEventListForGame(match, cont);
+                        await bubu.Clients.All.InvokeAsync("SendCreateMatch", 
+                            new { matchToCreate = match,
+                                matchId = cont,
+                                events = events.Count
+                            });
 
                         var currentMinute = 0;
 
                         foreach(var item in events)
                         {
-                            int timeToWait = (item.Minute - currentMinute) * 5000;
+                            int timeToWait = (item.Minute - currentMinute) * 500;
                             Thread.Sleep(timeToWait);
                             await bubu.Clients.All.InvokeAsync("Send", item);
                             currentMinute = item.Minute;
                         }
-                        
-                        await bubu.Clients.All.InvokeAsync("Send", "The game is over");
                     }).Start();
-                    matchId++;
                 }
 
 
@@ -144,6 +132,13 @@ namespace Football.API.TaskRunner.Jobs
             events.AddRange(cards);
             events.AddRange(substitutions);
             events.AddRange(goals);
+            events.Add(new MatchEventRT()
+            {
+                Description = "",
+                MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.GameFinished,
+                MatchId = matchId,
+                Minute = 90
+            });
 
             return events.OrderBy(x=>x.Minute).ToList();
         }

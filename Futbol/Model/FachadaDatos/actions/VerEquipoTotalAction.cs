@@ -12,7 +12,7 @@ using Futbol.Model.Estadio.DAO;
 using Futbol.Model.Estadio.VO;
 using Futbol.Model.FachadaAdmin.COs;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaDatos.Actions

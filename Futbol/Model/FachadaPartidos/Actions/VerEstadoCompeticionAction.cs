@@ -16,7 +16,7 @@ using Futbol.Model.Competicion.VO;
 using Futbol.Model.Competicion.DAO;
 using Futbol.Model.Gol.VO;
 using Futbol.Model.Gol.DAO;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaPartidos.Actions

@@ -22,8 +22,8 @@ using Futbol.Model.Clasificacion.VO;
 using Futbol.Model.FachadaPartidos;
 using Futbol.Model.FachadaDatos;
 using Futbol;
-using Util.Log;
 using Futbol.Model.Competicion.VO;
+using System.Linq;
 
 namespace Simulador
 {
@@ -182,6 +182,9 @@ namespace Simulador
                 PartidoTotalCO partidoTotal=fachada.pruebaCrearPartidoTotal(partidoCompleto);
                 return partidoTotal;
             }
+
+            partidoCompleto.playersLocal = jugadoresLocal.Cast<JugadorVO>().ToList();
+            partidoCompleto.playersVisitor = jugadoresVisitante.Cast<JugadorVO>().ToList();
 
             return partidoCompleto;
         }

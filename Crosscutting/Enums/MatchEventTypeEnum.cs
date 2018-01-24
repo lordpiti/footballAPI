@@ -11,6 +11,8 @@ namespace Football.Crosscutting.Enums
         Goal = 1,
         Substitution = 2,
         YellowCard = 3,
-        RedCard = 4
+        RedCard = 4,
+        GameFinished = 5,
+        GameStart = 6
     }
 }

@@ -12,7 +12,7 @@ using Futbol.Model.Clasificacion.VO;
 using Futbol.Model.Calendario.DAO;
 using Futbol.Model.Calendario.VO;
 using System.Collections;
-using Util.Log;
+
 
 
 namespace Futbol.Model.FachadaPartidos.Actions

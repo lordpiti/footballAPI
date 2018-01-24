@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Text;
 using Util.Exceptions;
-using Util.Log;
+
 using Futbol.Model.Cambio.VO;
 using System.Data;
 using System.Data.Common;

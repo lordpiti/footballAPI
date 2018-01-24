@@ -228,10 +228,6 @@
     <Compile Include="Model\Tarjeta\DAO\ITarjetaIdentifierRetriever.cs" />
     <Compile Include="Model\Tarjeta\TarjetaCO.cs" />
     <Compile Include="Model\Tarjeta\VO\TarjetaVO.cs" />
-    <Compile Include="ParsersXML\ParserCompeticionXML.cs" />
-    <Compile Include="ParsersXML\ParserEquipoXML.cs" />
-    <Compile Include="ParsersXML\ParserJornadaXML.cs" />
-    <Compile Include="ParsersXML\ParserJugadorXML.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

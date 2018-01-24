@@ -8,7 +8,7 @@ using System.Data.Common;
 
 /* For Testing only */
 using Futbol.Model.HcoIntegrante.VO;
-using Util.Log;
+
 using System.Collections;
 
 namespace Futbol.Model.HcoIntegrante.DAO
