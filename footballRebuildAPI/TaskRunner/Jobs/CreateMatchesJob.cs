@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
 using Simulador;
-using System.Collections;
 using Futbol.Model.FachadaPartidos;
 using Futbol.Model.Competicion.VO;
 using System.Linq;
@@ -30,11 +28,8 @@ namespace Football.API.TaskRunner.Jobs
 
         public override async Task<bool> Run()
         {
-            //_logger.LogInformation("AmazonCleanupBadger Run()");
-
             try
             {
-                //TODO: create matches
                 var serviceProvider = ServiceConfiguration.ConsoleProvider;
 
                 var chatHub = serviceProvider.GetService<IHubContext<LoopyHub>>();
@@ -43,8 +38,7 @@ namespace Football.API.TaskRunner.Jobs
                 var generadorCosas = new GeneradorCosas();
                 var generador = new GeneradorPartidos();
 
-                var listaCodigosEquipos = new ArrayList();
-                var clasificacion = new ArrayList();
+                var listaCodigosEquipos = new List<int>();
 
                 for (int i = 1; i <= 20; i++)
                 {
@@ -60,14 +54,15 @@ namespace Football.API.TaskRunner.Jobs
 
                 int numeroJornada = 1;
 
-                var matchSet = (ArrayList)calendario[0];
+                var matchSet = calendario[0];
+                var taskList = new List<Task>();
 
                 for (int i=1;i<10;i++)
                 {
                     var cont = i;
                     var part = (Jornada)matchSet[cont];
                     
-                    new Thread(async () =>
+                    var task = new Task(async () =>
                     {
                         var match = generador.generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, false);
 
@@ -87,10 +82,13 @@ namespace Football.API.TaskRunner.Jobs
                             await bubu.Clients.All.InvokeAsync("Send", item);
                             currentMinute = item.Minute;
                         }
-                    }).Start();
+                    });
+                    taskList.Add(task);
+                    task.Start();
                 }
 
-
+                Task.WaitAll(taskList.ToArray());
+             
 
             }
             catch (Exception ex)
