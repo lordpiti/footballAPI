@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Futbol.Model.HcoIntegrante
 {
-    class HistorialEquiposCO
+    public class HistorialEquiposCO
     {
         private String nombre;
         private DateTime fecha_Comienzo;

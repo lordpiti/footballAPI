@@ -23,7 +23,7 @@ namespace Futbol.Model.FachadaDatos.Actions
         {
 
             EquipoDAO equipoDAO = EquipoDAOFactory.GetDAO();
-            ArrayList listaEquipos = equipoDAO.listarEquipos(connection,null,0,2);
+            var listaEquipos = equipoDAO.listarEquipos(connection,null,0,2);
 
 
             return listaEquipos;

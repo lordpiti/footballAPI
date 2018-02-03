@@ -41,10 +41,6 @@ namespace Futbol.Model.FachadaPartidos.Actions
             ArbitroVO arbitro;
             EstadioVO estadio;
             PartidoVO partido;
-            ArrayList titularesLocal;
-            ArrayList titularesVisitante;
-            ArrayList suplentesLocal=null;
-            ArrayList suplentesVisitante=null;
             List<CambioCO> listaCambiosLocal;
             List<CambioCO> listaCambiosVisitante;
             ArrayList listaTarjetasLocal;
@@ -72,18 +68,18 @@ namespace Futbol.Model.FachadaPartidos.Actions
             
             //Obtenemos los jugadores titulares y suplentes de ambos equipos en el partido
             
-            titularesLocal=partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
+            var titularesLocal=partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
                 equipoLocal.Cd_Equipo, cod_Partido,"titular");
 
-            titularesVisitante = partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
+            var titularesVisitante = partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
             equipoVisitante.Cd_Equipo, cod_Partido,"titular");
 
 
-            suplentesLocal = partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
+            var suplentesLocal = partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
             equipoLocal.Cd_Equipo, cod_Partido, "suplente");
 
 
-            suplentesVisitante = partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
+            var suplentesVisitante = partidoJugadoDAO.buscarJugadoresTitularesEquipoPartido(connection, null,
             equipoVisitante.Cd_Equipo, cod_Partido, "suplente");
 
 
@@ -97,11 +93,11 @@ namespace Futbol.Model.FachadaPartidos.Actions
 
             //Obtenemos la lista de goles de ambos equipos
 
-            ArrayList listaGolesLocal = golDAO.listarGolesEquipoPartido(connection, null,
+            var listaGolesLocal = golDAO.listarGolesEquipoPartido(connection, null,
                 partido.Cod_Partido, partido.Cod_Local, 0, 2);
 
 
-            ArrayList listaGolesVisitante = golDAO.listarGolesEquipoPartido(connection, null,
+            var listaGolesVisitante = golDAO.listarGolesEquipoPartido(connection, null,
                 partido.Cod_Partido, partido.Cod_Visitante, 0, 2);
 
             

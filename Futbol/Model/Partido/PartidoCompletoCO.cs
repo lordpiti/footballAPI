@@ -7,6 +7,7 @@ using Futbol.Model.Partido.VO;
 using Futbol.Model.Arbitro.VO;
 using Futbol.Model.Estadio.VO;
 using Futbol.Model.Cambio;
+using Futbol.Model.Gol;
 
 namespace Futbol.Model.Partido
 {
@@ -15,12 +16,12 @@ namespace Futbol.Model.Partido
         private EquipoVO equipoLocal;
         private EquipoVO equipoVisitante;
         private PartidoVO partido;
-        private ArrayList jugadoresTitularesLocal;
-        private ArrayList jugadoresTitularesVisitante;
-        private ArrayList jugadoresNoTitularesLocal;
-        private ArrayList jugadoresNoTitularesVisitante;
-        private ArrayList golesLocal;
-        private ArrayList golesVisitante;
+        private List<PartidoJugadoBasicoCO> jugadoresTitularesLocal;
+        private List<PartidoJugadoBasicoCO> jugadoresTitularesVisitante;
+        private List<PartidoJugadoBasicoCO> jugadoresNoTitularesLocal;
+        private List<PartidoJugadoBasicoCO> jugadoresNoTitularesVisitante;
+        private List<GolCO> golesLocal;
+        private List<GolCO> golesVisitante;
         private ArrayList tarjetasLocal;
         private ArrayList tarjetasVisitante;
         private List<CambioCO> cambiosLocal;
@@ -32,10 +33,10 @@ namespace Futbol.Model.Partido
 
 
         public PartidoCompletoCO(EquipoVO equipoLocal,EquipoVO equipoVisitante,
-            PartidoVO partido, ArrayList jugadoresTitularesLocal,
-            ArrayList jugadoresTitularesVisitante,ArrayList jugadoresNoTitularesLocal,
-            ArrayList jugadoresNoTitularesVisitante,ArrayList golesLocal,
-            ArrayList golesVisitante,ArrayList tarjetasLocal, ArrayList tarjetasVisitante,
+            PartidoVO partido, List<PartidoJugadoBasicoCO> jugadoresTitularesLocal,
+            List<PartidoJugadoBasicoCO> jugadoresTitularesVisitante, List<PartidoJugadoBasicoCO> jugadoresNoTitularesLocal,
+            List<PartidoJugadoBasicoCO> jugadoresNoTitularesVisitante, List<GolCO> golesLocal,
+            List<GolCO> golesVisitante,ArrayList tarjetasLocal, ArrayList tarjetasVisitante,
             EstadioVO estadio, ArbitroVO arbitro,String cronica, List<CambioCO> cambiosLocal,
             List<CambioCO> cambiosVisitante)
         {
@@ -72,41 +73,41 @@ namespace Futbol.Model.Partido
         }
 
 
-        public ArrayList JugadoresTitularesLocal
+        public List<PartidoJugadoBasicoCO> JugadoresTitularesLocal
         {
             get { return jugadoresTitularesLocal; }
             set { jugadoresTitularesLocal = value; }
         }
 
 
-        public ArrayList JugadoresTitularesVisitante
+        public List<PartidoJugadoBasicoCO> JugadoresTitularesVisitante
         {
             get { return jugadoresTitularesVisitante; }
             set { jugadoresTitularesVisitante = value; }
         }
 
 
-        public ArrayList JugadoresNoTitularesLocal
+        public List<PartidoJugadoBasicoCO> JugadoresNoTitularesLocal
         {
             get { return jugadoresNoTitularesLocal; }
             set { jugadoresNoTitularesLocal = value; }
         }
 
-        public ArrayList JugadoresNoTitularesVisitante
+        public List<PartidoJugadoBasicoCO> JugadoresNoTitularesVisitante
         {
             get { return jugadoresNoTitularesVisitante; }
             set { jugadoresNoTitularesVisitante = value; }
         }
 
 
-        public ArrayList GolesLocal
+        public List<GolCO> GolesLocal
         {
             get { return golesLocal; }
             set { golesLocal = value; }
         }
 
         
-        public ArrayList GolesVisitante
+        public List<GolCO> GolesVisitante
         {
             get { return golesVisitante; }
             set { golesVisitante = value; }

@@ -94,7 +94,7 @@ namespace Futbol.Model.Gol.DAO
 
         
         
-        public ArrayList listarGolesEquipoPartido(DbConnection connection, DbTransaction transaction,
+        public List<GolCO> listarGolesEquipoPartido(DbConnection connection, DbTransaction transaction,
             int cod_Partido, int cod_Equipo,int startIndex, int count)
         {
             DbDataReader dataReader = null;
@@ -127,7 +127,7 @@ namespace Futbol.Model.Gol.DAO
 
                 }
 
-                ArrayList goles = new ArrayList();
+                var goles = new List<GolCO>();
                 
                 do
                 {

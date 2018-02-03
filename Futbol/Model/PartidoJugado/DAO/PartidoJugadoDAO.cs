@@ -401,7 +401,7 @@ namespace Futbol.Model.PartidoJugado.DAO
         }
 
 
-        public ArrayList buscarJugadoresTitularesEquipoPartido(DbConnection connection, DbTransaction transaction,
+        public List<PartidoJugadoBasicoCO> buscarJugadoresTitularesEquipoPartido(DbConnection connection, DbTransaction transaction,
             int cod_Equipo, int cod_Partido,String titulares)
         {
 
@@ -438,7 +438,7 @@ namespace Futbol.Model.PartidoJugado.DAO
                 }
 
 
-                ArrayList nombresJugadoresTitulares = new ArrayList();
+                var nombresJugadoresTitulares = new List<PartidoJugadoBasicoCO>();
 
                 do
                 {
@@ -471,7 +471,7 @@ namespace Futbol.Model.PartidoJugado.DAO
         }
 
 
-        public ArrayList temporadasConPartidosJugados(DbConnection connection, DbTransaction transaction,
+        public List<TemporadaCO> temporadasConPartidosJugados(DbConnection connection, DbTransaction transaction,
             int cod_Jugador)
         {
             DbDataReader dataReader = null;
@@ -498,7 +498,7 @@ namespace Futbol.Model.PartidoJugado.DAO
                 }
 
 
-                ArrayList temporadasConPartidosJugados = new ArrayList();
+                var temporadasConPartidosJugados = new List<TemporadaCO>();
 
                 do
                 {

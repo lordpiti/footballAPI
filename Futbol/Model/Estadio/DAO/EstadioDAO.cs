@@ -107,7 +107,7 @@ namespace Futbol.Model.Estadio.DAO
 
         
         
-        public ArrayList listarEstadios(DbConnection connection, DbTransaction transaction,
+        public List<EstadioVO> listarEstadios(DbConnection connection, DbTransaction transaction,
             int startIndex, int count)
         {
 
@@ -139,7 +139,7 @@ namespace Futbol.Model.Estadio.DAO
 
                 }
 
-                ArrayList estadios = new ArrayList();
+                var estadios = new List<EstadioVO>();
                 
                 do
                 {

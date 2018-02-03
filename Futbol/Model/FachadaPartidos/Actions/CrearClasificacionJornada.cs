@@ -18,9 +18,9 @@ namespace Futbol.Model.FachadaPartidos.Actions
     class CrearClasificacionJornadaAction : TransactionalPlainAction
     {
 
-        private ArrayList clasificacion;
+        private List<ClasificacionVO> clasificacion;
 
-        public CrearClasificacionJornadaAction(ArrayList clasificacion)
+        public CrearClasificacionJornadaAction(List<ClasificacionVO> clasificacion)
         {
             this.clasificacion = clasificacion;
         }

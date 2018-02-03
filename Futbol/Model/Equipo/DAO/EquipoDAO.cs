@@ -97,7 +97,7 @@ namespace Futbol.Model.Equipo.DAO
 
         
         
-        public ArrayList listarEquipos(DbConnection connection, DbTransaction transaction,
+        public List<EquipoVO> listarEquipos(DbConnection connection, DbTransaction transaction,
             int startIndex, int count)
         {
             DbDataReader dataReader = null;
@@ -122,7 +122,7 @@ namespace Futbol.Model.Equipo.DAO
 
                 }
 
-                ArrayList equipos = new ArrayList();
+                var equipos = new List<EquipoVO>();
                 
                 do
                 {

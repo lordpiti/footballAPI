@@ -212,7 +212,7 @@ namespace Futbol.Model.HcoIntegrante.DAO
         }
 
 
-         public ArrayList verHistorialEquipos(DbConnection connection, DbTransaction transaction, int cod_Integrante)
+         public List<HistorialEquiposCO> verHistorialEquipos(DbConnection connection, DbTransaction transaction, int cod_Integrante)
          {
 
              DbDataReader dataReader = null;
@@ -245,7 +245,7 @@ namespace Futbol.Model.HcoIntegrante.DAO
 
                  }
 
-                 ArrayList historial = new ArrayList();
+                 var historial = new List<HistorialEquiposCO>();
 
 
                  do

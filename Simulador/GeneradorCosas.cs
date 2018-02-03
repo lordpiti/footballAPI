@@ -262,11 +262,11 @@ namespace Simulador
 
         }
 
-        public ArrayList generarRondaCopa(ArrayList equipos)
+        public List<Jornada> generarRondaCopa(List<int> equipos)
         {
-            ArrayList equiposBombo1=new ArrayList();
-            ArrayList equiposBombo2=new ArrayList();
-            ArrayList emparejamientosRonda = new ArrayList();
+            var equiposBombo1=new List<int>();
+            var equiposBombo2=new List<int>();
+            var emparejamientosRonda = new List<Jornada>();
 
             for (int i = 0; i < equipos.Count / 2; i++)
             {

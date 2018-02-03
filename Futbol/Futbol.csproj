@@ -127,7 +127,6 @@
     <Compile Include="Model\FachadaAdmin\COs\InfoJugadorEditar.cs" />
     <Compile Include="Model\FachadaAdmin\COs\JugadorCO.cs" />
     <Compile Include="Model\FachadaAdmin\COs\MiembroCO.cs" />
-    <Compile Include="Model\FachadaAdmin\COs\PerfilCompletoJugador.cs" />
     <Compile Include="Model\FachadaAdmin\FachadaAdmin.cs" />
     <Compile Include="Model\FachadaDatos\actions\VerEntrenadoresEquipoAction.cs" />
     <Compile Include="Model\FachadaDatos\actions\VerEquipoTotalAction.cs" />

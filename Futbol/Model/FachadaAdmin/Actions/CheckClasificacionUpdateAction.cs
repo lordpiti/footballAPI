@@ -32,10 +32,10 @@ namespace Futbol.Model.FachadaAdmin.Actions
             
             var listaEquiposParticipantes=equiposParticipanDAO.verEquiposParticipan(connection,null,cod_Competicion);
             
-            ArrayList listaPartidosJornada = partidoDAO.verPartidosVOCompeticionJornada(connection,
+            var listaPartidosJornada = partidoDAO.verPartidosVOCompeticionJornada(connection,
                 null, cod_Competicion, Convert.ToString(jornada));
             
-            ArrayList listaPartidosCompeticion = partidoDAO.buscarPartidosEquipos(connection, null, 0, 0, cod_Competicion, null, 0);
+            var listaPartidosCompeticion = partidoDAO.buscarPartidosEquipos(connection, null, 0, 0, cod_Competicion, null, 0);
             
             int numeroPartidosCompeticion=(listaEquiposParticipantes.Count)*(listaEquiposParticipantes.Count-1);
 

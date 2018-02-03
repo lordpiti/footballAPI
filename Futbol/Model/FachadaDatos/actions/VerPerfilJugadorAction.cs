@@ -29,9 +29,9 @@ namespace Futbol.Model.FachadaDatos.Actions
             JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
             DatosTotalesJugador datosTotales = jugadorDAO.verJugador(connection, null, cod_Jugador);
             HcoIntegranteDAO hcoIntegranteDAO = HcoIntegranteDAOFactory.GetDAO();
-            ArrayList historial=hcoIntegranteDAO.verHistorialEquipos(connection, null, cod_Jugador);
+            var historial=hcoIntegranteDAO.verHistorialEquipos(connection, null, cod_Jugador);
             PartidoJugadoDAO partidoJugadoDAO=PartidoJugadoDAOFactory.GetDAO();
-            ArrayList temporadas = partidoJugadoDAO.temporadasConPartidosJugados(connection, null, cod_Jugador);
+            var temporadas = partidoJugadoDAO.temporadasConPartidosJugados(connection, null, cod_Jugador);
 
             return new PerfilCompletoJugador(datosTotales, historial,temporadas);
         }

@@ -75,7 +75,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
             
 
             
-            ArrayList listaPartidosJornada = partidoDAO.verPartidosVOCompeticionJornada(connection,
+            var listaPartidosJornada = partidoDAO.verPartidosVOCompeticionJornada(connection,
                 transaction, cod_Competicion, Convert.ToString(jornada));
             
             

@@ -233,9 +233,9 @@ namespace Simulador
 
             comp3 = fachada.crearCompeticionTotal(comp3);
 
-            ArrayList listaCodigosEquipos = new ArrayList();
-            ArrayList rondaActual = new ArrayList();
-            ArrayList auxiliar=new ArrayList();
+            var listaCodigosEquipos = new List<int>();
+            var rondaActual = new List<Jornada>();
+            var auxiliar=new List<object>();
             PartidoTotalCO partido;
             String nombreRonda="Fase Previa";
 
@@ -259,7 +259,7 @@ namespace Simulador
                 
                 //genera los partidos de la ronda de copa actual
                 
-                foreach (Jornada item in rondaActual)
+                foreach (var item in rondaActual)
                 {
                     auxiliar.Add(item.Local);
                     auxiliar.Add(item.Visitante);

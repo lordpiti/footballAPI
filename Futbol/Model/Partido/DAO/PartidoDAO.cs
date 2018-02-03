@@ -436,7 +436,7 @@ namespace Futbol.Model.Partido.DAO
 
 
 
-         public ArrayList verPartidosVOCompeticionJornada(DbConnection connection, DbTransaction transaction,
+         public List<PartidoVO> verPartidosVOCompeticionJornada(DbConnection connection, DbTransaction transaction,
              int cod_Competicion, String jornada)
          {
 
@@ -466,7 +466,7 @@ namespace Futbol.Model.Partido.DAO
 
                  }
 
-                 ArrayList listaPartidoVOs = new ArrayList();
+                 var listaPartidoVOs = new List<PartidoVO>();
 
                  do
                  {
@@ -510,7 +510,7 @@ namespace Futbol.Model.Partido.DAO
 
 
 
-         public ArrayList buscarPartidosEquipos(DbConnection connection, DbTransaction transaction,
+         public List<PartidoCompeticionJornadaCO> buscarPartidosEquipos(DbConnection connection, DbTransaction transaction,
              int cod_Local, int cod_Visitante, int cod_Competicion,String jornada,int flag)
          {
              DbDataReader dataReader = null;
@@ -572,7 +572,7 @@ namespace Futbol.Model.Partido.DAO
 
                  }
 
-                 ArrayList partidosJugadosCompeticionJugador = new ArrayList();
+                 var partidosJugadosCompeticionJugador = new List<PartidoCompeticionJornadaCO>();
 
                  do
                  {

@@ -1,33 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Util.Exceptions;
-
-using System.Configuration;
-using System.Data.Common;
-using System.Collections;
-using System.Xml;
-using Futbol.Model.Estadio.VO;
-using Futbol.Model.Integrante.VO;
-using Futbol.Model.HcoIntegrante.VO;
-using Futbol.Model.Jugador.VO;
-using Futbol.Model.Competicion.VO;
-using Futbol.Model.Clasificacion;
-using Futbol.Model.Clasificacion.VO;
-using Futbol.Model.Equipo.VO;
-using Futbol.Model.Partido.VO;
-using Futbol.Model.PartidoJugado.VO;
-using Futbol.Model.Gol.VO;
-using Futbol.Model.PartidoJugado;
-using Futbol.Model.FachadaPartidos.Actions;
 using Futbol.ActionProcessor;
+using Futbol.Model.Clasificacion.VO;
+using Futbol.Model.Competicion.VO;
+using Futbol.Model.FachadaPartidos.Actions;
+using Futbol.Model.FachadaPartidos.COs;
+using Futbol.Model.Gol.VO;
 using Futbol.Model.Partido;
-
-
+using Futbol.Model.Partido.VO;
+using Futbol.Model.PartidoJugado;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Common;
+using Util.Exceptions;
 
 namespace Futbol.Model.FachadaPartidos
 {
-     public class FachadaPartidos
+    public class FachadaPartidos
     {
         private static String providerName = "System.Data.SqlClient";
      /*   private static String connectionString = "Data Source=localhost\\SQLExpress;" +
@@ -84,7 +72,7 @@ namespace Futbol.Model.FachadaPartidos
 
 
 
-         public void crearClasificacionJornada(ArrayList clasificacion)
+         public void crearClasificacionJornada(List<ClasificacionVO> clasificacion)
          {
              try
              {
@@ -101,7 +89,7 @@ namespace Futbol.Model.FachadaPartidos
 
 
 
-         public ArrayList actualizarClasificacionTrasPartido(int numeroJornada, PartidoVO partido, ArrayList clasificacion)
+         public List<ClasificacionVO> actualizarClasificacionTrasPartido(int numeroJornada, PartidoVO partido, List<ClasificacionVO> clasificacion)
          {
              int ptosLocal = 0, ptosVisitante = 0, golesFavorLocal = 0, golesContraLocal = 0;
              int golesFavorVisitante = 0, golesContraVisitante = 0;
@@ -169,7 +157,7 @@ namespace Futbol.Model.FachadaPartidos
          }
 
 
-         private ArrayList actualizarClasificacion(ClasificacionVO e, ArrayList clasificacion)
+         private List<ClasificacionVO> actualizarClasificacion(ClasificacionVO e, List<ClasificacionVO> clasificacion)
          {
              
              int i = 0;
@@ -191,7 +179,7 @@ namespace Futbol.Model.FachadaPartidos
              i = 0;
              while (i < clasificacion.Count)
              {
-                 aux = (ClasificacionVO)clasificacion[i];
+                 aux = clasificacion[i];
                  if ((aux.Puntos < e.Puntos) || ((aux.Puntos == e.Puntos) && (e.goal_Average() >= aux.goal_Average())))
                  {
                      clasificacion.Insert(i, e);
@@ -299,12 +287,12 @@ namespace Futbol.Model.FachadaPartidos
 
          }
 
-         public ArrayList actualizarClasificacionCompeticion(int cod_Competicion)
+         public List<ClasificacionVO> actualizarClasificacionCompeticion(int cod_Competicion)
          {
              try
              {
                  ActualizarClasificacionCompeticionAction action = new ActualizarClasificacionCompeticionAction(cod_Competicion);
-                 return ((ArrayList)PlainActionProcessor.process(dbFactory, action));
+                 return ((List<ClasificacionVO>)PlainActionProcessor.process(dbFactory, action));
 
              }
              catch (InternalErrorException e) { throw e; }
@@ -328,36 +316,36 @@ namespace Futbol.Model.FachadaPartidos
 
          }
 
-         public ArrayList buscarCompeticionesTemporada(String temporada)
+         public List<CompeticionConNombreCO> buscarCompeticionesTemporada(String temporada)
          {
              try
              {
                  BuscarCompeticionesTemporadaAction action = new BuscarCompeticionesTemporadaAction(temporada);
-                 return ((ArrayList)PlainActionProcessor.process(dbFactory, action));
+                 return ((List<CompeticionConNombreCO>)PlainActionProcessor.process(dbFactory, action));
 
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }
          }
 
-         public ArrayList buscarTemporadas()
+         public List<string> buscarTemporadas()
          {
              try
              {
                  BuscarTemporadasAction action = new BuscarTemporadasAction();
-                 return ((ArrayList)PlainActionProcessor.process(dbFactory, action));
+                 return ((List<string>)PlainActionProcessor.process(dbFactory, action));
 
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }
          }
 
-         public ArrayList buscarJornadas(int cod_Competicion)
+         public List<TemporadaCO> buscarJornadas(int cod_Competicion)
          {
              try
              {
                  VerJornadasCompeticionAction action = new VerJornadasCompeticionAction(cod_Competicion);
-                 return ((ArrayList)PlainActionProcessor.process(dbFactory, action));
+                 return ((List<TemporadaCO>)PlainActionProcessor.process(dbFactory, action));
 
              }
              catch (InternalErrorException e) { throw e; }
@@ -382,7 +370,7 @@ namespace Futbol.Model.FachadaPartidos
          }
 
 
-         public ArrayList buscarPartidosEquipos (int codLocal,int codVisitante, int cod_Competicion,
+         public List<PartidoCompeticionJornadaCO> buscarPartidosEquipos (int codLocal,int codVisitante, int cod_Competicion,
              String jornada,int flag)
          {
              try
@@ -390,7 +378,7 @@ namespace Futbol.Model.FachadaPartidos
 
                  VerResultadosBusquedaAction action =
                      new VerResultadosBusquedaAction(codLocal, codVisitante, cod_Competicion, jornada,flag);
-                 return ((ArrayList)PlainActionProcessor.process(dbFactory, action));
+                 return ((List<PartidoCompeticionJornadaCO>)PlainActionProcessor.process(dbFactory, action));
 
 
              }
