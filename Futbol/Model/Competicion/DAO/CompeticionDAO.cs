@@ -125,7 +125,7 @@ namespace Futbol.Model.Competicion.DAO
 
         
         
-        public ArrayList listarCompeticiones(DbConnection connection, DbTransaction transaction,
+        public List<CompeticionVO> listarCompeticiones(DbConnection connection, DbTransaction transaction,
             int startIndex, int count)
         {
 
@@ -157,7 +157,7 @@ namespace Futbol.Model.Competicion.DAO
                     return null;
                 }
 
-                ArrayList competiciones = new ArrayList();
+                var competiciones = new List<CompeticionVO>();
                 
                 do
                 {
@@ -254,7 +254,7 @@ namespace Futbol.Model.Competicion.DAO
 
 
 
-        public ArrayList buscarCompeticionesTemporada(DbConnection connection, DbTransaction transaction,
+        public List<CompeticionConNombreCO> buscarCompeticionesTemporada(DbConnection connection, DbTransaction transaction,
             String temporada)
         {
 
@@ -287,7 +287,7 @@ namespace Futbol.Model.Competicion.DAO
                        return null;
                 }
 
-                ArrayList competiciones = new ArrayList();
+                var competiciones = new List<CompeticionConNombreCO>();
 
                 do
                 {
@@ -311,7 +311,7 @@ namespace Futbol.Model.Competicion.DAO
 
 
 
-        public ArrayList buscarTemporadas(DbConnection connection, DbTransaction transaction)
+        public List<string> buscarTemporadas(DbConnection connection, DbTransaction transaction)
         {
 
             DbDataReader dataReader = null;
@@ -337,11 +337,11 @@ namespace Futbol.Model.Competicion.DAO
                     //   return null;
                 }
 
-                ArrayList competiciones = new ArrayList();
+                var competiciones = new List<string>();
 
                 do
                 {
-                    String temporada = dataReader.GetString(0);
+                    var temporada = dataReader.GetString(0);
 
                     competiciones.Add(temporada);
                 }

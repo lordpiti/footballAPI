@@ -39,7 +39,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
 
             EquipoVO equipoVO = equipoTotal.Equipo;
             EstadioVO estadioVO = equipoTotal.Estadio;
-            ArrayList listaJugadores = equipoTotal.ListaJugadores;
+            var listaJugadores = equipoTotal.ListaJugadores;
             ArrayList listaEntrenadores = equipoTotal.ListaEntrenadores;
             ArrayList listaDirectivos = equipoTotal.ListaDirectivos;
 

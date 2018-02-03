@@ -30,7 +30,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
             PartidoDAO partidoDAO=PartidoDAOFactory.GetDAO();
             EquiposParticipanDAO equiposParticipanDAO=EquiposParticipanDAOFactory.GetDAO();
             
-            ArrayList listaEquiposParticipantes=equiposParticipanDAO.verEquiposParticipan(connection,null,cod_Competicion);
+            var listaEquiposParticipantes=equiposParticipanDAO.verEquiposParticipan(connection,null,cod_Competicion);
             
             ArrayList listaPartidosJornada = partidoDAO.verPartidosVOCompeticionJornada(connection,
                 null, cod_Competicion, Convert.ToString(jornada));

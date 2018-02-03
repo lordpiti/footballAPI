@@ -75,7 +75,7 @@ namespace Futbol.Model.EquiposParticipan.DAO
 
 
 
-        public ArrayList verEquiposParticipan(DbConnection connection, DbTransaction transaction,
+        public List<EquiposParticipanVO> verEquiposParticipan(DbConnection connection, DbTransaction transaction,
         int cod_Competicion)
         {
 
@@ -103,7 +103,7 @@ namespace Futbol.Model.EquiposParticipan.DAO
                 }
 
 
-                ArrayList listaEquiposParticipan = new ArrayList();
+                var listaEquiposParticipan = new List<EquiposParticipanVO>();
 
                 do
                 {

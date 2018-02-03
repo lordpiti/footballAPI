@@ -40,7 +40,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
             int cod_PartidoGenerado;
 
             PartidoVO partidoVO = partidoTotalCO.Partido;         
-            ArrayList listaPartidoJugado = partidoTotalCO.PartidosJugados;
+            var listaPartidoJugado = partidoTotalCO.PartidosJugados;
             var listaGoles = partidoTotalCO.Goles;
             var listaCambios = partidoTotalCO.Cambios; 
             var listaTarjetas = partidoTotalCO.Tarjetas;

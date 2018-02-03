@@ -138,7 +138,7 @@ namespace Futbol.Model.Clasificacion.DAO
 
 
 
-        public ArrayList clasificacionJornadaTemporada(DbConnection connection, DbTransaction transaction,
+        public List<ClasificacionCO> clasificacionJornadaTemporada(DbConnection connection, DbTransaction transaction,
         int cod_Competicion, int jornada)
         {
 
@@ -168,7 +168,7 @@ namespace Futbol.Model.Clasificacion.DAO
                 }
 
 
-                ArrayList clasificacionJornada = new ArrayList();
+                var clasificacionJornada = new List<ClasificacionCO>();
 
                 do
                 {
@@ -182,7 +182,7 @@ namespace Futbol.Model.Clasificacion.DAO
                     int golesFavor = dataReader.GetInt32(8);
                     int golesContra = dataReader.GetInt32(9);
                     int puntos = dataReader.GetInt32(10);
-                    ClasificacionCO clasificacionVO =
+                    var clasificacionVO =
                         new ClasificacionCO(cod_Competicion, jornada, posicion, cod_Equipo,nombre,
                         ganados,perdidos,empatados,golesFavor, golesContra, puntos);
                     clasificacionJornada.Add(clasificacionVO);
@@ -205,7 +205,7 @@ namespace Futbol.Model.Clasificacion.DAO
 
 
 
-        public ArrayList listaClasificacionVOsJornadaTemporada(DbConnection connection, DbTransaction transaction,
+        public List<ClasificacionVO> listaClasificacionVOsJornadaTemporada(DbConnection connection, DbTransaction transaction,
          int cod_Competicion, int jornada)
         {
 
@@ -235,7 +235,7 @@ namespace Futbol.Model.Clasificacion.DAO
                 }
 
 
-                ArrayList clasificacionJornada = new ArrayList();
+                var clasificacionJornada = new List<ClasificacionVO>();
 
                 do
                 {
@@ -247,7 +247,7 @@ namespace Futbol.Model.Clasificacion.DAO
                     int golesFavor = dataReader.GetInt32(5);
                     int golesContra = dataReader.GetInt32(6);
                     int puntos = dataReader.GetInt32(7);
-                    ClasificacionVO clasificacionVO =
+                    var clasificacionVO =
                         new ClasificacionVO(cod_Competicion, jornada,cod_Equipo, posicion, 
                         ganados, perdidos, empatados, golesFavor, golesContra, puntos);
                     clasificacionJornada.Add(clasificacionVO);

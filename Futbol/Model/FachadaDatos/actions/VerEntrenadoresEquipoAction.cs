@@ -25,7 +25,7 @@ namespace Futbol.Model.FachadaDatos.Actions
         {
 
             EntrenadorDAO entrenadorDAO = EntrenadorDAOFactory.GetDAO();
-            ArrayList listaEntrenadores = entrenadorDAO.verEntrenadoresEquipo(connection, null, cod_Equipo, 0, 2);
+            var listaEntrenadores = entrenadorDAO.verEntrenadoresEquipo(connection, null, cod_Equipo, 0, 2);
 
             return listaEntrenadores;
         }

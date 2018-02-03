@@ -2,8 +2,8 @@ using Futbol.Model.Cambio.VO;
 using Futbol.Model.Gol.VO;
 using Futbol.Model.Jugador.VO;
 using Futbol.Model.Partido.VO;
+using Futbol.Model.PartidoJugado.VO;
 using Futbol.Model.Tarjeta.VO;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Futbol.Model.FachadaPartidos
@@ -11,12 +11,12 @@ namespace Futbol.Model.FachadaPartidos
     public class PartidoTotalCO
     {
         private PartidoVO partido;
-        private ArrayList partidosJugados;
+        private List<PartidoJugadoVO> partidosJugados;
         public List<JugadorVO> playersLocal { get; set; }
         public List<JugadorVO> playersVisitor { get; set; }
 
 
-        public PartidoTotalCO(PartidoVO partidoVO, ArrayList partidosJugadosVO,
+        public PartidoTotalCO(PartidoVO partidoVO, List<PartidoJugadoVO> partidosJugadosVO,
             List<GolVO> goles)
         {
             this.partido = partidoVO;
@@ -25,7 +25,7 @@ namespace Futbol.Model.FachadaPartidos
         }
 
 
-        public PartidoTotalCO(PartidoVO partidoVO, ArrayList partidosJugadosVO,
+        public PartidoTotalCO(PartidoVO partidoVO, List<PartidoJugadoVO> partidosJugadosVO,
     List<GolVO> goles, List<CambioVO> cambios)
         {
             this.partido = partidoVO;
@@ -35,7 +35,7 @@ namespace Futbol.Model.FachadaPartidos
         }
 
 
-        public PartidoTotalCO(PartidoVO partidoVO, ArrayList partidosJugadosVO,
+        public PartidoTotalCO(PartidoVO partidoVO, List<PartidoJugadoVO> partidosJugadosVO,
 List<GolVO> goles, List<CambioVO> cambios, List<TarjetaVO> tarjetas)
         {
             this.partido = partidoVO;
@@ -55,7 +55,7 @@ List<GolVO> goles, List<CambioVO> cambios, List<TarjetaVO> tarjetas)
         }
 
 
-        public ArrayList PartidosJugados
+        public List<PartidoJugadoVO> PartidosJugados
         {
             get { return partidosJugados; }
             set { partidosJugados = value; }

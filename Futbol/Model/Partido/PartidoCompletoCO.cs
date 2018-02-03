@@ -6,6 +6,7 @@ using Futbol.Model.Equipo.VO;
 using Futbol.Model.Partido.VO;
 using Futbol.Model.Arbitro.VO;
 using Futbol.Model.Estadio.VO;
+using Futbol.Model.Cambio;
 
 namespace Futbol.Model.Partido
 {
@@ -22,8 +23,8 @@ namespace Futbol.Model.Partido
         private ArrayList golesVisitante;
         private ArrayList tarjetasLocal;
         private ArrayList tarjetasVisitante;
-        private ArrayList cambiosLocal;
-        private ArrayList cambiosVisitante;
+        private List<CambioCO> cambiosLocal;
+        private List<CambioCO> cambiosVisitante;
         private EstadioVO estadio;
         private ArbitroVO arbitro;
         private String cronica;
@@ -35,8 +36,8 @@ namespace Futbol.Model.Partido
             ArrayList jugadoresTitularesVisitante,ArrayList jugadoresNoTitularesLocal,
             ArrayList jugadoresNoTitularesVisitante,ArrayList golesLocal,
             ArrayList golesVisitante,ArrayList tarjetasLocal, ArrayList tarjetasVisitante,
-            EstadioVO estadio, ArbitroVO arbitro,String cronica,ArrayList cambiosLocal,
-            ArrayList cambiosVisitante)
+            EstadioVO estadio, ArbitroVO arbitro,String cronica, List<CambioCO> cambiosLocal,
+            List<CambioCO> cambiosVisitante)
         {
             this.equipoLocal = equipoLocal;
             this.equipoVisitante = equipoVisitante;
@@ -154,13 +155,13 @@ namespace Futbol.Model.Partido
             set { arbitro = value; }
         }
 
-        public ArrayList CambiosLocal
+        public List<CambioCO> CambiosLocal
         {
             get { return cambiosLocal; }
             set { cambiosLocal = value; }
         }
 
-        public ArrayList CambiosVisitante
+        public List<CambioCO> CambiosVisitante
         {
             get { return cambiosVisitante; }
             set { cambiosVisitante = value; }

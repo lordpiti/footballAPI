@@ -16,8 +16,8 @@ using Futbol.Model.Competicion.VO;
 using Futbol.Model.Competicion.DAO;
 using Futbol.Model.Gol.VO;
 using Futbol.Model.Gol.DAO;
-
-
+using Futbol.Model.Calendario;
+using Futbol.Model.Clasificacion;
 
 namespace Futbol.Model.FachadaPartidos.Actions
 {
@@ -41,8 +41,8 @@ namespace Futbol.Model.FachadaPartidos.Actions
             ClasificacionDAO clasificacionDAO = ClasificacionDAOFactory.GetDAO();
             CompeticionDAO competicionDAO = CompeticionDAOFactory.GetDAO();
             GolDAO golDAO = GolDAOFactory.GetDAO();
-            ArrayList siguienteJornada=null;
-            ArrayList clasificacion = null;
+            List<CalendarioCO> siguienteJornada =null;
+            List<ClasificacionCO> clasificacion = null;
             CompeticionVO competicion=competicionDAO.buscarCompeticionId(connection,null,cod_Competicion);
             String tipoCompeticion = competicion.Tipo;
             String foto = competicion.Foto;
@@ -57,7 +57,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
                     null, cod_Competicion, Convert.ToString(jornadaNum));
             }
             
-            ArrayList resultados = partidoDAO.verPartidosCompeticionJornada(connection,
+            var resultados = partidoDAO.verPartidosCompeticionJornada(connection,
                 null, cod_Competicion, jornada);
 
             //if (cod_Competicion != 2)
@@ -67,10 +67,10 @@ namespace Futbol.Model.FachadaPartidos.Actions
                     null, cod_Competicion, Int32.Parse(jornada));
             }
             
-            ArrayList jornadasCompeticion = partidoDAO.verJornadasCompeticion(connection,
+            var jornadasCompeticion = partidoDAO.verJornadasCompeticion(connection,
                 null, cod_Competicion);
 
-            ArrayList goleadoresCompeticion = golDAO.listarGoleadoresCompeticion(connection, null, cod_Competicion);
+            var goleadoresCompeticion = golDAO.listarGoleadoresCompeticion(connection, null, cod_Competicion);
            
             return (new EstadoCompeticionCO(clasificacion,siguienteJornada,jornadasCompeticion,
                 resultados,foto,tipoCompeticion,goleadoresCompeticion));

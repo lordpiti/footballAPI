@@ -21,8 +21,7 @@ using Futbol.Model.Arbitro.DAO;
 using Futbol.Model.Tarjeta.VO;
 using Futbol.Model.Tarjeta.DAO;
 using System.Collections;
-
-
+using Futbol.Model.Cambio;
 
 namespace Futbol.Model.FachadaPartidos.Actions
 {
@@ -46,8 +45,8 @@ namespace Futbol.Model.FachadaPartidos.Actions
             ArrayList titularesVisitante;
             ArrayList suplentesLocal=null;
             ArrayList suplentesVisitante=null;
-            ArrayList listaCambiosLocal;
-            ArrayList listaCambiosVisitante;
+            List<CambioCO> listaCambiosLocal;
+            List<CambioCO> listaCambiosVisitante;
             ArrayList listaTarjetasLocal;
             ArrayList listaTarjetasVisitante;
 

@@ -19,7 +19,7 @@ namespace Futbol.Model.FachadaAdmin.COs
         private EntrenadorVO entrenador;
 
 
-        public EntrenadorCO(EntrenadorVO entrenador, ArrayList listaHcoIntegrantes,
+        public EntrenadorCO(EntrenadorVO entrenador, List<HcoIntegranteVO> listaHcoIntegrantes,
             IntegranteVO integrante)
         {
             this.entrenador = entrenador;

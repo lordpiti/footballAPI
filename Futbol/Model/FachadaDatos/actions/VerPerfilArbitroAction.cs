@@ -27,7 +27,7 @@ namespace Futbol.Model.FachadaDatos.Actions
 
             ArbitroDAO arbitroDAO = ArbitroDAOFactory.GetDAO();
             ArbitroVO infoArbitro=arbitroDAO.verArbitro(connection, null, cod_Arbitro);
-            ArrayList partidosArbitro = arbitroDAO.buscarPartidosArbitro(connection, null, cod_Arbitro);
+            var partidosArbitro = arbitroDAO.buscarPartidosArbitro(connection, null, cod_Arbitro);
 
             return new ArbitroCO(infoArbitro, partidosArbitro);
         }

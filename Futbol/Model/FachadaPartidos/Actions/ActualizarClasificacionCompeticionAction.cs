@@ -34,7 +34,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
             ClasificacionDAO clasificacionDAO=ClasificacionDAOFactory.GetDAO();
             EquiposParticipanDAO equiposParticipan=EquiposParticipanDAOFactory.GetDAO();
             CompeticionDAO competicionDAO=CompeticionDAOFactory.GetDAO();
-            ArrayList clasificacion=new ArrayList();
+            var clasificacion=new List<ClasificacionVO>();
 
             
 
@@ -43,7 +43,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
             int ganadosLocal = 0, perdidosLocal = 0, empatadosLocal = 0;
             int ganadosVisitante = 0, perdidosVisitante = 0, empatadosVisitante = 0;
             int jornada = clasificacionDAO.obtenerUltimaJornada(connection, transaction, cod_Competicion);
-            ArrayList listaEquiposParticipantes = equiposParticipan.verEquiposParticipan(connection, transaction, cod_Competicion);
+            var listaEquiposParticipantes = equiposParticipan.verEquiposParticipan(connection, transaction, cod_Competicion);
 
 
             if (clasificacionDAO.listaClasificacionVOsJornadaTemporada(connection,
@@ -52,7 +52,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
                 
                 int contador = 1;
                 
-                foreach (EquiposParticipanVO equipo in listaEquiposParticipantes)
+                foreach (var equipo in listaEquiposParticipantes)
                 {
                     clasificacion.Add(new ClasificacionVO(cod_Competicion, 0, equipo.Cod_Equipo, contador, 0, 0, 0, 0, 0, 0));
                     contador++;
@@ -160,7 +160,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
 
 
 
-        private ArrayList actualizarClasificacion(ClasificacionVO e, ArrayList clasificacion)
+        private List<ClasificacionVO> actualizarClasificacion(ClasificacionVO e, List<ClasificacionVO> clasificacion)
         {
 
             int i = 0;
@@ -169,7 +169,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
             ClasificacionVO aux = null;
             while (i < clasificacion.Count)
             {
-                aux = (ClasificacionVO)clasificacion[i];
+                aux = clasificacion[i];
                 if (e.Cod_Equipo == aux.Cod_Equipo)
                 {
                     target = i;
@@ -182,7 +182,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
             i = 0;
             while (i < clasificacion.Count)
             {
-                aux = (ClasificacionVO)clasificacion[i];
+                aux = clasificacion[i];
                 if ((aux.Puntos < e.Puntos) || ((aux.Puntos == e.Puntos) && (e.goal_Average() >= aux.goal_Average())))
                 {
                     clasificacion.Insert(i, e);

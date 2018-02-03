@@ -99,54 +99,6 @@ namespace Futbol.Model.Jugador.DAO
 
              }
          }
-         
-   
-         
-         
-   /*      public JugadorVO verJugador(DbConnection connection, DbTransaction transaction,int cod_Jugador)
-        {
-
-            DbDataReader dataReader = null;
-            
-            try
-            {
-
-                DbCommand command = connection.CreateCommand();
-                if (transaction != null)
-                {
-                    command.Transaction = transaction;
-                }
-
-                command.CommandText = "SELECT * from Jugador where Cod_Jugador="+cod_Jugador;
-                command.Prepare();
-                
-                dataReader = command.ExecuteReader();
-                
-                if (!dataReader.Read())
-                {
-                    throw new InstanceNotFoundException(1, "algo");
-
-                }
-
-                    int cod_Jugador2 = dataReader.GetInt32(0);
-                    int cod_Integrante = dataReader.GetInt32(1);
-                    int cod_Equipo = dataReader.GetInt32(2);
-                    int version_Integrante = dataReader.GetInt32(3);
-                    float altura = dataReader.GetFloat(4);
-                    String posicion = dataReader.GetString(5);
-                    String pierna = dataReader.GetString(6);
-
-                    return new JugadorVO(cod_Jugador2, cod_Integrante,cod_Equipo, version_Integrante, 
-                        altura, posicion, pierna);
-            }
-            catch (DbException e)
-            {
-                throw new InternalErrorException(e);
-            }
-            finally { dataReader.Close(); }
-        }
-         */
-
 
 
          public ArrayList listarJugadoresEquipo(DbConnection connection, DbTransaction transaction,int cod_Equipo,
@@ -179,7 +131,7 @@ namespace Futbol.Model.Jugador.DAO
                      return null;
                  }
 
-                 ArrayList jugadores = new ArrayList();
+                 var jugadores = new ArrayList();
 
                  do
                  {
@@ -255,7 +207,7 @@ namespace Futbol.Model.Jugador.DAO
 
 
 
-         public ArrayList verPlantillaEquipo(DbConnection connection, DbTransaction transaction, int cod_Equipo,
+         public List<JugadorPlantillaCO> verPlantillaEquipo(DbConnection connection, DbTransaction transaction, int cod_Equipo,
    int startIndex, int count)
          {
              DbDataReader dataReader = null;
@@ -286,7 +238,7 @@ namespace Futbol.Model.Jugador.DAO
                      return null;
                  }
 
-                 ArrayList jugadores = new ArrayList();
+                 var jugadores = new List<JugadorPlantillaCO>();
                  
 
                  do

@@ -86,7 +86,7 @@ namespace Futbol.Model.Cambio.DAO
 
 
 
-        public ArrayList listarCambiosPartidoEquipo(DbConnection connection, DbTransaction transaction,
+        public List<CambioCO> listarCambiosPartidoEquipo(DbConnection connection, DbTransaction transaction,
             int cod_Partido, int cod_Equipo, int startIndex, int count)
         {
             DbDataReader dataReader = null;
@@ -124,7 +124,7 @@ namespace Futbol.Model.Cambio.DAO
                     return null;
                 }
 
-                ArrayList cambios = new ArrayList();
+                var cambios = new List<CambioCO>();
                 
                 do
                 {

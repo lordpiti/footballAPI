@@ -102,7 +102,7 @@ namespace Futbol.Model.Calendario.DAO
 
          
          
-         public ArrayList verCalendarioCompeticionJornada(DbConnection connection, DbTransaction transaction,
+         public List<CalendarioCO> verCalendarioCompeticionJornada(DbConnection connection, DbTransaction transaction,
              int cod_Competicion,String jornada)
         {
 
@@ -135,7 +135,7 @@ namespace Futbol.Model.Calendario.DAO
 
                 }
 
-                ArrayList listaCalendario = new ArrayList();
+                var listaCalendario = new List<CalendarioCO>();
 
                 do
                 {

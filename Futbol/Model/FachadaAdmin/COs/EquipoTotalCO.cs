@@ -10,6 +10,7 @@ using System.Xml;
 using Futbol.Model.Equipo.VO;
 using Futbol.Model.Estadio.VO;
 using Futbol.Model.HcoIntegrante.VO;
+using Futbol.Model.Jugador.VO;
 
 namespace Futbol.Model.FachadaAdmin.COs
 {

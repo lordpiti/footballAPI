@@ -40,7 +40,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
 
             IntegranteVO integranteVO = integranteDAO.verIntegrante(connection, null, cod_Integrante);
             
-            ArrayList listaHcoIntegrante = hcoIntegranteDAO.obtenerListaHcoIntegranteVO(connection, null, cod_Integrante);
+            var listaHcoIntegrante = hcoIntegranteDAO.obtenerListaHcoIntegranteVO(connection, null, cod_Integrante);
             
             HcoIntegranteVO hcoIntegranteVO = (HcoIntegranteVO) listaHcoIntegrante[listaHcoIntegrante.Count - 1];
             

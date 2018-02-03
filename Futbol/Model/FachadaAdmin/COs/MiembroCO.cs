@@ -9,10 +9,10 @@ namespace Futbol.Model.FachadaAdmin.COs
 {
     public class MiembroCO
     {
-        protected ArrayList listaHcoIntegrantes;
+        protected List<HcoIntegranteVO> listaHcoIntegrantes;
         protected IntegranteVO integrante;
 
-        public MiembroCO(IntegranteVO integrante, ArrayList listaHcoIntegrantes)
+        public MiembroCO(IntegranteVO integrante, List<HcoIntegranteVO> listaHcoIntegrantes)
         {
             this.integrante = integrante;
             this.listaHcoIntegrantes = listaHcoIntegrantes;
@@ -29,7 +29,7 @@ namespace Futbol.Model.FachadaAdmin.COs
         }
 
 
-        public ArrayList ListaHcoIntegrantes
+        public List<HcoIntegranteVO> ListaHcoIntegrantes
         {
             get { return listaHcoIntegrantes; }
             set { listaHcoIntegrantes = value; }

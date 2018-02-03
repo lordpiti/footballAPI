@@ -27,7 +27,7 @@ namespace Futbol.Model.FachadaDatos.Actions
 
             EquipoDAO equipoDAO = EquipoDAOFactory.GetDAO();
             EquiposParticipanDAO equiposParticipanDAO = EquiposParticipanDAOFactory.GetDAO();
-            ArrayList listaEquipos = equiposParticipanDAO.verEquiposParticipan(connection, null, cod_Competicion);
+            var listaEquipos = equiposParticipanDAO.verEquiposParticipan(connection, null, cod_Competicion);
 
 
             return listaEquipos;

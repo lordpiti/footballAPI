@@ -191,7 +191,7 @@ namespace Futbol.Model.Arbitro.DAO
 
 
 
-         public ArrayList buscarPartidosArbitro(DbConnection connection, DbTransaction transaction,
+         public List<PartidoCompeticionJornadaCO> buscarPartidosArbitro(DbConnection connection, DbTransaction transaction,
     int cod_Arbitro)
          {
              DbDataReader dataReader = null;
@@ -228,7 +228,7 @@ namespace Futbol.Model.Arbitro.DAO
 
                  }
 
-                 ArrayList partidosJugadosCompeticionJugador = new ArrayList();
+                 var partidosJugadosCompeticionJugador = new List<PartidoCompeticionJornadaCO>();
 
                  do
                  {

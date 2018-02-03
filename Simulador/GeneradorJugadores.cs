@@ -109,7 +109,7 @@ namespace Simulador
                     generador.generarFechaAleatoriaPartido(),DateTime.MinValue, generador.generarFechaAleatoriaPartido(),
                     20000,i);
 
-                ArrayList listaHcoIntegrantes = new ArrayList();
+                var listaHcoIntegrantes = new List<HcoIntegranteVO>();
                 listaHcoIntegrantes.Add(hcoIntegranteVO);
 
                 JugadorVO jugadorVO = new JugadorVO(contador+i, cod_Equipo, generador.generarAltura(), posicion, generador.generarZurdoDiestro());
@@ -165,7 +165,7 @@ namespace Simulador
                     generador.generarFechaAleatoriaPartido(), DateTime.MinValue, generador.generarFechaAleatoriaPartido(),
                     20000, i);
 
-                ArrayList listaHcoIntegrantes = new ArrayList();
+                var listaHcoIntegrantes = new List<HcoIntegranteVO>();
                 listaHcoIntegrantes.Add(hcoIntegranteVO);
 
                 EntrenadorVO entrenadorVO = new EntrenadorVO(contador + i, cod_Equipo, cargo, generador.generarFechaAleatoriaPartido());
@@ -221,7 +221,7 @@ namespace Simulador
                     generador.generarFechaAleatoriaPartido(), DateTime.MinValue, generador.generarFechaAleatoriaPartido(),
                     20000, i);
 
-                ArrayList listaHcoIntegrantes = new ArrayList();
+                var listaHcoIntegrantes = new List<HcoIntegranteVO>();
                 listaHcoIntegrantes.Add(hcoIntegranteVO);
 
                 DirectivoVO directivoVO = new DirectivoVO(contador + i, cod_Equipo, cargo,"abogao");

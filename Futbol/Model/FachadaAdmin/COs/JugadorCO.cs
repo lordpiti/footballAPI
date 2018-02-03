@@ -19,7 +19,7 @@ namespace Futbol.Model.FachadaAdmin.COs
         private JugadorVO jugador;
 
 
-        public JugadorCO(JugadorVO jugador, ArrayList listaHcoIntegrantes,
+        public JugadorCO(JugadorVO jugador, List<HcoIntegranteVO> listaHcoIntegrantes,
             IntegranteVO integrante)
         {
             

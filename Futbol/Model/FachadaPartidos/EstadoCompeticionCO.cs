@@ -15,25 +15,30 @@ using Futbol.Model.Equipo.VO;
 using Futbol.Model.Partido.VO;
 using Futbol.Model.PartidoJugado.VO;
 using Futbol.Model.HcoIntegrante.VO;
+using Futbol.Model.Calendario;
+using Futbol.Model.Clasificacion;
+using Futbol.Model.Gol;
+using Futbol.Model.Partido;
+using Futbol.Model.PartidoJugado;
 
 namespace Futbol.Model.FachadaPartidos
 {
     public class EstadoCompeticionCO
     {
-        private ArrayList clasificacion;
-        private ArrayList siguienteJornada;
-        private ArrayList restoJornadas;
-        private ArrayList resultados;
+        private List<ClasificacionCO> clasificacion;
+        private List<CalendarioCO> siguienteJornada;
+        private List<TemporadaCO> restoJornadas;
+        private List<PartidoCompeticionJornadaCO> resultados;
         private String foto;
         private String tipoCompeticion;
-        private ArrayList listaGoleadores;
+        private List<GoleadorCO> listaGoleadores;
 
 
 
 
-        public EstadoCompeticionCO(ArrayList clasificacion, ArrayList siguienteJornada,
-            ArrayList restoJornadas,ArrayList resultados,String foto,String tipoCompeticion,
-            ArrayList listaGoleadores)
+        public EstadoCompeticionCO(List<ClasificacionCO> clasificacion, List<CalendarioCO> siguienteJornada,
+            List<TemporadaCO> restoJornadas,List<PartidoCompeticionJornadaCO> resultados,String foto,String tipoCompeticion,
+            List<GoleadorCO> listaGoleadores)
         {
             this.clasificacion = clasificacion;
             this.siguienteJornada = siguienteJornada;
@@ -45,27 +50,27 @@ namespace Futbol.Model.FachadaPartidos
         }
 
 
-        public ArrayList Clasificacion
+        public List<ClasificacionCO> Clasificacion
         {
             get { return clasificacion; }
             set { clasificacion = value; }
         }
 
 
-        public ArrayList Resultados
+        public List<PartidoCompeticionJornadaCO> Resultados
         {
             get { return resultados; }
             set { resultados = value; }
         }
 
 
-        public ArrayList SiguienteJornada
+        public List<CalendarioCO> SiguienteJornada
         {
             get { return siguienteJornada; }
             set { siguienteJornada = value; }
         }
 
-        public ArrayList RestoJornadas
+        public List<TemporadaCO> RestoJornadas
         {
             get { return restoJornadas; }
             set { restoJornadas = value; }
@@ -83,7 +88,7 @@ namespace Futbol.Model.FachadaPartidos
             set { tipoCompeticion = value; }
         }
 
-        public ArrayList ListaGoleadores
+        public List<GoleadorCO> ListaGoleadores
         {
             get { return listaGoleadores; }
             set { listaGoleadores = value; }

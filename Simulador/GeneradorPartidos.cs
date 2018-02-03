@@ -71,7 +71,7 @@ namespace Simulador
 
             ArrayList jugadoresLocal = generar11Titular(codLocal);
             ArrayList jugadoresVisitante = generar11Titular(codVisitante);
-            ArrayList listaPartidosJugados = new ArrayList();
+            var listaPartidosJugados = new List<PartidoJugadoVO>();
             var golesLocal=new List<GolVO>();
             var golesVisitante = new List<GolVO>();
 
@@ -138,7 +138,7 @@ namespace Simulador
             numeroTarjetas = rand.Next(0, 6);
             for (int i = 0; i < numeroTarjetas; i++)
             {
-                TarjetaVO tarjeta = new TarjetaVO(((JugadorVO)jugadoresVisitante[i]).Cod_Jugador,
+                var tarjeta = new TarjetaVO(((JugadorVO)jugadoresVisitante[i]).Cod_Jugador,
                     rand.Next(0, 90), "Amarilla", "Juego violento");
                 tarjetasVisitante.Add(tarjeta);
             }

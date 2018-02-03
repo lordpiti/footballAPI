@@ -383,7 +383,7 @@ namespace Futbol.Model.HcoIntegrante.DAO
          }
     
 
-         public ArrayList obtenerListaHcoIntegranteVO(DbConnection connection, 
+         public List<HcoIntegranteVO> obtenerListaHcoIntegranteVO(DbConnection connection, 
              DbTransaction transaction,int cod_Integrante)
          {
              DbDataReader dataReader = null;
@@ -415,7 +415,7 @@ namespace Futbol.Model.HcoIntegrante.DAO
                      throw new InstanceNotFoundException(1, "hcoint");
                  }
 
-                 ArrayList historial = new ArrayList();
+                 var historial = new List<HcoIntegranteVO>();
                  
 
                  do

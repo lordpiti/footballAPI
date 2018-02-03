@@ -24,8 +24,8 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
-            ArrayList listaJugadores = jugadorDAO.verPlantillaEquipo(connection, null, cod_Equipo, 0, 2);
+            var jugadorDAO = JugadorDAOFactory.GetDAO();
+            var listaJugadores = jugadorDAO.verPlantillaEquipo(connection, null, cod_Equipo, 0, 2);
 
             return listaJugadores;
         }

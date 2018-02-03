@@ -199,7 +199,7 @@ namespace Futbol.Model.Gol.DAO
         }
 
 
-        public ArrayList listarGoleadoresCompeticion(DbConnection connection, DbTransaction transaction,
+        public List<GoleadorCO> listarGoleadoresCompeticion(DbConnection connection, DbTransaction transaction,
             int cod_Competicion)
         {
             DbDataReader dataReader = null;
@@ -232,7 +232,7 @@ namespace Futbol.Model.Gol.DAO
 
                 }
 
-                ArrayList goleadores = new ArrayList();
+                var goleadores = new List<GoleadorCO>();
 
                 do
                 {

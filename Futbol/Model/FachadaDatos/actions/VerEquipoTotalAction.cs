@@ -35,9 +35,9 @@ namespace Futbol.Model.FachadaDatos.Actions
             EstadioDAO estadioDAO=EstadioDAOFactory.GetDAO();
             EquipoVO equipo = equipoDAO.buscarEquipoId(connection, null, cod_Equipo);
             EstadioVO estadio= estadioDAO.buscarEstadioId(connection,null,equipo.Cd_Estadio);
-            ArrayList listaJugadores = jugadorDAO.listarJugadoresEquipo(connection, null,
+            var listaJugadores = jugadorDAO.listarJugadoresEquipo(connection, null,
                 cod_Equipo, 0, 2);   
-            ArrayList listaEntrenadores = entrenadorDAO.verEntrenadoresEquipo(connection, null, cod_Equipo, 0, 2);
+            var listaEntrenadores = entrenadorDAO.verEntrenadoresEquipo(connection, null, cod_Equipo, 0, 2);
             ArrayList listaDirectivos = directivoDAO.verDirectivosEquipo(connection, null, cod_Equipo, 0, 2);
 
             return new EquipoTotalCO(equipo, listaJugadores, listaEntrenadores, listaDirectivos, estadio);
