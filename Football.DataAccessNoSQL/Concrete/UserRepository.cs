@@ -83,7 +83,8 @@ namespace Football.DataAccessNoSQL.Concrete
                     Email = loginResponse.Email,
                     UserId = loginResponse.Id,
                     Name = loginResponse.Name,
-                    AuthenticationType = loginResponse.AuthenticationType
+                    AuthenticationType = loginResponse.AuthenticationType,
+                    Role = loginResponse.Role
                 };
 
                 var collection = _mongoDb.GetCollection<BsonDocument>("users");

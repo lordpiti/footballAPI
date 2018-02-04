@@ -16,5 +16,7 @@ namespace Football.Crosscutting.ViewModels.User
         public string Name { get; set; }
 
         public LoginTypeEnum AuthenticationType { get; set; }
+
+        public string Role { get; set; }
     }
 }
