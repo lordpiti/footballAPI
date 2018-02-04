@@ -43,7 +43,7 @@ namespace Football.API.Filters
                         new ContentResult()
                         {
                             StatusCode = 403,
-                            Content = "Short circuit filter"
+                            Content = "Short circuit filter1"
                         };
                 }
             }
@@ -53,7 +53,7 @@ namespace Football.API.Filters
                 filterContext.Result = //new UnauthorizedResult() { };
                 new ContentResult()
                 {   StatusCode = 403,
-                    Content = "Short circuit filter"
+                    Content = "Short circuit filter2"
                 };
             }
 
