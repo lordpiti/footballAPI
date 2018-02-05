@@ -53,7 +53,7 @@ namespace Football.API.Filters
                 filterContext.Result = //new UnauthorizedResult() { };
                 new ContentResult()
                 {   StatusCode = 403,
-                    Content = "Short circuit filter2"
+                    Content = "Short circuit filter2"+ string.Join(",", filterContext.HttpContext.Request.Headers.ToArray()).ToString()
                 };
             }
 
