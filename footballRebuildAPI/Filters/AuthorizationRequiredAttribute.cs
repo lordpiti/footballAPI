@@ -22,7 +22,7 @@ namespace Football.API.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.Request.Headers.Any(x=>x.Key==Token && !string.IsNullOrEmpty(x.Value)))
+            if (filterContext.HttpContext.Request.Headers.Any(x=>x.Key.ToLower()==Token.ToLower() && !string.IsNullOrEmpty(x.Value)))
             {
                 var tokenAndAuthenticationTypeJSON = filterContext.HttpContext.Request.Headers.FirstOrDefault(x=>x.Key==Token).Value;
 
