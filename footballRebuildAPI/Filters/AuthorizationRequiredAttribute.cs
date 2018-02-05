@@ -14,10 +14,12 @@ namespace Football.API.Filters
     {
         private const string Token = "authenticationToken";
         private IUserService _userService;
+        private string[] _roles;
 
-        public AuthorizationRequiredAttribute(IUserService userService)
+        public AuthorizationRequiredAttribute(IUserService userService, string[] roles = null)
         {
             _userService = userService;
+            _roles = roles;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -43,8 +45,20 @@ namespace Football.API.Filters
                         new ContentResult()
                         {
                             StatusCode = 403,
-                            Content = "Short circuit filter1"
+                            Content = "User not authorised - authentication token invalid"
                         };
+                }
+                else
+                {
+                    if (_roles!=null && !_roles.Contains(eo.Role))
+                    {
+                        filterContext.Result = //new UnauthorizedResult() { };
+                        new ContentResult()
+                        {
+                            StatusCode = 403,
+                            Content = "User not authorised - Not enough privileges to access"
+                        };
+                    }
                 }
             }
             else
@@ -53,8 +67,9 @@ namespace Football.API.Filters
                 filterContext.Result = //new UnauthorizedResult() { };
                 new ContentResult()
                 {   StatusCode = 403,
-                    Content = "Short circuit filter2"+ string.Join(",", filterContext.HttpContext.Request.Headers.ToArray()).ToString()
+                    Content = "Missing authentication token in the request"
                 };
+                //ver headers = string.Join(",", filterContext.HttpContext.Request.Headers.ToArray()).ToString()
             }
 
             base.OnActionExecuting(filterContext);

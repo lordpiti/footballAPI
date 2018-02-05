@@ -14,7 +14,8 @@ using Football.API.Filters;
 namespace Football.API.Controllers
 {
     [Route("api/[controller]")]
-    [ServiceFilter(typeof(AuthorizationRequiredAttribute))]
+    //https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters
+    [TypeFilter(typeof(AuthorizationRequiredAttribute), Arguments = new object[] { new string[] { "Admin", "Lord" } })]
     public class CompetitionController : Controller
     {
         private readonly ICompetitionService _competitionService;
