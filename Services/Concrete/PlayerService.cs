@@ -44,5 +44,10 @@ namespace Services.Concrete
         {
             return await _playerRepository.UpdatePlayer(player);
         }
+
+        public async Task<List<Player>> GetPlayersFromList(List<int> playerIdList)
+        {
+            return await _playerRepository.GetPlayersFromList(playerIdList);
+        }
     }
 }

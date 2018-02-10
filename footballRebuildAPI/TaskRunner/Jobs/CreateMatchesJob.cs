@@ -14,6 +14,7 @@ using Futbol.Model.Competicion.VO;
 using System.Linq;
 using Football.Crosscutting.ViewModels.Match;
 using System.Collections.Generic;
+using Services.Interface;
 
 namespace Football.API.TaskRunner.Jobs
 {
@@ -30,9 +31,6 @@ namespace Football.API.TaskRunner.Jobs
         {
             try
             {
-                var serviceProvider = ServiceConfiguration.ConsoleProvider;
-
-                var chatHub = serviceProvider.GetService<IHubContext<LoopyHub>>();
                 var bubu = Startup.Provider.GetService<IHubContext<LoopyHub>>();
 
                 var generadorCosas = new GeneradorCosas();
@@ -60,13 +58,13 @@ namespace Football.API.TaskRunner.Jobs
                 for (int i=1;i<10;i++)
                 {
                     var cont = i;
-                    var part = (Jornada)matchSet[cont];
+                    var part = matchSet[cont];
                     
                     var task = new Task(async () =>
                     {
                         var match = generador.generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, false);
 
-                        var events = GenerateEventListForGame(match, cont);
+                        var events = await GenerateEventListForGame(match, cont);
                         await bubu.Clients.All.InvokeAsync("SendCreateMatch", 
                             new { matchToCreate = match,
                                 matchId = cont,
@@ -99,33 +97,46 @@ namespace Football.API.TaskRunner.Jobs
             return true;
         }
 
-        private List<MatchEventRT> GenerateEventListForGame(PartidoTotalCO partido, int matchId)
+        private async Task<List<MatchEventRT>> GenerateEventListForGame(PartidoTotalCO partido, int matchId)
         {
+            //call server to get player list
+
             var events = new List<MatchEventRT>();
+            //var _playerService = Startup.Provider.GetService<IPlayerService>();
+            var serviceProvider = ServiceConfiguration.ConsoleProvider;
+            var _playerService = serviceProvider.GetService<IPlayerService>();
+
+            var playerIds = partido.PartidosJugados.Select(x => x.Cod_Jugador).ToList();
+            var players = await _playerService.GetPlayersFromList(playerIds);
+
 
             var cards = partido.Tarjetas.Select(x => new MatchEventRT()
             {
-                Description = "",
+                Description = x.Tipo + " card",
                 MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.RedCard,
                 Minute = x.Minuto,
-                MatchId = matchId
-            });
+                MatchId = matchId,
+                Player1 = players.FirstOrDefault(y => y.PlayerId == x.Cd_Jugador)
+            }).ToList();
 
             var substitutions = partido.Cambios.Select(x => new MatchEventRT()
             {
-                Description = "",
+                Description = "Substitution",
                 MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.Substitution,
                 Minute = x.Minuto,
-                MatchId = matchId
-            });
+                MatchId = matchId,
+                Player1 = players.FirstOrDefault(y => y.PlayerId == x.Cd_Jugador_Sale),
+                Player2 = players.FirstOrDefault(y => y.PlayerId == x.Cd_Jugador_Entra)
+            }).ToList();
 
-            var goals = partido.Cambios.Select(x => new MatchEventRT()
+            var goals = partido.Goles.Select(x => new MatchEventRT()
             {
-                Description = "",
+                Description = "Goal",
                 MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.Goal,
                 Minute = x.Minuto,
-                MatchId = matchId
-            });
+                MatchId = matchId,
+                Player1 = players.FirstOrDefault(y => y.PlayerId == x.Cd_Jugador)
+            }).ToList();
 
             events.AddRange(cards);
             events.AddRange(substitutions);

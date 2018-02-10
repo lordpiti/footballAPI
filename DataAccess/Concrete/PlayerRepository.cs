@@ -80,6 +80,25 @@ namespace DataAccess.Concrete
             };
         }
 
+        public async Task<List<Player>> GetPlayersFromList(List<int> playerIdList)
+        {
+            var playersFromDb = await _context.Jugador.Include(x => x.CodIntegranteNavigation).Where(x => playerIdList.Any(y => x.CodJugador == y )).ToListAsync();
+
+            return playersFromDb.Select(playerFromDb => new Player()
+            {
+                BirthDate = playerFromDb.CodIntegranteNavigation.FechaNac,
+                Name = playerFromDb.CodIntegranteNavigation.Nombre,
+                Picture = playerFromDb.CodIntegranteNavigation.Picture != null ? new BlobData()
+                {
+                    FileName = playerFromDb.CodIntegranteNavigation.Picture.FileName,
+                    ContainerReference = playerFromDb.CodIntegranteNavigation.Picture.BlobStorageContainer
+                } : new BlobData() { },
+                Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
+                Height = playerFromDb.Altura,
+                PlayerId = playerFromDb.CodJugador
+            }).ToList();
+        }
+
         public async Task<int> UpdatePlayer(Player player)
         {
             try

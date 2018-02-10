@@ -18,5 +18,7 @@ namespace DataAccess.Interface
         Task<Player> GetPlayer(int playerId);
 
         Task<int> UpdatePlayer(Player player);
+
+        Task<List<Player>> GetPlayersFromList(List<int> playerIdList);
     }
 }

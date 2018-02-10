@@ -20,7 +20,7 @@ namespace Services
         {
             return DataAccessLayerBindings
                 .AddDataAccessLayerBindings(services, configuration)
-                .AddScoped<IPlayerRepository, PlayerRepository>()
+                .AddTransient<IPlayerRepository, PlayerRepository>()
                 .AddScoped<ICompetitionRepository, CompetitionRepository>()
                 .AddScoped<ITeamRepository, TeamRepository>()
                 .AddScoped<IUserRepository, UserRepository>();

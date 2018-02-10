@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting.Enums;
+﻿using Crosscutting.ViewModels;
+using Football.Crosscutting.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace Football.Crosscutting.ViewModels.Match
 
         public string Description { get; set; }
 
-        public int Player1 { get; set; }
+        public Player Player1 { get; set; }
 
-        public int? Player2 { get; set; }
+        public Player Player2 { get; set; }
     }
 }
