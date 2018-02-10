@@ -20,13 +20,12 @@ namespace Football.API.Config
 {
     public static class ServiceConfiguration
     {
-        private static void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services, bool transient = false)
         {
 
             ServiceLayerBindings
-                .AddServiceLayerBindings(services, Configuration)
+                .AddServiceLayerBindings(services, Configuration, transient)
                 .AddOptions()
-                //.AddScoped<IPlayerService, PlayerService>()
                 .AddScoped<ITeamService, TeamService>()
                 .AddScoped<ICompetitionService, CompetitionService>()
                 .AddScoped<IBlobStorageService, BlobStorageService>()
@@ -42,7 +41,7 @@ namespace Football.API.Config
         public static void ConfigureAPIServices(IServiceCollection services)
         {
             
-            ConfigureServices(services);
+            ConfigureServices(services, false);
             services.AddScoped<IPlayerService, PlayerService>();
         }
 
@@ -74,7 +73,7 @@ namespace Football.API.Config
             Configuration = builder.Build();
 
             var services = new ServiceCollection();
-            ConfigureServices(services);
+            ConfigureServices(services, true);
             services.AddTransient<IPlayerService, PlayerService>();
 
             services.AddSingleton<JobRunnerConfigService>()

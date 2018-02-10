@@ -10,13 +10,23 @@ namespace DataAccess
 {
     public static class DataAccessLayerBindings
     {
-        public static IServiceCollection AddDataAccessLayerBindings(IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddDataAccessLayerBindings(IServiceCollection services, IConfigurationRoot configuration, bool transient = false)
         {
             var connectionString = configuration.GetSection("AppSettings:ConnectionString").Value;
 
-            services
-                .AddDbContext<c__database_futbol_mdfContext>(options =>
-                options.UseSqlServer(connectionString));
+            if (transient)
+            {
+                services
+                    .AddDbContext<c__database_futbol_mdfContext>(options =>
+                    options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+            }
+            else
+            {
+                services
+                    .AddDbContext<c__database_futbol_mdfContext>(options =>
+                    options.UseSqlServer(connectionString));
+            }
+
             return services;
         }
     }

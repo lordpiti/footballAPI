@@ -53,6 +53,13 @@ namespace Football.API.TaskRunner.Jobs
                 int numeroJornada = 1;
 
                 var matchSet = calendario[0];
+
+                await bubu.Clients.All.InvokeAsync("StartSimulation",
+                new
+                {
+                    eventType = "startSimulation"
+                });
+
                 var taskList = new List<Task>();
 
                 for (int i=1;i<10;i++)

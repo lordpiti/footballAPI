@@ -16,14 +16,24 @@ namespace Services
 {
     public static class ServiceLayerBindings
     {
-        public static IServiceCollection AddServiceLayerBindings(IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddServiceLayerBindings(IServiceCollection services, IConfigurationRoot configuration, bool transient = false)
         {
-            return DataAccessLayerBindings
-                .AddDataAccessLayerBindings(services, configuration)
-                .AddTransient<IPlayerRepository, PlayerRepository>()
+            var servicesOutput = DataAccessLayerBindings
+                .AddDataAccessLayerBindings(services, configuration, transient)
                 .AddScoped<ICompetitionRepository, CompetitionRepository>()
                 .AddScoped<ITeamRepository, TeamRepository>()
                 .AddScoped<IUserRepository, UserRepository>();
+
+            if (transient)
+            {
+                servicesOutput.AddTransient<IPlayerRepository, PlayerRepository>();
+            }
+            else
+            {
+                servicesOutput.AddScoped<IPlayerRepository, PlayerRepository>();
+            }
+
+            return servicesOutput;
         }
     }
 
