@@ -48,7 +48,9 @@ namespace Football.DataAccess.Concrete
                 {
                     Name = x.CodIntegranteNavigation.Nombre,
                     Surname = x.CodIntegranteNavigation.Apellidos,
-                    TeamName = teamFromBD.Nombre
+                    TeamName = teamFromBD.Nombre,
+                    BirthDate = x.CodIntegranteNavigation.FechaNac,
+                    Position = x.Posicion
                 }).ToList()
             };
 
@@ -147,5 +149,28 @@ namespace Football.DataAccess.Concrete
             };
         }
 
+        public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
+            int competitionId)
+        {
+            var clasificationSeasonData = await _context.Clasificacion.Include(x => x.CodCompeticionNavigation)
+                .Where(x => x.CodEquipo == teamId && x.CodCompeticion == competitionId)
+                .Select(x => new ClasificationRoundData()
+                {
+                    Position = x.Posicion,
+                    GoalsAgainst = x.GolesContra,
+                    GoalsFor = x.GolesFavor,
+                    Round = x.Jornada
+                })
+                .OrderBy(x => x.Round).ToListAsync();
+
+            var team = await _context.Equipo.FirstOrDefaultAsync(x => x.CodEquipo == teamId);
+
+            return new ClasificationChartData()
+            {
+                Season = "",
+                TeamName = team.Nombre,
+                ClasificationSeasonData = clasificationSeasonData
+            };
+        }
     }
 }

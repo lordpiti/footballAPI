@@ -51,5 +51,13 @@ namespace Football.API.Controllers
         {
             return await _teamService.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
         }
+
+        [Route("Clasification/{teamId}/competition/{competitionId}")]
+        [HttpGet]
+        public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
+            int competitionId)
+        {
+            return await _teamService.GetTeamSeasonClasificationChartData(teamId, competitionId);
+        }
     }
 }
