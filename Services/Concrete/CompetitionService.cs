@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Football.Services.Concrete
 {
@@ -65,6 +66,25 @@ namespace Football.Services.Concrete
         public async Task<List<Scorer>> GetTopScorers(int competitionId, string round)
         {
             return await _competitionRepository.GetTopScorers(competitionId, round);
+        }
+
+        public async Task<TournamentDraw> GetDraw(int competitionId)
+        {
+            var draw = await _competitionRepository.GetDraw(competitionId);
+
+            foreach (var item in draw.EightLeft
+                .Concat(draw.EightRight)
+                .Concat(draw.QuarterFinalsLeft)
+                .Concat(draw.QuarterFinalsRight)
+                .Concat(new List<MatchGeneralInfo>() { draw.SemifinalsLeft })
+                .Concat(new List<MatchGeneralInfo>() { draw.SemifinalsRight })
+                .Concat(new List<MatchGeneralInfo>() { draw.Final }))
+            {
+                _blobStorageService.PopulateUrlForBlob(item.LocalTeam.PictureLogo);
+                _blobStorageService.PopulateUrlForBlob(item.VisitorTeam.PictureLogo);
+            }
+
+            return draw;
         }
     }
 }

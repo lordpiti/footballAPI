@@ -19,5 +19,7 @@ namespace Football.Services.Interface
         Task<Competition> GetCompetitionById(int competitionId);
 
         Task<List<Scorer>> GetTopScorers(int competitionId, string round);
+
+        Task<TournamentDraw> GetDraw(int competitionId);
     }
 }

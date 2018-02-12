@@ -77,7 +77,7 @@ namespace Football.BlobStorage
             }
         }
 
-        private string GetUrlForBlog(string blobReference, string blobContainerReference)
+        private string getUrlForBlog(string blobReference, string blobContainerReference)
         {
             if (!string.IsNullOrEmpty(blobReference) && !string.IsNullOrEmpty(blobContainerReference))
             {
@@ -94,7 +94,7 @@ namespace Football.BlobStorage
         {
             if (data != null)
             {
-                data.Url = this.GetUrlForBlog(data.FileName, data.ContainerReference);
+                data.Url = getUrlForBlog(data.FileName, data.ContainerReference);
             }
         }
     }

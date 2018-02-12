@@ -347,5 +347,148 @@ namespace Football.DataAccess.Concrete
                 return null;
             }
         }
+
+        public async Task<TournamentDraw> GetDraw(int competitionId)
+        {
+            var sixteen = await _context.Partido
+                .Include(x => x.CodLocalNavigation.TeamPicture)
+                .Include(x => x.CodVisitanteNavigation.TeamPicture)
+                .Include(x => x.CodEstadioNavigation)
+                .Where(match => match.CodCompeticion == competitionId && match.Jornada == "1/8 Final")
+                .Select(x => createMatchFromDb(x))
+                .ToListAsync();
+
+            var eight = await _context.Partido
+                .Include(x => x.CodLocalNavigation.TeamPicture)
+                .Include(x => x.CodVisitanteNavigation.TeamPicture)
+                .Include(x => x.CodEstadioNavigation)
+                .Where(match => match.CodCompeticion == competitionId && match.Jornada == "1/4 Final")
+                .Select(x => createMatchFromDb(x))
+                .ToListAsync();
+
+            var semifinals = await _context.Partido
+                .Include(x => x.CodLocalNavigation.TeamPicture)
+                .Include(x => x.CodVisitanteNavigation.TeamPicture)
+                .Include(x => x.CodEstadioNavigation)
+                .Where(match => match.CodCompeticion == competitionId &&  match.Jornada == "Semifinal")
+                .Select(x => createMatchFromDb(x))
+                .ToListAsync();
+
+            var final = await _context.Partido
+                .Include(x => x.CodLocalNavigation.TeamPicture)
+                .Include(x => x.CodVisitanteNavigation.TeamPicture)
+                .Include(x => x.CodEstadioNavigation)
+                .FirstOrDefaultAsync(match => match.CodCompeticion == competitionId && match.Jornada == "Final");
+
+            var finalMatch = createMatchFromDb(final);
+
+            #region SF
+
+            var semifinalLeft = getMatchPreviousRound(finalMatch.LocalTeam.Id, semifinals);
+            var semifinalRight = getMatchPreviousRound(finalMatch.VisitorTeam.Id, semifinals);
+
+            #endregion
+
+            #region QF
+
+            var qfListLeft = new List<MatchGeneralInfo>();
+
+            var qfLeft1 = getMatchPreviousRound(semifinalLeft.LocalTeam.Id, eight);
+            var qfLeft2 = getMatchPreviousRound(semifinalLeft.VisitorTeam.Id, eight);
+
+            qfListLeft.Add(qfLeft1);
+            qfListLeft.Add(qfLeft2);
+
+            var qfListRight = new List<MatchGeneralInfo>();
+
+            var qfRight1 = getMatchPreviousRound(semifinalRight.LocalTeam.Id, eight);
+            var qfRight2 = getMatchPreviousRound(semifinalRight.VisitorTeam.Id, eight);
+
+            qfListRight.Add(qfRight1);
+            qfListRight.Add(qfRight2);
+
+            #endregion
+
+            #region last 16
+
+            var last16Left = new List<MatchGeneralInfo>();
+
+            foreach (var item in qfListLeft)
+            {
+                var prev1 = getMatchPreviousRound(item.LocalTeam.Id, sixteen);
+                var prev2 = getMatchPreviousRound(item.VisitorTeam.Id, sixteen);
+
+                last16Left.Add(prev1);
+                last16Left.Add(prev2);
+            }
+
+            var last16Right = new List<MatchGeneralInfo>();
+
+            foreach (var item in qfListRight)
+            {
+                var prev1 = getMatchPreviousRound(item.LocalTeam.Id, sixteen);
+                var prev2 = getMatchPreviousRound(item.VisitorTeam.Id, sixteen);
+
+                last16Right.Add(prev1);
+                last16Right.Add(prev2);
+            }
+
+            #endregion
+
+            return new TournamentDraw()
+            {
+                EightLeft = last16Left,
+                EightRight = last16Right,
+                QuarterFinalsLeft = qfListLeft,
+                QuarterFinalsRight = qfListRight,
+                SemifinalsLeft = semifinalLeft,
+                SemifinalsRight = semifinalRight,
+                Final = finalMatch
+            };
+        }
+
+        private MatchGeneralInfo createMatchFromDb(Partido match)
+        {
+            return new MatchGeneralInfo()
+            {
+                Date = match.Fecha,
+                GoalsLocal = match.GolesLocal,
+                GoalsVisitor = match.GolesVisitante,
+                LocalTeam = new Team()
+                {
+                    Id = match.CodLocal,
+                    Name = match.CodLocalNavigation.Nombre,
+                    PictureLogo = match.CodLocalNavigation.TeamPicture != null ? new Crosscutting.BlobData()
+                    {
+                        ContainerReference = match.CodLocalNavigation.TeamPicture.BlobStorageContainer,
+                        FileName = match.CodLocalNavigation.TeamPicture.BlobStorageReference
+                    } : new Crosscutting.BlobData()
+                },
+                VisitorTeam = new Team()
+                {
+                    Id = match.CodVisitante,
+                    Name = match.CodVisitanteNavigation.Nombre,
+                    PictureLogo = match.CodVisitanteNavigation.TeamPicture != null ? new Crosscutting.BlobData()
+                    {
+                        ContainerReference = match.CodVisitanteNavigation.TeamPicture.BlobStorageContainer,
+                        FileName = match.CodVisitanteNavigation.TeamPicture.BlobStorageReference
+                    } : new Crosscutting.BlobData()
+                },
+                MatchId = match.CodPartido,
+                Stadium = new Stadium()
+                {
+                    Id = match.CodEstadio,
+                    Name = match.CodEstadioNavigation.Nombre
+                }
+            };
+        }
+
+        private MatchGeneralInfo getMatchPreviousRound(int teamId, 
+            List<MatchGeneralInfo> allGamesPreviousRound)
+        {
+            return allGamesPreviousRound.FirstOrDefault(x => x.LocalTeam.Id == teamId
+                || x.VisitorTeam.Id == teamId);
+
+        }
     }
 }

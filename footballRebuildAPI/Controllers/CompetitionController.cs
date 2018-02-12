@@ -15,7 +15,7 @@ namespace Football.API.Controllers
 {
     [Route("api/[controller]")]
     //https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters
-    [TypeFilter(typeof(AuthorizationRequiredAttribute), Arguments = new object[] { new string[] { "Admin", "Lord" } })]
+    //[TypeFilter(typeof(AuthorizationRequiredAttribute), Arguments = new object[] { new string[] { "Admin", "Lord" } })]
     public class CompetitionController : Controller
     {
         private readonly ICompetitionService _competitionService;
@@ -61,6 +61,13 @@ namespace Football.API.Controllers
         public async Task<List<Scorer>> GetTopScorers(int competitionId, string round)
         {
             return await _competitionService.GetTopScorers(competitionId, round);
+        }
+
+        [HttpGet]
+        [Route("{competitionId}/getDraw")]
+        public async Task<TournamentDraw> GetDraw(int competitionId)
+        {
+            return await _competitionService.GetDraw(competitionId);
         }
     }
 }
