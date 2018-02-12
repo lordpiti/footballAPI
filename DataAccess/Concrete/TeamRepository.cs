@@ -50,7 +50,8 @@ namespace Football.DataAccess.Concrete
                     Surname = x.CodIntegranteNavigation.Apellidos,
                     TeamName = teamFromBD.Nombre,
                     BirthDate = x.CodIntegranteNavigation.FechaNac,
-                    Position = x.Posicion
+                    Position = x.Posicion,
+                    PlayerId = x.CodJugador
                 }).ToList()
             };
 
