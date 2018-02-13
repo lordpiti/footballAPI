@@ -36,7 +36,14 @@ namespace Football.Services.Concrete
 
         public async Task<List<Team>> GetAllTeams(int? competitionId = null)
         {
-            return await _teamRepository.GetAllTeams(competitionId);
+            var teams = await _teamRepository.GetAllTeams(competitionId);
+
+            foreach (var team in teams)
+            {
+                _blobStorageService.PopulateUrlForBlob(team.PictureLogo);
+            }
+
+            return teams;
         }
 
         public async Task AddTeamPicture(int teamId, BlobData mediaItem)
