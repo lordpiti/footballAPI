@@ -21,16 +21,17 @@ namespace Services
             var servicesOutput = DataAccessLayerBindings
                 .AddDataAccessLayerBindings(services, configuration, transient)
                 .AddScoped<ICompetitionRepository, CompetitionRepository>()
-                .AddScoped<ITeamRepository, TeamRepository>()
                 .AddScoped<IUserRepository, UserRepository>();
 
             if (transient)
             {
-                servicesOutput.AddTransient<IPlayerRepository, PlayerRepository>();
+                servicesOutput.AddTransient<IPlayerRepository, PlayerRepository>()
+                                .AddTransient<ITeamRepository, TeamRepository>();
             }
             else
             {
-                servicesOutput.AddScoped<IPlayerRepository, PlayerRepository>();
+                servicesOutput.AddScoped<IPlayerRepository, PlayerRepository>()
+                                .AddScoped<ITeamRepository, TeamRepository>();
             }
 
             return servicesOutput;

@@ -32,6 +32,7 @@ namespace Football.DataAccess.Concrete
             {
                 Id = id,
                 Name = teamFromBD.Nombre,
+                City = teamFromBD.Localidad,
                 Stadium = new Stadium()
                 {
                     Address = teamFromBD.Stadium.Direccion,

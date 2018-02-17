@@ -5,8 +5,7 @@
     {
       "Name": "CreateMatchesJob",
       "Settings": {
-        "Time": "12:00",
-        "Interval": "0.00:03:00"
+        "Interval": "0.00:02:00"
       },
       "Enabled": true
     }

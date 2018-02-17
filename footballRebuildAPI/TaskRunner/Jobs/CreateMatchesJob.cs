@@ -15,12 +15,15 @@ using System.Linq;
 using Football.Crosscutting.ViewModels.Match;
 using System.Collections.Generic;
 using Services.Interface;
+using Football.Services.Interface;
 
 namespace Football.API.TaskRunner.Jobs
 {
     public class CreateMatchesJob : BaseJob
     {
         private readonly IOptions<AppSettings> _settings;
+        private IPlayerService _playerService;
+        private ITeamService _teamService;
 
         public CreateMatchesJob(IOptions<AppSettings> settings)
         {
@@ -69,12 +72,21 @@ namespace Football.API.TaskRunner.Jobs
                     
                     var task = new Task(async () =>
                     {
+                        //_teamService = serviceProvider.GetService<ITeamService>();
                         var match = generador.generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, false);
 
                         var events = await GenerateEventListForGame(match, cont);
+
+                        var serviceProvider = ServiceConfiguration.ConsoleProvider;
+                        _teamService = serviceProvider.GetService<ITeamService>();
+                        var localTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
+                        var visitorTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
+
                         await bubu.Clients.All.InvokeAsync("SendCreateMatch", 
                             new { matchToCreate = match,
                                 matchId = cont,
+                                localTeam = localTeam,
+                                visitorTeam = visitorTeam,
                                 events = events.Count
                             });
 
@@ -107,11 +119,11 @@ namespace Football.API.TaskRunner.Jobs
         private async Task<List<MatchEventRT>> GenerateEventListForGame(PartidoTotalCO partido, int matchId)
         {
             //call server to get player list
-
-            var events = new List<MatchEventRT>();
             //var _playerService = Startup.Provider.GetService<IPlayerService>();
             var serviceProvider = ServiceConfiguration.ConsoleProvider;
-            var _playerService = serviceProvider.GetService<IPlayerService>();
+            _playerService = serviceProvider.GetService<IPlayerService>();
+
+            var events = new List<MatchEventRT>();
 
             var playerIds = partido.PartidosJugados.Select(x => x.Cod_Jugador).ToList();
             var players = await _playerService.GetPlayersFromList(playerIds);

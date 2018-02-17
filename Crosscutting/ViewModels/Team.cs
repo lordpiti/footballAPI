@@ -16,5 +16,7 @@ namespace Football.Crosscutting.ViewModels
         public BlobData PictureLogo { get; set; }
 
         public Stadium Stadium { get; set; }
+
+        public string City { get; set; }
     }
 }
