@@ -21,5 +21,9 @@ namespace Football.Crosscutting.ViewModels.Match
         public Player Player1 { get; set; }
 
         public Player Player2 { get; set; }
+
+        public Team Team1 { get; set; }
+
+        public Team Team2 { get; set; }
     }
 }

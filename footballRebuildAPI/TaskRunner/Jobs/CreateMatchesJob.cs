@@ -16,6 +16,7 @@ using Football.Crosscutting.ViewModels.Match;
 using System.Collections.Generic;
 using Services.Interface;
 using Football.Services.Interface;
+using Football.Crosscutting.ViewModels;
 
 namespace Football.API.TaskRunner.Jobs
 {
@@ -77,16 +78,16 @@ namespace Football.API.TaskRunner.Jobs
 
                         var events = await GenerateEventListForGame(match, cont);
 
-                        var serviceProvider = ServiceConfiguration.ConsoleProvider;
-                        _teamService = serviceProvider.GetService<ITeamService>();
-                        var localTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
-                        var visitorTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
+                        //var serviceProvider = ServiceConfiguration.ConsoleProvider;
+                        //_teamService = serviceProvider.GetService<ITeamService>();
+                        //var localTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
+                        //var visitorTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
 
                         await bubu.Clients.All.InvokeAsync("SendCreateMatch", 
                             new { matchToCreate = match,
                                 matchId = cont,
-                                localTeam = localTeam,
-                                visitorTeam = visitorTeam,
+                                //localTeam = localTeam,
+                                //visitorTeam = visitorTeam,
                                 events = events.Count
                             });
 
@@ -154,6 +155,11 @@ namespace Football.API.TaskRunner.Jobs
                 MatchEventType = Crosscutting.Enums.MatchEventTypeEnum.Goal,
                 Minute = x.Minuto,
                 MatchId = matchId,
+                Team1 = new Team()
+                {
+                    Name = players.FirstOrDefault(y => y.PlayerId == x.Cd_Jugador).TeamName,
+                    Id = players.FirstOrDefault(y => y.PlayerId == x.Cd_Jugador).TeamId
+                },
                 Player1 = players.FirstOrDefault(y => y.PlayerId == x.Cd_Jugador)
             }).ToList();
 

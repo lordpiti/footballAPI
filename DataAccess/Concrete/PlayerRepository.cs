@@ -95,7 +95,8 @@ namespace DataAccess.Concrete
                 } : new BlobData() { },
                 Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
                 Height = playerFromDb.Altura,
-                PlayerId = playerFromDb.CodJugador
+                PlayerId = playerFromDb.CodJugador,
+                TeamId = (int)playerFromDb.CodEquipo
             }).ToList();
         }
 

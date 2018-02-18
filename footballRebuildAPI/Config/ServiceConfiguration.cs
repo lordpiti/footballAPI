@@ -78,7 +78,7 @@ namespace Football.API.Config
             services.AddTransient<ITeamService, TeamService>();
 
             services.AddSingleton<JobRunnerConfigService>()
-                .AddScoped<CreateMatchesJob>();
+                .AddTransient<CreateMatchesJob>();
 
             services.AddSignalR();
 

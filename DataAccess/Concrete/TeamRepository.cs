@@ -23,40 +23,49 @@ namespace Football.DataAccess.Concrete
 
         public async Task<Team> GetTeamByIdAndYear(int id, int year)
         {
-            var teamFromBD = await _context.Equipo.Include(x=>x.TeamPicture).Include(x=>x.Stadium)
-                .Include(x => x.Jugador)
-                .ThenInclude(x=>x.CodIntegranteNavigation.HcoIntegrante)
-                .FirstOrDefaultAsync(x => x.CodEquipo == id);
-
-            var team = new Team()
+            try
             {
-                Id = id,
-                Name = teamFromBD.Nombre,
-                City = teamFromBD.Localidad,
-                Stadium = new Stadium()
-                {
-                    Address = teamFromBD.Stadium.Direccion,
-                    Id = teamFromBD.Stadium.CodEstadio,
-                    Name = teamFromBD.Stadium.Nombre,
-                    Capacity = teamFromBD.Stadium.Capacidad
-                },
-                PictureLogo = teamFromBD.TeamPicture!=null?new BlobData() {
-                    ContainerReference = teamFromBD.TeamPicture.BlobStorageContainer,
-                    FileName = teamFromBD.TeamPicture.FileName
-                }: new BlobData() { },
-                PlayerList = teamFromBD.Jugador.Where(x=>x.CodIntegranteNavigation.HcoIntegrante.Any(hco=>hco.FechaInicio.Year == year))
-                .Select(x=>new Player()
-                {
-                    Name = x.CodIntegranteNavigation.Nombre,
-                    Surname = x.CodIntegranteNavigation.Apellidos,
-                    TeamName = teamFromBD.Nombre,
-                    BirthDate = x.CodIntegranteNavigation.FechaNac,
-                    Position = x.Posicion,
-                    PlayerId = x.CodJugador
-                }).ToList()
-            };
+                var teamFromBD = await _context.Equipo.Include(x => x.TeamPicture).Include(x => x.Stadium)
+                    .Include(x => x.Jugador)
+                    .ThenInclude(x => x.CodIntegranteNavigation.HcoIntegrante)
+                    .FirstOrDefaultAsync(x => x.CodEquipo == id);
 
-            return team;
+                var team = new Team()
+                {
+                    Id = id,
+                    Name = teamFromBD.Nombre,
+                    City = teamFromBD.Localidad,
+                    Stadium = new Stadium()
+                    {
+                        Address = teamFromBD.Stadium.Direccion,
+                        Id = teamFromBD.Stadium.CodEstadio,
+                        Name = teamFromBD.Stadium.Nombre,
+                        Capacity = teamFromBD.Stadium.Capacidad
+                    },
+                    PictureLogo = teamFromBD.TeamPicture != null ? new BlobData()
+                    {
+                        ContainerReference = teamFromBD.TeamPicture.BlobStorageContainer,
+                        FileName = teamFromBD.TeamPicture.FileName
+                    } : new BlobData() { },
+                    PlayerList = teamFromBD.Jugador.Where(x => x.CodIntegranteNavigation.HcoIntegrante.Any(hco => hco.FechaInicio.Year == year))
+                    .Select(x => new Player()
+                    {
+                        Name = x.CodIntegranteNavigation.Nombre,
+                        Surname = x.CodIntegranteNavigation.Apellidos,
+                        TeamName = teamFromBD.Nombre,
+                        BirthDate = x.CodIntegranteNavigation.FechaNac,
+                        Position = x.Posicion,
+                        PlayerId = x.CodJugador
+                    }).ToList()
+                };
+
+                return team;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task<List<Team>> GetAllTeams(int? competitionId = null)
