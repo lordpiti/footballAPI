@@ -18,10 +18,6 @@ namespace Football.BlobStorage
 
         public BlobStorageService(IOptions<AppSettings> options)
         {
-            //for some reason DI doesn't look to work properly on Azure when loading the config values on the Appsettings class
-            //thats why the connection strings for the mongodb db are hardcoded here. Locally it's ok
-            //This is only for azure
-            //var cloudStorageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=pititest;AccountKey=UIAjevML+igZ7ldWewh0VrVsi2kWUetFPY9qHdvmi3J1Xjo1rb3QzNSc3zknBK+melgoIEshEx5XG7DLt1Vb/A==");
             var cloudStorageAccount = CloudStorageAccount.Parse(options.Value.BlobStorageConnectionString);
 
             _cloudStorageClient = cloudStorageAccount.CreateCloudBlobClient();
