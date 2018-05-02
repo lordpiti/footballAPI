@@ -70,6 +70,7 @@ namespace DataAccess.Concrete
             return new Player()
             {
                 BirthDate = playerFromDb.CodIntegranteNavigation.FechaNac,
+                BirthPlace = playerFromDb.CodIntegranteNavigation.BirthPlace,
                 Name = playerFromDb.CodIntegranteNavigation.Nombre,
                 Picture = playerFromDb.CodIntegranteNavigation.Picture!=null ? new BlobData() {
                     FileName = playerFromDb.CodIntegranteNavigation.Picture.FileName,
@@ -96,7 +97,8 @@ namespace DataAccess.Concrete
                 Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
                 Height = playerFromDb.Altura,
                 PlayerId = playerFromDb.CodJugador,
-                TeamId = (int)playerFromDb.CodEquipo
+                TeamId = (int)playerFromDb.CodEquipo,
+                BirthPlace = playerFromDb.CodIntegranteNavigation.BirthPlace
             }).ToList();
         }
 
@@ -110,7 +112,14 @@ namespace DataAccess.Concrete
                 playerToUpdate.CodIntegranteNavigation.Apellidos = player.Surname;
                 playerToUpdate.CodIntegranteNavigation.FechaNac = player.BirthDate;
                 playerToUpdate.Altura = player.Height;
+                playerToUpdate.CodIntegranteNavigation.BirthPlace = player.BirthPlace;
                 playerToUpdate.Posicion = player.Position??"Forward";
+                playerToUpdate.CodIntegranteNavigation.Picture = new GlobalMedia()
+                {
+                    BlobStorageContainer = "mycontainer",
+                    BlobStorageReference = Guid.NewGuid().ToString(),
+                    FileName = player.Picture.FileName
+                };
 
                 return await _context.SaveChangesAsync();
             }

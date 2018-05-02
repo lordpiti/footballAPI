@@ -28,5 +28,7 @@ namespace Crosscutting.ViewModels
         public float? Height { get; set; }
 
         public string Position { get; set; }
+
+        public string BirthPlace { get; set; }
     }
 }
