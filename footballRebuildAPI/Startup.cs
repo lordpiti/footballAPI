@@ -21,6 +21,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Football.API.Config;
 using AspNetCoreSignalr.SignalRHubs;
+using Microsoft.AspNetCore.Http.Connections;
 
 namespace footballRebuildAPI
 {
@@ -95,7 +96,7 @@ namespace footballRebuildAPI
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<LoopyHub>("/loopy");
+                routes.MapHub<LoopyHub>("/loopy", options => options.Transports = TransportType.All);
             });
 
             app.UseSwagger();
