@@ -49,9 +49,15 @@ namespace footballRebuildAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // Add CORS
-            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
-                                                                    .AllowAnyMethod()
-                                                                     .AllowAnyHeader()));
+
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .AllowAnyOrigin();
+            }));
             // Add framework services.
             services.AddMvc();
 
@@ -82,13 +88,14 @@ namespace footballRebuildAPI
 
             loggerFactory.AddDebug();
 
-            app.UseCors("AllowAll");
+            //app.UseCors("AllowAll");
+            app.UseCors("CorsPolicy");
 
             app.UseMvc();
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<LoopyHub>("loopy");
+                routes.MapHub<LoopyHub>("/loopy");
             });
 
             app.UseSwagger();

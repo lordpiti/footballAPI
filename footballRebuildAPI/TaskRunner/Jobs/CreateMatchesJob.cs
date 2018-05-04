@@ -58,7 +58,7 @@ namespace Football.API.TaskRunner.Jobs
 
                 var matchSet = calendario[0];
 
-                await bubu.Clients.All.InvokeAsync("StartSimulation",
+                await bubu.Clients.All.SendAsync("StartSimulation",
                 new
                 {
                     eventType = "startSimulation"
@@ -83,7 +83,7 @@ namespace Football.API.TaskRunner.Jobs
                         //var localTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
                         //var visitorTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
 
-                        await bubu.Clients.All.InvokeAsync("SendCreateMatch", 
+                        await bubu.Clients.All.SendAsync("SendCreateMatch", 
                             new { matchToCreate = match,
                                 matchId = cont,
                                 //localTeam = localTeam,
@@ -97,7 +97,7 @@ namespace Football.API.TaskRunner.Jobs
                         {
                             int timeToWait = (item.Minute - currentMinute) * 500;
                             Thread.Sleep(timeToWait);
-                            await bubu.Clients.All.InvokeAsync("Send", item);
+                            await bubu.Clients.All.SendAsync("Send", item);
                             currentMinute = item.Minute;
                         }
                     });

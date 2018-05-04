@@ -7,7 +7,7 @@
       "Settings": {
         "Interval": "0.00:02:00"
       },
-      "Enabled": false
+      "Enabled": true
     }
   ]
 }

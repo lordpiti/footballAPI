@@ -8,12 +8,12 @@ namespace AspNetCoreSignalr.SignalRHubs
 
         public Task Send(string data)
         {
-            return Clients.All.InvokeAsync("Send", data);
+            return Clients.All.SendAsync("Send", data);
         }
 
         public Task SendCreateMatch(string data)
         {
-            return Clients.All.InvokeAsync("SendCreateMatch", data);
+            return Clients.All.SendAsync("SendCreateMatch", data);
         }
     }
 }
