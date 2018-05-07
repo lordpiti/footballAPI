@@ -65,7 +65,9 @@ namespace DataAccess.Concrete
 
         public async Task<Player> GetPlayer(int playerId)
         {
-            var playerFromDb = await _context.Jugador.Include(x=>x.CodIntegranteNavigation).FirstOrDefaultAsync(x => x.CodJugador == playerId);
+            var playerFromDb = await _context.Jugador
+                .Include(x=>x.CodIntegranteNavigation).ThenInclude(x=>x.Picture)
+                .FirstOrDefaultAsync(x => x.CodJugador == playerId);
 
             return new Player()
             {

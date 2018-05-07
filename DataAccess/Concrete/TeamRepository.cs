@@ -123,7 +123,7 @@ namespace Football.DataAccess.Concrete
                 existingteam.TeamPicture = new GlobalMedia()
                 {
                     BlobStorageContainer = "mycontainer",
-                    BlobStorageReference = team.PictureLogo.FileName,
+                    BlobStorageReference = Guid.NewGuid().ToString(),
                     FileName = team.PictureLogo.FileName
                 };
 

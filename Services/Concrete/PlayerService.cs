@@ -1,6 +1,7 @@
 ﻿using Crosscutting.ViewModels;
 using DataAccess.Concrete;
 using DataAccess.Interface;
+using Football.BlobStorage.Interfaces;
 using Football.Crosscutting.ViewModels.Match;
 using Services.Interface;
 using System;
@@ -13,10 +14,12 @@ namespace Services.Concrete
     public class PlayerService : IPlayerService
     {
         private readonly IPlayerRepository _playerRepository;
+        private readonly IBlobStorageService _blobStorageService;
 
-        public PlayerService(IPlayerRepository playerRepository)
+        public PlayerService(IPlayerRepository playerRepository, IBlobStorageService blobStorageService)
         {
             _playerRepository = playerRepository;
+            _blobStorageService = blobStorageService;
         }
 
 
@@ -37,7 +40,14 @@ namespace Services.Concrete
 
         public async Task<Player> GetPlayer(int playerId)
         {
-            return await _playerRepository.GetPlayer(playerId);
+            var player = await _playerRepository.GetPlayer(playerId);
+
+            if (player != null)
+            {
+                _blobStorageService.PopulateUrlForBlob(player.Picture);
+            }
+
+            return player;
         }
 
         public async Task<int> UpdatePlayer(Player player)
