@@ -74,6 +74,7 @@ namespace DataAccess.Concrete
                 BirthDate = playerFromDb.CodIntegranteNavigation.FechaNac,
                 BirthPlace = playerFromDb.CodIntegranteNavigation.BirthPlace,
                 Name = playerFromDb.CodIntegranteNavigation.Nombre,
+                Position = playerFromDb.Posicion,
                 Picture = playerFromDb.CodIntegranteNavigation.Picture!=null ? new BlobData() {
                     FileName = playerFromDb.CodIntegranteNavigation.Picture.FileName,
                     ContainerReference = playerFromDb.CodIntegranteNavigation.Picture.BlobStorageContainer
