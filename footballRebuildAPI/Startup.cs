@@ -96,7 +96,7 @@ namespace footballRebuildAPI
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<LoopyHub>("/loopy", options => options.Transports = TransportType.All);
+                routes.MapHub<LoopyHub>("/loopy", options => options.Transports = HttpTransportType.WebSockets);
             });
 
             app.UseSwagger();
