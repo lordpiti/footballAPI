@@ -23,7 +23,7 @@ namespace Football.BlobStorage
             _cloudStorageClient = cloudStorageAccount.CreateCloudBlobClient();
         }
 
-        public async Task<BlobData> PostBlob(byte[] data, string blobReference, string containerReference)
+        public async Task<BlobData> PostBlob(byte[] data, string fileName, string containerReference)
         {
             var container = _cloudStorageClient.GetContainerReference(containerReference);
 
@@ -36,6 +36,7 @@ namespace Football.BlobStorage
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 });
 
+            var blobReference = Guid.NewGuid().ToString() + "-" + fileName;
             // Retrieve reference to a blob with an specified name
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobReference);
             //TODO: if exists, then create another one
@@ -47,7 +48,8 @@ namespace Football.BlobStorage
 
             return new BlobData()
             {
-                FileName = blobReference,
+                ContainerReference = blobReference,
+                FileName = fileName,
                 Url = blockBlob.Uri.ToString()
             };
         }

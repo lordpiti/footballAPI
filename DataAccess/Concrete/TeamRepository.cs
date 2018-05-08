@@ -45,7 +45,7 @@ namespace Football.DataAccess.Concrete
                     PictureLogo = teamFromBD.TeamPicture != null ? new BlobData()
                     {
                         ContainerReference = teamFromBD.TeamPicture.BlobStorageContainer,
-                        FileName = teamFromBD.TeamPicture.FileName
+                        FileName = teamFromBD.TeamPicture.BlobStorageReference
                     } : new BlobData() { },
                     PlayerList = teamFromBD.Jugador.Where(x => x.CodIntegranteNavigation.HcoIntegrante.Any(hco => hco.FechaInicio.Year == year))
                     .Select(x => new Player()
@@ -120,12 +120,21 @@ namespace Football.DataAccess.Concrete
 
                 existingteam.Nombre = team.Name;
 
-                existingteam.TeamPicture = new GlobalMedia()
+                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == team.PictureLogo.ContainerReference);
+
+                if (imageExists == null)
                 {
-                    BlobStorageContainer = "mycontainer",
-                    BlobStorageReference = Guid.NewGuid().ToString(),
-                    FileName = team.PictureLogo.FileName
-                };
+                    existingteam.TeamPicture = new GlobalMedia()
+                    {
+                        BlobStorageReference = team.PictureLogo.ContainerReference,
+                        FileName = team.PictureLogo.FileName,
+                        BlobStorageContainer = "mycontainer"
+                    };
+                }
+                else
+                {
+                    existingteam.TeamPicture = imageExists;
+                }
 
                 return await _context.SaveChangesAsync();
             }

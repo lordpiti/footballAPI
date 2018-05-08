@@ -69,5 +69,12 @@ namespace Football.API.Controllers
         {
             return await _competitionService.GetDraw(competitionId);
         }
+
+        [Route("SaveCompetitionDetails")]
+        [HttpPost]
+        public async Task<bool> SaveCompetitionDetails([FromBody]Competition competition)
+        {
+            return await _competitionService.SaveCompetitionDetails(competition);
+        }
     }
 }

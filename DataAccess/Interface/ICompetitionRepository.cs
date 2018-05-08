@@ -23,5 +23,7 @@ namespace Football.DataAccess.Interface
         Task<List<Scorer>> GetTopScorers(int competitionId, string round);
 
         Task<TournamentDraw> GetDraw(int competitionId);
+
+        Task<bool> SaveCompetitionDetails(Competition competition);
     }
 }

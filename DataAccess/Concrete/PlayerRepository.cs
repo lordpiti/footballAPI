@@ -76,7 +76,7 @@ namespace DataAccess.Concrete
                 Name = playerFromDb.CodIntegranteNavigation.Nombre,
                 Position = playerFromDb.Posicion,
                 Picture = playerFromDb.CodIntegranteNavigation.Picture!=null ? new BlobData() {
-                    FileName = playerFromDb.CodIntegranteNavigation.Picture.FileName,
+                    FileName = playerFromDb.CodIntegranteNavigation.Picture.BlobStorageReference,
                     ContainerReference = playerFromDb.CodIntegranteNavigation.Picture.BlobStorageContainer
                 }: new BlobData() { }, Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
                 Height = playerFromDb.Altura,
@@ -117,12 +117,22 @@ namespace DataAccess.Concrete
                 playerToUpdate.Altura = player.Height;
                 playerToUpdate.CodIntegranteNavigation.BirthPlace = player.BirthPlace;
                 playerToUpdate.Posicion = player.Position??"Forward";
-                playerToUpdate.CodIntegranteNavigation.Picture = new GlobalMedia()
+
+                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == player.Picture.ContainerReference);
+
+                if (imageExists == null)
                 {
-                    BlobStorageContainer = "mycontainer",
-                    BlobStorageReference = Guid.NewGuid().ToString(),
-                    FileName = player.Picture.FileName
-                };
+                    playerToUpdate.CodIntegranteNavigation.Picture = new GlobalMedia()
+                    {
+                        BlobStorageReference = player.Picture.ContainerReference,
+                        FileName = player.Picture.FileName,
+                        BlobStorageContainer = "mycontainer"
+                    };
+                }
+                else
+                {
+                    playerToUpdate.CodIntegranteNavigation.Picture = imageExists;
+                }
 
                 return await _context.SaveChangesAsync();
             }

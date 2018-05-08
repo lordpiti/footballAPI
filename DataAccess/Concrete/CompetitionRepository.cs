@@ -311,7 +311,8 @@ namespace Football.DataAccess.Concrete
                 Name = competition.Nombre,
                 RoundList = rounds,
                 Season = competition.Temporada,
-                Type = competition.Tipo, Logo = competition.CompetitionLogo!=null?new BlobData()
+                Type = competition.Tipo,
+                Logo = competition.CompetitionLogo!=null?new BlobData()
                 {
                     ContainerReference = competition.CompetitionLogo.BlobStorageContainer,
                     FileName = competition.CompetitionLogo.BlobStorageReference
@@ -445,6 +446,36 @@ namespace Football.DataAccess.Concrete
                 SemifinalsRight = semifinalRight,
                 Final = finalMatch
             };
+        }
+
+        public async Task<bool> SaveCompetitionDetails(Competition competition)
+        {
+            var currentCompetition = await _context.Competicion.Include(x=>x.CompetitionLogo)
+                .FirstOrDefaultAsync(x => x.CodCompeticion == competition.Id);
+
+            currentCompetition.Nombre = competition.Name;
+            currentCompetition.Temporada = competition.Season;
+            currentCompetition.Tipo = competition.Type;
+
+            var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == competition.Logo.ContainerReference);
+
+            if (imageExists == null)
+            {
+                currentCompetition.CompetitionLogo = new GlobalMedia()
+                {
+                    BlobStorageReference = competition.Logo.ContainerReference,
+                    FileName = competition.Logo.FileName,
+                    BlobStorageContainer = "mycontainer"
+                };
+            }
+            else
+            {
+                currentCompetition.CompetitionLogo = imageExists;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         private MatchGeneralInfo createMatchFromDb(Partido match)

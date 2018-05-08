@@ -86,5 +86,10 @@ namespace Football.Services.Concrete
 
             return draw;
         }
+
+        public async Task<bool> SaveCompetitionDetails(Competition competition)
+        {
+            return await _competitionRepository.SaveCompetitionDetails(competition);
+        }
     }
 }
