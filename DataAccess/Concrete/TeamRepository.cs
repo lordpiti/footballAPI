@@ -120,13 +120,13 @@ namespace Football.DataAccess.Concrete
 
                 existingteam.Nombre = team.Name;
 
-                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == team.PictureLogo.ContainerReference);
+                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == team.PictureLogo.FileName);
 
                 if (imageExists == null)
                 {
                     existingteam.TeamPicture = new GlobalMedia()
                     {
-                        BlobStorageReference = team.PictureLogo.ContainerReference,
+                        BlobStorageReference = team.PictureLogo.FileName,
                         FileName = team.PictureLogo.FileName,
                         BlobStorageContainer = "mycontainer"
                     };
