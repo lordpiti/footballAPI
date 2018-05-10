@@ -80,7 +80,7 @@ namespace Football.DataAccess.Concrete
                         Name = x.CodEquipoNavigation.Nombre,
                         PictureLogo = new BlobData()
                         {
-                            FileName = x.CodEquipoNavigation.TeamPicture.FileName,
+                            FileName = x.CodEquipoNavigation.TeamPicture.BlobStorageReference,
                             ContainerReference = x.CodEquipoNavigation.TeamPicture.BlobStorageContainer
                         }
                     }).ToListAsync();
@@ -92,7 +92,7 @@ namespace Football.DataAccess.Concrete
                 Name = equipo.Nombre,
                 PictureLogo = new BlobData()
                 {
-                    FileName = equipo.TeamPicture.FileName,
+                    FileName = equipo.TeamPicture.BlobStorageReference,
                     ContainerReference = equipo.TeamPicture.BlobStorageContainer
                 }
             }).ToListAsync();
