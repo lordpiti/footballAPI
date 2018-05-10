@@ -118,13 +118,13 @@ namespace DataAccess.Concrete
                 playerToUpdate.CodIntegranteNavigation.BirthPlace = player.BirthPlace;
                 playerToUpdate.Posicion = player.Position??"Forward";
 
-                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == player.Picture.ContainerReference);
+                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == player.Picture.FileName);
 
                 if (imageExists == null)
                 {
                     playerToUpdate.CodIntegranteNavigation.Picture = new GlobalMedia()
                     {
-                        BlobStorageReference = player.Picture.ContainerReference,
+                        BlobStorageReference = player.Picture.FileName,
                         FileName = player.Picture.FileName,
                         BlobStorageContainer = "mycontainer"
                     };

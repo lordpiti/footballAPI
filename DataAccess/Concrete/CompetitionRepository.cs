@@ -457,13 +457,13 @@ namespace Football.DataAccess.Concrete
             currentCompetition.Temporada = competition.Season;
             currentCompetition.Tipo = competition.Type;
 
-            var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == competition.Logo.ContainerReference);
+            var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == competition.Logo.FileName);
 
             if (imageExists == null)
             {
                 currentCompetition.CompetitionLogo = new GlobalMedia()
                 {
-                    BlobStorageReference = competition.Logo.ContainerReference,
+                    BlobStorageReference = competition.Logo.FileName,
                     FileName = competition.Logo.FileName,
                     BlobStorageContainer = "mycontainer"
                 };
