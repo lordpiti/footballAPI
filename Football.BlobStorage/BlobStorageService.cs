@@ -9,6 +9,8 @@ using Football.Crosscutting;
 using Football.BlobStorage.Interfaces;
 using Microsoft.Extensions.Options;
 using Crosscutting.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Football.BlobStorage
 {
@@ -73,6 +75,36 @@ namespace Football.BlobStorage
 
                 return blob;
             }
+        }
+
+        public async Task<bool> DeleteSelectedBlobs(List<string> guidList, string blobContainerReference)
+        {
+            try
+            {
+                //https://stackoverflow.com/questions/23485514/getting-list-of-names-of-azure-blob-files-in-a-container
+                //https://stackoverflow.com/questions/36497399/how-to-delete-files-from-blob-container
+
+                var container = _cloudStorageClient.GetContainerReference(blobContainerReference);
+
+                var blobList = container.ListBlobs();
+
+                List<string> blobNames = blobList.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
+
+                foreach (var item in blobList.OfType<CloudBlockBlob>().ToList())
+                {
+                    if (!guidList.Contains(item.Name))
+                    {
+                        await item.DeleteIfExistsAsync();
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
         }
 
         private string getUrlForBlob(string blobReference, string blobContainerReference)

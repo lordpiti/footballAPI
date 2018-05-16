@@ -14,7 +14,7 @@ namespace Football.API.TaskRunner
         public static void RunService(Guid id)
         {
             // Currently wont run a service if its not already running, expand at a later point
-            var service = ThreadManager.Services.FirstOrDefault(x => x.Id == id);
+            var service = Services.FirstOrDefault(x => x.Id == id);
             service.NextRun = DateTime.Now;
         }
 

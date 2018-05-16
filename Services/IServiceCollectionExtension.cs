@@ -21,7 +21,8 @@ namespace Services
             var servicesOutput = DataAccessLayerBindings
                 .AddDataAccessLayerBindings(services, configuration, transient)
                 .AddScoped<ICompetitionRepository, CompetitionRepository>()
-                .AddScoped<IUserRepository, UserRepository>();
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IGlobalMediaRepository, GlobalMediaRepository>();
 
             if (transient)
             {

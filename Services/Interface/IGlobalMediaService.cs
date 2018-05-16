@@ -1,4 +1,5 @@
 ﻿using Football.Crosscutting;
+using Football.Crosscutting.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Football.Services.Interface
 
         Task<BlobData> GetBlobById(string blobReference, string blobContainerReference);
 
-        //string GetUrlForBlog(string blobReference, string blobContainerReference);
+        Task<List<GlobalMediaData>> GetReferencedBlobIds();
+
+        Task<int> DeleteUnreferencedBlobs(List<int> referencedBlobIds);
     }
 }

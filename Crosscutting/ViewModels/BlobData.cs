@@ -6,6 +6,7 @@ namespace Football.Crosscutting
 {
     public class BlobData
     {
+        public int Id { get; set; }
         public byte[] Bytes { get; set; }
 
         public string Base64String { get; set; }

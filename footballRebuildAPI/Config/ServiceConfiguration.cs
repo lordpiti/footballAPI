@@ -28,6 +28,7 @@ namespace Football.API.Config
                 .AddOptions()
                 .AddScoped<ICompetitionService, CompetitionService>()
                 .AddScoped<IBlobStorageService, BlobStorageService>()
+                .AddScoped<IGlobalMediaService, GlobalMediaService>()
                 .AddScoped<IUserService, UserService>();
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
@@ -78,7 +79,8 @@ namespace Football.API.Config
             services.AddTransient<ITeamService, TeamService>();
 
             services.AddSingleton<JobRunnerConfigService>()
-                .AddTransient<CreateMatchesJob>();
+                .AddTransient<CreateMatchesJob>()
+                .AddTransient<CleanBlobStorageJob>();
 
             services.AddSignalR();
 
