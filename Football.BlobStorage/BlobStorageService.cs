@@ -77,7 +77,7 @@ namespace Football.BlobStorage
             }
         }
 
-        public async Task<bool> DeleteSelectedBlobs(List<string> guidList, string blobContainerReference)
+        public async Task<bool> DeleteBlobsExceptSelected(List<string> guidList, string blobContainerReference)
         {
             try
             {

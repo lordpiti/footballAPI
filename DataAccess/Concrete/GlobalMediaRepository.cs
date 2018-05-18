@@ -42,7 +42,7 @@ namespace Football.DataAccess.Concrete
         public async Task<int> DeleteUnreferencedBlobs(List<int> referencedBlobIds)
         {
             var blobsToDelete = await _context.GlobalMedia
-                .Where(x => !referencedBlobIds.Any(y => y == x.GlobalMediaId)).Distinct().ToListAsync();
+                .Where(x => !referencedBlobIds.Any(y => y == x.GlobalMediaId)).ToListAsync();
 
             _context.GlobalMedia.RemoveRange(blobsToDelete);
 

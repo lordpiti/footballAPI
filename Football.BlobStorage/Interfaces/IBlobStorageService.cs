@@ -12,7 +12,7 @@ namespace Football.BlobStorage.Interfaces
 
         Task<BlobData> GetBlobById(string blobReference, string blobContainerReference);
 
-        Task<bool> DeleteSelectedBlobs(List<string> guidList, string blobContainerReference);
+        Task<bool> DeleteBlobsExceptSelected(List<string> guidList, string blobContainerReference);
 
         void PopulateUrlForBlob(BlobData data);
     }

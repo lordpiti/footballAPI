@@ -25,7 +25,7 @@ namespace Football.API.TaskRunner.Jobs
             var referencedGlobalMediaIds = referencedBlobs.Select(x => x.GlobalMediaId).ToList();
 
             //Remove non referenced files from blob storage
-            await _blobStorageService.DeleteSelectedBlobs(referencedBlobIds, "mycontainer");
+            await _blobStorageService.DeleteBlobsExceptSelected(referencedBlobIds, "mycontainer");
 
             //Remove non referenced items froom the globalmedia table
             await _globalMediaService.DeleteUnreferencedBlobs(referencedGlobalMediaIds);
