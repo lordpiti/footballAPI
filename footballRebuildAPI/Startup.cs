@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Football.API.Config;
 using AspNetCoreSignalr.SignalRHubs;
 using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNet.OData.Extensions;
 
 namespace footballRebuildAPI
 {
@@ -60,9 +61,12 @@ namespace footballRebuildAPI
                     .AllowAnyOrigin();
             }));
             // Add framework services.
+            services.AddOData();
             services.AddMvc();
 
             services.AddSignalR();
+
+            
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
@@ -92,7 +96,11 @@ namespace footballRebuildAPI
             //app.UseCors("AllowAll");
             app.UseCors("CorsPolicy");
 
-            app.UseMvc();
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
+                routeBuilder.EnableDependencyInjection();
+            });
 
             app.UseSignalR(routes =>
             {
