@@ -15,7 +15,6 @@ using System.Linq;
 using Football.Crosscutting.ViewModels.Match;
 using System.Collections.Generic;
 using Services.Interface;
-using Football.Services.Interface;
 using Football.Crosscutting.ViewModels;
 
 namespace Football.API.TaskRunner.Jobs
@@ -24,41 +23,39 @@ namespace Football.API.TaskRunner.Jobs
     {
         private readonly IOptions<AppSettings> _settings;
         private IPlayerService _playerService;
-        private ITeamService _teamService;
+        private IHubContext<LoopyHub> _footballHub;
+        private IGeneradorCosas _generadorCosas;
+        private IGeneradorPartidos _generadorPartidos;
 
-        public CreateMatchesJob(IOptions<AppSettings> settings)
+        public CreateMatchesJob(IOptions<AppSettings> settings, IPlayerService playerService, 
+            IGeneradorCosas generadorCosas, IGeneradorPartidos generadorPartidos)
         {
             _settings = settings;
+            _footballHub = Startup.Provider.GetService<IHubContext<LoopyHub>>();
+            _generadorCosas = generadorCosas;
+            _generadorPartidos = generadorPartidos;
+            _playerService = playerService;
         }
 
         public override async Task<bool> Run()
         {
             try
             {
-                var bubu = Startup.Provider.GetService<IHubContext<LoopyHub>>();
+                const int numberOfTeams = 20;
+                var teamCodeList = Enumerable.Range(1, numberOfTeams).ToList();
 
-                var generadorCosas = new GeneradorCosas();
-                var generador = new GeneradorPartidos();
+                var calendario = _generadorCosas.generaLiga(teamCodeList);
+                var calendarioLiga = _generadorPartidos.generaListaCalendarioVOsLiga(calendario);
 
-                var listaCodigosEquipos = new List<int>();
-
-                for (int i = 1; i <= 20; i++)
-                {
-                    listaCodigosEquipos.Add(i);
-                }
-
-                var calendario = generadorCosas.generaLiga(listaCodigosEquipos);
-                var calendarioLiga = generador.generaListaCalendarioVOsLiga(calendario);
-
-                var comp1 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 14-15", "2014-2015", generadorCosas.generarFechaAleatoriaPartido(),
-                    generadorCosas.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/eurocopa.jpg", "Liga"),
-                    calendarioLiga, listaCodigosEquipos);
+                var comp1 = new CompeticionTotalCO(new CompeticionVO("LFP 1ªDivision 14-15", "2014-2015", _generadorCosas.generarFechaAleatoriaPartido(),
+                    _generadorCosas.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/eurocopa.jpg", "Liga"),
+                    calendarioLiga, teamCodeList);
 
                 int numeroJornada = 1;
 
                 var matchSet = calendario[0];
 
-                await bubu.Clients.All.SendAsync("StartSimulation",
+                await _footballHub.Clients.All.SendAsync("StartSimulation",
                 new
                 {
                     eventType = "startSimulation"
@@ -66,48 +63,17 @@ namespace Football.API.TaskRunner.Jobs
 
                 var taskList = new List<Task>();
 
-                for (int i=1;i<10;i++)
+                for (int i=1;i< numberOfTeams/2; i++)
                 {
                     var cont = i;
                     var part = matchSet[cont];
-                    
-                    var task = new Task(async () =>
-                    {
-                        //_teamService = serviceProvider.GetService<ITeamService>();
-                        var match = generador.generarPartidoCompleto(comp1.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, false);
 
-                        var events = await GenerateEventListForGame(match, cont);
-
-                        //var serviceProvider = ServiceConfiguration.ConsoleProvider;
-                        //_teamService = serviceProvider.GetService<ITeamService>();
-                        //var localTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
-                        //var visitorTeam = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
-
-                        await bubu.Clients.All.SendAsync("SendCreateMatch", 
-                            new { matchToCreate = match,
-                                matchId = cont,
-                                //localTeam = localTeam,
-                                //visitorTeam = visitorTeam,
-                                events = events.Count
-                            });
-
-                        var currentMinute = 0;
-
-                        foreach(var item in events)
-                        {
-                            int timeToWait = (item.Minute - currentMinute) * 500;
-                            Thread.Sleep(timeToWait);
-                            await bubu.Clients.All.SendAsync("Send", item);
-                            currentMinute = item.Minute;
-                        }
-                    });
+                    var task = createMatchTask(comp1, part, numeroJornada, cont);
                     taskList.Add(task);
                     task.Start();
                 }
 
                 Task.WaitAll(taskList.ToArray());
-             
-
             }
             catch (Exception ex)
             {
@@ -117,18 +83,39 @@ namespace Football.API.TaskRunner.Jobs
             return true;
         }
 
+        private async Task createMatchTask(CompeticionTotalCO competition, Jornada part, int numeroJornada, int cont)
+        {
+            var match = _generadorPartidos.generarPartidoCompleto(competition.Competicion.Cd_Competicion, Convert.ToString(numeroJornada), (int)part.Local, (int)part.Visitante, false);
+
+            var events = await GenerateEventListForGame(match, cont);
+
+            await _footballHub.Clients.All.SendAsync("SendCreateMatch",
+                new
+                {
+                    matchToCreate = match,
+                    matchId = cont,
+                    events = events.Count
+                });
+
+            var currentMinute = 0;
+
+            foreach (var item in events)
+            {
+                int timeToWait = (item.Minute - currentMinute) * 500;
+                Thread.Sleep(timeToWait);
+                await _footballHub.Clients.All.SendAsync("Send", item);
+                currentMinute = item.Minute;
+            }
+        }
+
         private async Task<List<MatchEventRT>> GenerateEventListForGame(PartidoTotalCO partido, int matchId)
         {
-            //call server to get player list
-            //var _playerService = Startup.Provider.GetService<IPlayerService>();
             var serviceProvider = ServiceConfiguration.ConsoleProvider;
-            _playerService = serviceProvider.GetService<IPlayerService>();
 
             var events = new List<MatchEventRT>();
 
             var playerIds = partido.PartidosJugados.Select(x => x.Cod_Jugador).ToList();
             var players = await _playerService.GetPlayersFromList(playerIds);
-
 
             var cards = partido.Tarjetas.Select(x => new MatchEventRT()
             {

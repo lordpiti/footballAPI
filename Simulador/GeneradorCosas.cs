@@ -7,7 +7,7 @@ using Util;
 
 namespace Simulador
 {
-    public class GeneradorCosas
+    public class GeneradorCosas : IGeneradorCosas
     {
 
         private Random rand = new Random();

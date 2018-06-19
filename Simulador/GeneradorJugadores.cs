@@ -14,7 +14,7 @@ using Futbol;
 
 namespace Simulador
 {
-    public class GeneradorJugadores
+    public class GeneradorJugadores : IGeneradorJugadores
     {
         private GeneradorCosas generador=new GeneradorCosas();
         private static int contador=1;

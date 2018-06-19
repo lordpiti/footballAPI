@@ -4,11 +4,9 @@ using Football.Crosscutting.ViewModels.Competition;
 using Football.Crosscutting.ViewModels.Match;
 using Football.DataAccess.Interface;
 using Football.Services.Interface;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Football.Services.Concrete
 {

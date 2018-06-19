@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Simulador
 {
-    public class GeneradorPartidos
+    public class GeneradorPartidos : IGeneradorPartidos
     {
         GeneradorCosas generador = new GeneradorCosas();
         FachadaDatos fachadaDatos = new FachadaDatos();

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Concrete;
 using Services.Interface;
+using Simulador;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,7 +78,8 @@ namespace Football.API.Config
             ConfigureServices(services, true);
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<ITeamService, TeamService>();
-
+            services.AddScoped<IGeneradorCosas, GeneradorCosas>();
+            services.AddScoped<IGeneradorPartidos, GeneradorPartidos>();
             services.AddSingleton<JobRunnerConfigService>()
                 .AddTransient<CreateMatchesJob>()
                 .AddTransient<CleanBlobStorageJob>();

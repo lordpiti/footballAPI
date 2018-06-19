@@ -11,12 +11,34 @@ using Football.BlobStorage.Interfaces;
 using Football.Crosscutting.ViewModels.Teams;
 using Crosscutting.ViewModels;
 using System.Threading.Tasks;
+using Football.Services.Interface;
 
 namespace Football.Services.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class CompetitionServiceTest
     {
+        private ICompetitionRepository _competitionMockRepository;
+        private Mock<IBlobStorageService> _mockBlobStorageService;
+        private ICompetitionService _competitionService;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _competitionMockRepository = _getCompetitionRepositoryMock();
+            _mockBlobStorageService = new Mock<IBlobStorageService>();
+            _mockBlobStorageService.Setup(m => m.PopulateUrlForBlob(It.IsAny<BlobData>()));
+            _competitionService = new CompetitionService(_competitionMockRepository, _mockBlobStorageService.Object);
+        }
+
+        [TestCleanup()]
+        public void Cleanup()
+        {
+
+        }
+
+        #region private methods for mocks
+
         private CompetitionRoundData _getMockCompetitionData()
         {
             var competitionRoundData = new CompetitionRoundData()
@@ -98,22 +120,18 @@ namespace Football.Services.Test
             return mockRepository.Object;
         }
 
+        #endregion
+
         [TestMethod]
         public async Task GetCompetitionRoundData_DoesStuff()
         {
-            var mockRepository = _getCompetitionRepositoryMock();
-            var mockBlobStorageService = new Mock<IBlobStorageService>();
-            mockBlobStorageService.Setup(m => m.PopulateUrlForBlob(It.IsAny<BlobData>()));
-
-            var competitionService = new CompetitionService(mockRepository, mockBlobStorageService.Object);
-
-            var obtained = await competitionService.GetCompetitionRoundData(1, "3");
+            var obtained = await _competitionService.GetCompetitionRoundData(1, "3");
 
             //foreach(var item in obtained.MatchList)
             //{
-                mockBlobStorageService.Verify(mock => mock.PopulateUrlForBlob(It.IsAny<BlobData>()), Times.Exactly(6));
+                _mockBlobStorageService.Verify(mock => mock.PopulateUrlForBlob(It.IsAny<BlobData>()), Times.Exactly(6));
             //}
-                            // Creamos una instancia del objeto mockeado y la testeamos
+            // Creamos una instancia del objeto mockeado y la testeamos
             Assert.AreEqual(_getMockCompetitionData().MatchList.Count, obtained.MatchList.Count);
         }
     }

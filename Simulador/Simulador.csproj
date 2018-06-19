@@ -48,6 +48,9 @@
     <Compile Include="GeneradorCosas.cs" />
     <Compile Include="GeneradorJugadores.cs" />
     <Compile Include="GeneradorPartidos.cs" />
+    <Compile Include="IGeneradorCosas.cs" />
+    <Compile Include="IGeneradorJugadores.cs" />
+    <Compile Include="IGeneradorPartidos.cs" />
     <Compile Include="Jornada.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
