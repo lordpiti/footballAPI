@@ -70,7 +70,7 @@ namespace Football.API.TaskRunner.Jobs
 
                     var task = createMatchTask(comp1, part, numeroJornada, cont);
                     taskList.Add(task);
-                    task.Start();
+                    //task.Start();
                 }
 
                 Task.WaitAll(taskList.ToArray());
