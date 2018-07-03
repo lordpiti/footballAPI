@@ -13,6 +13,7 @@ namespace Football.Crosscutting.Enums
         YellowCard = 3,
         RedCard = 4,
         GameFinished = 5,
-        GameStart = 6
+        GameStart = 6,
+        StartingLine = 7
     }
 }

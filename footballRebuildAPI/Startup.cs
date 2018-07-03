@@ -23,6 +23,8 @@ using Football.API.Config;
 using AspNetCoreSignalr.SignalRHubs;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNet.OData.Extensions;
+using MongoDB.Bson.Serialization;
+using Football.Crosscutting.ViewModels.Reports;
 
 namespace footballRebuildAPI
 {
@@ -41,6 +43,17 @@ namespace footballRebuildAPI
 
             var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
             ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
+
+            #endregion
+
+            #region Deserialising settings for mongodb
+
+            //https://mongodb-documentation.readthedocs.io/en/latest/ecosystem/tutorial/serialize-documents-with-the-csharp-driver.html#polymorphic-classes-and-discriminators
+            BsonClassMap.RegisterClassMap<BaseItem>();
+            BsonClassMap.RegisterClassMap<SubstitutionReportItem>();
+            BsonClassMap.RegisterClassMap<YellowRedCardReportItem>();
+            BsonClassMap.RegisterClassMap<GoalReportItem>();
+            BsonClassMap.RegisterClassMap<StartingLineReportItem>();
 
             #endregion
         }

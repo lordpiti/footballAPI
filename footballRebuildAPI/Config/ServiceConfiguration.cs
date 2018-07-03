@@ -30,6 +30,7 @@ namespace Football.API.Config
                 .AddScoped<ICompetitionService, CompetitionService>()
                 .AddScoped<IBlobStorageService, BlobStorageService>()
                 .AddScoped<IGlobalMediaService, GlobalMediaService>()
+                .AddScoped<IReportService, ReportService>()
                 .AddScoped<IUserService, UserService>();
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));

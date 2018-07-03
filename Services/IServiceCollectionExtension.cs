@@ -22,6 +22,8 @@ namespace Services
                 .AddDataAccessLayerBindings(services, configuration, transient)
                 .AddScoped<ICompetitionRepository, CompetitionRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IReportNoSQLRepository, ReportNoSQLRepository>()
+                .AddScoped<IReportRepository, ReportRepository>()
                 .AddScoped<IGlobalMediaRepository, GlobalMediaRepository>();
 
             if (transient)

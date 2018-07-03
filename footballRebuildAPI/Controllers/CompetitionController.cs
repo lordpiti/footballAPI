@@ -8,6 +8,7 @@ using Football.Crosscutting.ViewModels.Competition;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Match;
 using Football.API.Filters;
+using Football.Crosscutting.ViewModels.Reports;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,10 +20,12 @@ namespace Football.API.Controllers
     public class CompetitionController : Controller
     {
         private readonly ICompetitionService _competitionService;
+        private readonly IReportService _reportService;
 
-        public CompetitionController(ICompetitionService competitionService)
+        public CompetitionController(ICompetitionService competitionService, IReportService reportService)
         {
             _competitionService = competitionService;
+            _reportService = reportService;
         }
 
         [HttpGet]
@@ -75,6 +78,20 @@ namespace Football.API.Controllers
         public async Task<bool> SaveCompetitionDetails([FromBody]Competition competition)
         {
             return await _competitionService.SaveCompetitionDetails(competition);
+        }
+
+        [HttpGet]
+        [Route("{matchId}/getReport")]
+        public async Task<List<BaseItem>> GetReport(int matchId)
+        {
+            return await _reportService.GenerateReport(matchId);
+        }
+
+        [HttpGet]
+        [Route("{matchId}/reportSnapshot")]
+        public ReportData GetReportSnapshot(int matchId)
+        {
+            return _reportService.GetReportSnapshot(matchId);
         }
     }
 }
