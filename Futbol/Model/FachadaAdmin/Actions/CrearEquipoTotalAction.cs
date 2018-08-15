@@ -37,11 +37,11 @@ namespace Futbol.Model.FachadaAdmin.Actions
         public object execute(DbConnection connection,DbTransaction transaction)
         {
 
-            EquipoVO equipoVO = equipoTotal.Equipo;
-            EstadioVO estadioVO = equipoTotal.Estadio;
+            var equipoVO = equipoTotal.Equipo;
+            var estadioVO = equipoTotal.Estadio;
             var listaJugadores = equipoTotal.ListaJugadores;
-            ArrayList listaEntrenadores = equipoTotal.ListaEntrenadores;
-            ArrayList listaDirectivos = equipoTotal.ListaDirectivos;
+            var listaEntrenadores = equipoTotal.ListaEntrenadoresCreate;
+            var listaDirectivos = equipoTotal.ListaDirectivosCreate;
 
 
             
@@ -193,7 +193,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
 
                 }
             }
-            return (new EquipoTotalCO(equipoVO, listaJugadores, listaEntrenadores, listaDirectivos,
+            return (new EquipoTotalCO(equipoVO, listaJugadores, listaEntrenadores,null,  listaDirectivos, null,
                 estadioVO));
 
         }

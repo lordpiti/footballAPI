@@ -97,7 +97,7 @@ namespace Futbol.Model.Directivo.DAO
          
    
 
-         public ArrayList verDirectivosEquipo(DbConnection connection, DbTransaction transaction, int cod_Equipo,
+         public List<DirectivoPlantillaCO> verDirectivosEquipo(DbConnection connection, DbTransaction transaction, int cod_Equipo,
    int startIndex, int count)
          {
              DbDataReader dataReader = null;
@@ -125,7 +125,7 @@ namespace Futbol.Model.Directivo.DAO
                      return null;
                  }
 
-                 ArrayList directivos = new ArrayList();
+                 var directivos = new List<DirectivoPlantillaCO>();
                  
 
                  do

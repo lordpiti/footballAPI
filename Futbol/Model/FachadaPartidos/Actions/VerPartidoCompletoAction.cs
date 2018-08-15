@@ -22,6 +22,7 @@ using Futbol.Model.Tarjeta.VO;
 using Futbol.Model.Tarjeta.DAO;
 using System.Collections;
 using Futbol.Model.Cambio;
+using Futbol.Model.Tarjeta;
 
 namespace Futbol.Model.FachadaPartidos.Actions
 {
@@ -43,8 +44,8 @@ namespace Futbol.Model.FachadaPartidos.Actions
             PartidoVO partido;
             List<CambioCO> listaCambiosLocal;
             List<CambioCO> listaCambiosVisitante;
-            ArrayList listaTarjetasLocal;
-            ArrayList listaTarjetasVisitante;
+            List<TarjetaCO> listaTarjetasLocal;
+            List<TarjetaCO> listaTarjetasVisitante;
 
 
             //Obtenemos el VO del partido

@@ -25,7 +25,7 @@ namespace Futbol.Model.FachadaDatos.Actions
         {
 
             DirectivoDAO directivoDAO = DirectivoDAOFactory.GetDAO();
-            ArrayList listaDirectivos = directivoDAO.verDirectivosEquipo(connection, null, cod_Equipo, 0, 2);
+            var listaDirectivos = directivoDAO.verDirectivosEquipo(connection, null, cod_Equipo, 0, 2);
 
             return listaDirectivos;
         }

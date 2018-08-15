@@ -21,8 +21,8 @@ using Futbol.Model.PartidoJugado.VO;
 using Futbol.ActionProcessor;
 using Futbol.Model.FachadaDatos.Actions;
 using Futbol.Model.FachadaAdmin.COs;
-
-
+using Futbol.Model.Directivo;
+using Futbol.Model.Entrenador;
 
 namespace Futbol.Model.FachadaDatos
 {
@@ -104,25 +104,25 @@ namespace Futbol.Model.FachadaDatos
              catch (Exception e) { throw new InternalErrorException(e); }
          }
 
-        public ArrayList verEntrenadoresEquipo(int cod_Equipo)
+        public List<EntrenadorPlantillaCO> verEntrenadoresEquipo(int cod_Equipo)
          {
              try
              {
-                 VerEntrenadoresEquipoAction action = new VerEntrenadoresEquipoAction(cod_Equipo);
+                 var action = new VerEntrenadoresEquipoAction(cod_Equipo);
 
-                 return (ArrayList)PlainActionProcessor.process(dbFactory, action);
+                 return (List<EntrenadorPlantillaCO>)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }
          }
 
-        public ArrayList verDirectivaEquipo(int cod_Equipo)
+        public List<DirectivoPlantillaCO> verDirectivaEquipo(int cod_Equipo)
          {
              try
              {
-                 VerJuntaDirectivaAction action = new VerJuntaDirectivaAction(cod_Equipo);
+                 var action = new VerJuntaDirectivaAction(cod_Equipo);
 
-                 return (ArrayList)PlainActionProcessor.process(dbFactory, action);
+                 return (List<DirectivoPlantillaCO>)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }

@@ -12,8 +12,7 @@ using Futbol.Model.Estadio.DAO;
 using Futbol.Model.Estadio.VO;
 using Futbol.Model.FachadaAdmin.COs;
 using System.Collections;
-
-
+using Futbol.Model.Directivo;
 
 namespace Futbol.Model.FachadaDatos.Actions
 {
@@ -28,19 +27,19 @@ namespace Futbol.Model.FachadaDatos.Actions
 
         public object execute(DbConnection connection)
         {
-            EquipoDAO equipoDAO = EquipoDAOFactory.GetDAO();
-            JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
-            EntrenadorDAO entrenadorDAO = EntrenadorDAOFactory.GetDAO();
-            DirectivoDAO directivoDAO = DirectivoDAOFactory.GetDAO();
-            EstadioDAO estadioDAO=EstadioDAOFactory.GetDAO();
-            EquipoVO equipo = equipoDAO.buscarEquipoId(connection, null, cod_Equipo);
-            EstadioVO estadio= estadioDAO.buscarEstadioId(connection,null,equipo.Cd_Estadio);
+            var equipoDAO = EquipoDAOFactory.GetDAO();
+            var jugadorDAO = JugadorDAOFactory.GetDAO();
+            var entrenadorDAO = EntrenadorDAOFactory.GetDAO();
+            var directivoDAO = DirectivoDAOFactory.GetDAO();
+            var estadioDAO=EstadioDAOFactory.GetDAO();
+            var equipo = equipoDAO.buscarEquipoId(connection, null, cod_Equipo);
+            var estadio= estadioDAO.buscarEstadioId(connection,null,equipo.Cd_Estadio);
             var listaJugadores = jugadorDAO.listarJugadoresEquipo(connection, null,
                 cod_Equipo, 0, 2);   
             var listaEntrenadores = entrenadorDAO.verEntrenadoresEquipo(connection, null, cod_Equipo, 0, 2);
-            ArrayList listaDirectivos = directivoDAO.verDirectivosEquipo(connection, null, cod_Equipo, 0, 2);
+            var listaDirectivos = directivoDAO.verDirectivosEquipo(connection, null, cod_Equipo, 0, 2);
 
-            return new EquipoTotalCO(equipo, listaJugadores, listaEntrenadores, listaDirectivos, estadio);
+            return new EquipoTotalCO(equipo, listaJugadores, null, listaEntrenadores, null, listaDirectivos, estadio);
         }
     }
 }

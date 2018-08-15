@@ -99,7 +99,7 @@ namespace Futbol.Model.Tarjeta.DAO
 
         
         
-        public ArrayList listarTarjetasEquipoPartido(DbConnection connection, DbTransaction transaction,
+        public List<TarjetaCO> listarTarjetasEquipoPartido(DbConnection connection, DbTransaction transaction,
             int cod_Equipo, int cod_Partido, int startIndex, int count)
         {
             DbDataReader dataReader = null;
@@ -129,7 +129,7 @@ namespace Futbol.Model.Tarjeta.DAO
                     return null;
                 }
 
-                ArrayList tarjetas = new ArrayList();
+                var tarjetas = new List<TarjetaCO>();
                 
                 do
                 {

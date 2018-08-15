@@ -1,172 +1,88 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Text;
 using Futbol.Model.Equipo.VO;
 using Futbol.Model.Partido.VO;
 using Futbol.Model.Arbitro.VO;
 using Futbol.Model.Estadio.VO;
 using Futbol.Model.Cambio;
 using Futbol.Model.Gol;
+using Futbol.Model.Tarjeta;
 
 namespace Futbol.Model.Partido
 {
     public class PartidoCompletoCO
     {
-        private EquipoVO equipoLocal;
-        private EquipoVO equipoVisitante;
-        private PartidoVO partido;
-        private List<PartidoJugadoBasicoCO> jugadoresTitularesLocal;
-        private List<PartidoJugadoBasicoCO> jugadoresTitularesVisitante;
-        private List<PartidoJugadoBasicoCO> jugadoresNoTitularesLocal;
-        private List<PartidoJugadoBasicoCO> jugadoresNoTitularesVisitante;
-        private List<GolCO> golesLocal;
-        private List<GolCO> golesVisitante;
-        private ArrayList tarjetasLocal;
-        private ArrayList tarjetasVisitante;
-        private List<CambioCO> cambiosLocal;
-        private List<CambioCO> cambiosVisitante;
-        private EstadioVO estadio;
-        private ArbitroVO arbitro;
-        private String cronica;
-
-
-
         public PartidoCompletoCO(EquipoVO equipoLocal,EquipoVO equipoVisitante,
             PartidoVO partido, List<PartidoJugadoBasicoCO> jugadoresTitularesLocal,
             List<PartidoJugadoBasicoCO> jugadoresTitularesVisitante, List<PartidoJugadoBasicoCO> jugadoresNoTitularesLocal,
             List<PartidoJugadoBasicoCO> jugadoresNoTitularesVisitante, List<GolCO> golesLocal,
-            List<GolCO> golesVisitante,ArrayList tarjetasLocal, ArrayList tarjetasVisitante,
+            List<GolCO> golesVisitante, List<TarjetaCO> tarjetasLocal, List<TarjetaCO> tarjetasVisitante,
             EstadioVO estadio, ArbitroVO arbitro,String cronica, List<CambioCO> cambiosLocal,
             List<CambioCO> cambiosVisitante)
         {
-            this.equipoLocal = equipoLocal;
-            this.equipoVisitante = equipoVisitante;
-            this.partido = partido;
-            this.jugadoresTitularesLocal=jugadoresTitularesLocal;
-            this.jugadoresTitularesVisitante=jugadoresTitularesVisitante;
-            this.jugadoresNoTitularesLocal=jugadoresNoTitularesLocal;
-            this.jugadoresNoTitularesVisitante=jugadoresNoTitularesVisitante;
-            this.golesLocal=golesLocal;
-            this.golesVisitante=golesVisitante;
-            this.tarjetasLocal = tarjetasLocal;
-            this.tarjetasVisitante = tarjetasVisitante;
-            this.arbitro = arbitro;
-            this.estadio = estadio;
-            this.cronica=cronica;
-            this.cambiosLocal = cambiosLocal;
-            this.cambiosVisitante = cambiosVisitante;
+            this.EquipoLocal = equipoLocal;
+            this.EquipoVisitante = equipoVisitante;
+            this.Partido = partido;
+            this.JugadoresTitularesLocal=jugadoresTitularesLocal;
+            this.JugadoresTitularesVisitante=jugadoresTitularesVisitante;
+            this.JugadoresNoTitularesLocal=jugadoresNoTitularesLocal;
+            this.JugadoresNoTitularesVisitante=jugadoresNoTitularesVisitante;
+            this.GolesLocal=golesLocal;
+            this.GolesVisitante=golesVisitante;
+            this.TarjetasLocal = tarjetasLocal;
+            this.TarjetasVisitante = tarjetasVisitante;
+            this.Arbitro = arbitro;
+            this.Estadio = estadio;
+            this.Cronica=cronica;
+            this.CambiosLocal = cambiosLocal;
+            this.CambiosVisitante = cambiosVisitante;
         }
 
 
-        public EquipoVO EquipoLocal
-        {
-            get { return equipoLocal; }
-            set { equipoLocal = value; }
-        }
-        
-        
-        public EquipoVO EquipoVisitante
-        {
-            get { return equipoVisitante; }
-            set { equipoVisitante = value; }
-        }
+        public EquipoVO EquipoLocal { get; set; }
 
 
-        public List<PartidoJugadoBasicoCO> JugadoresTitularesLocal
-        {
-            get { return jugadoresTitularesLocal; }
-            set { jugadoresTitularesLocal = value; }
-        }
+        public EquipoVO EquipoVisitante { get; set; }
 
 
-        public List<PartidoJugadoBasicoCO> JugadoresTitularesVisitante
-        {
-            get { return jugadoresTitularesVisitante; }
-            set { jugadoresTitularesVisitante = value; }
-        }
+        public List<PartidoJugadoBasicoCO> JugadoresTitularesLocal { get; set; }
 
 
-        public List<PartidoJugadoBasicoCO> JugadoresNoTitularesLocal
-        {
-            get { return jugadoresNoTitularesLocal; }
-            set { jugadoresNoTitularesLocal = value; }
-        }
-
-        public List<PartidoJugadoBasicoCO> JugadoresNoTitularesVisitante
-        {
-            get { return jugadoresNoTitularesVisitante; }
-            set { jugadoresNoTitularesVisitante = value; }
-        }
+        public List<PartidoJugadoBasicoCO> JugadoresTitularesVisitante { get; set; }
 
 
-        public List<GolCO> GolesLocal
-        {
-            get { return golesLocal; }
-            set { golesLocal = value; }
-        }
+        public List<PartidoJugadoBasicoCO> JugadoresNoTitularesLocal { get; set; }
 
-        
-        public List<GolCO> GolesVisitante
-        {
-            get { return golesVisitante; }
-            set { golesVisitante = value; }
-        }
+        public List<PartidoJugadoBasicoCO> JugadoresNoTitularesVisitante { get; set; }
 
 
-        public ArrayList TarjetasLocal
-        {
-            get { return tarjetasLocal; }
-            set { tarjetasLocal = value; }
-        }
+        public List<GolCO> GolesLocal { get; set; }
 
 
-        public ArrayList TarjetasVisitante
-        {
-            get { return tarjetasVisitante; }
-            set { tarjetasVisitante = value; }
-        }
+        public List<GolCO> GolesVisitante { get; set; }
 
 
-        public String Cronica
-        {
-            get { return cronica; }
-            set { cronica = value; }
-        }
+        public List<TarjetaCO> TarjetasLocal { get; set; }
 
 
-        public PartidoVO Partido
-        {
-            get { return partido; }
-            set { partido = value; }
-        }
+        public List<TarjetaCO> TarjetasVisitante { get; set; }
+
+
+        public String Cronica { get; set; }
+
+
+        public PartidoVO Partido { get; set; }
 
 
 
-        public EstadioVO Estadio
-        {
-            get { return estadio; }
-            set { estadio = value; }
-        }
+        public EstadioVO Estadio { get; set; }
 
 
-        public ArbitroVO Arbitro
-        {
-            get { return arbitro; }
-            set { arbitro = value; }
-        }
+        public ArbitroVO Arbitro { get; set; }
 
-        public List<CambioCO> CambiosLocal
-        {
-            get { return cambiosLocal; }
-            set { cambiosLocal = value; }
-        }
+        public List<CambioCO> CambiosLocal { get; set; }
 
-        public List<CambioCO> CambiosVisitante
-        {
-            get { return cambiosVisitante; }
-            set { cambiosVisitante = value; }
-        }
+        public List<CambioCO> CambiosVisitante { get; set; }
 
 
     }

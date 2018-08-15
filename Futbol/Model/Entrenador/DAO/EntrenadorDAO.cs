@@ -97,7 +97,7 @@ namespace Futbol.Model.Entrenador.DAO
          
    
 
-         public ArrayList verEntrenadoresEquipo(DbConnection connection, DbTransaction transaction, int cod_Equipo,
+         public List<EntrenadorPlantillaCO> verEntrenadoresEquipo(DbConnection connection, DbTransaction transaction, int cod_Equipo,
    int startIndex, int count)
          {
              DbDataReader dataReader = null;
@@ -129,7 +129,7 @@ namespace Futbol.Model.Entrenador.DAO
 
                  }
 
-                 ArrayList entrenadores = new ArrayList();
+                 var entrenadores = new List<EntrenadorPlantillaCO>();
                  
 
                  do

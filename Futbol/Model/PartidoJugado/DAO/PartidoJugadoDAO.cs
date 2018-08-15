@@ -214,7 +214,7 @@ namespace Futbol.Model.PartidoJugado.DAO
         }
 
         
-        public ArrayList listarPartidosJugadosCompeticionJugador(DbConnection connection, DbTransaction transaction,
+        public List<PartidoJugadoJugadorCO> listarPartidosJugadosCompeticionJugador(DbConnection connection, DbTransaction transaction,
             String temporada, int cod_Competicion, int cod_Jugador, int startIndex, int count)
         {
             DbDataReader dataReader = null;
@@ -267,7 +267,7 @@ namespace Futbol.Model.PartidoJugado.DAO
 
                 }
 
-                ArrayList partidosJugadosCompeticionJugador = new ArrayList();
+                var partidosJugadosCompeticionJugador = new List<PartidoJugadoJugadorCO>();
 
                 do
                 {                  
