@@ -29,7 +29,7 @@ namespace Football.API.TaskRunner.Jobs
         private IGeneradorCosas _generadorCosas;
         private IGeneradorPartidos _generadorPartidos;
 
-        public CreateMatchesJob(IOptions<AppSettings> settings, IPlayerService playerService, 
+        public CreateMatchesJob(IOptions<AppSettings> settings, IPlayerService playerService, ITeamService teamService,
             IGeneradorCosas generadorCosas, IGeneradorPartidos generadorPartidos)
         {
             _settings = settings;
@@ -37,6 +37,7 @@ namespace Football.API.TaskRunner.Jobs
             _generadorCosas = generadorCosas;
             _generadorPartidos = generadorPartidos;
             _playerService = playerService;
+            _teamService = teamService;
         }
 
         public override async Task<bool> Run()
