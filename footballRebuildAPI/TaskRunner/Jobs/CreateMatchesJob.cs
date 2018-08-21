@@ -16,6 +16,7 @@ using Football.Crosscutting.ViewModels.Match;
 using System.Collections.Generic;
 using Services.Interface;
 using Football.Crosscutting.ViewModels;
+using Football.Services.Interface;
 
 namespace Football.API.TaskRunner.Jobs
 {
@@ -23,6 +24,7 @@ namespace Football.API.TaskRunner.Jobs
     {
         private readonly IOptions<AppSettings> _settings;
         private IPlayerService _playerService;
+        private ITeamService _teamService;
         private IHubContext<LoopyHub> _footballHub;
         private IGeneradorCosas _generadorCosas;
         private IGeneradorPartidos _generadorPartidos;
@@ -89,12 +91,17 @@ namespace Football.API.TaskRunner.Jobs
 
             var events = await GenerateEventListForGame(match, cont);
 
+            var teamLocal = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
+            var teamVisitor = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
+
             await _footballHub.Clients.All.SendAsync("SendCreateMatch",
                 new
                 {
                     matchToCreate = match,
                     matchId = cont,
-                    events = events.Count
+                    events = events.Count,
+                    localTeam = teamLocal,
+                    visitorTeam = teamVisitor
                 });
 
             var currentMinute = 0;
