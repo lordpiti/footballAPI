@@ -6,12 +6,8 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Football.Services.Concrete
 {
@@ -32,45 +28,53 @@ namespace Football.Services.Concrete
             if (loginType == LoginTypeEnum.Google)
             {
                 #region Google authentication
-   
-                var googleTokenUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=";
-                var googleUri = new Uri(googleTokenUrl + accessToken);
-                var responseGoogleToken = await client.GetAsync(googleUri);
 
-                if (responseGoogleToken.IsSuccessStatusCode)
+                if (login)
                 {
-                    string contentTOKEN = await responseGoogleToken.Content.ReadAsStringAsync();
-                    dynamic tokenObjGoogle = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(contentTOKEN);
+                    var googleTokenUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=";
+                    var googleUri = new Uri(googleTokenUrl + accessToken);
+                    var responseGoogleToken = await client.GetAsync(googleUri);
 
-                    me.Id = tokenObjGoogle["sub"];
-                    me.Email = tokenObjGoogle["email"];
-                    me.Name = tokenObjGoogle["name"];
-                    me.IsVerified = true;
-                    me.AuthenticationType = LoginTypeEnum.Google;
-                    me.Role = "User";
-
-                    if (login)
+                    if (responseGoogleToken.IsSuccessStatusCode)
                     {
+                        string contentTOKEN = await responseGoogleToken.Content.ReadAsStringAsync();
+                        dynamic tokenObjGoogle = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(contentTOKEN);
+
+                        me.Id = tokenObjGoogle["sub"];
+                        me.Email = tokenObjGoogle["email"];
+                        me.Name = tokenObjGoogle["name"];
+                        me.IsVerified = true;
+                        me.AuthenticationType = LoginTypeEnum.Google;
+                        me.Role = "User";
+                        me.Token = Guid.NewGuid().ToString();
+
                         var user = _userRepository.FindOrCreateUser(me);
                         me.Role = user.Role;
+
+                        return me;
+                    }
+                }
+                else
+                {
+                    var user = _userRepository.FindUserByToken(accessToken);
+
+                    if (user != null && user.AuthenticationType == LoginTypeEnum.Google)
+                    {
+                        me.Id = user.UserId;
+                        me.Email = user.Email;
+                        me.Name = user.Name;
+                        me.IsVerified = true;
+                        me.AuthenticationType = user.AuthenticationType;
+                        me.Role = user.Token;
+                        me.Token = user.Token;
+                        return me;
                     }
                     else
                     {
-                        var user = _userRepository.FindUserByFacebookUserId(LoginTypeEnum.Google, me.Id);
-
-                        if (user != null && user.AuthenticationType == LoginTypeEnum.Google && user.UserId == me.Id)
-                        {
-                            me.Role = user.Role;
-                            return me;
-                        }
-                        else
-                        {
-                            return null;
-                        }
+                        return null;
                     }
-
-                    return me;
                 }
+   
                 return null;
 
                 #endregion

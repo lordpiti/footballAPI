@@ -13,5 +13,7 @@ namespace Football.DataAccessNoSQL.Interface
         UserData FindOrCreateUser(LoginResponse facebookResponse);
 
         UserData FindUserByFacebookUserId(LoginTypeEnum authenticationType, string facebookUserId);
+
+        UserData FindUserByToken(string token);
     }
 }

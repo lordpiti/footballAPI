@@ -84,7 +84,8 @@ namespace Football.DataAccessNoSQL.Concrete
                     UserId = loginResponse.Id,
                     Name = loginResponse.Name,
                     AuthenticationType = loginResponse.AuthenticationType,
-                    Role = loginResponse.Role
+                    Role = loginResponse.Role,
+                    Token = loginResponse.Token
                 };
 
                 var collection = _mongoDb.GetCollection<BsonDocument>("users");
@@ -102,6 +103,15 @@ namespace Football.DataAccessNoSQL.Concrete
             var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
 
             var user = users.FirstOrDefault(x => x.UserId == userId);
+
+            return user;
+        }
+
+        public UserData FindUserByToken(string token)
+        {
+            var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
+
+            var user = users.FirstOrDefault(x => x.Token == token);
 
             return user;
         }
