@@ -50,6 +50,7 @@ namespace Football.Services.Concrete
 
                         var user = _userRepository.FindOrCreateUser(me);
                         me.Role = user.Role;
+                        me.Token = user.Token;
 
                         return me;
                     }
