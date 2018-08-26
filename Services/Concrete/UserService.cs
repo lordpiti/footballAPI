@@ -84,52 +84,55 @@ namespace Football.Services.Concrete
             {
                 #region Facebook
 
-                string verifyTokenEndPoint = string.Format("https://graph.facebook.com/me?access_token={0}&fields=email,name", accessToken);
-                string verifyAppEndpoint = string.Format("https://graph.facebook.com/app?access_token={0}", accessToken);
-
-                Uri uri = new Uri(verifyTokenEndPoint);
-                HttpResponseMessage response = await client.GetAsync(uri);
-
-                if (response.IsSuccessStatusCode)
+                if (login)
                 {
-                    string content = await response.Content.ReadAsStringAsync();
-                    dynamic userObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                    string verifyTokenEndPoint = string.Format("https://graph.facebook.com/me?access_token={0}&fields=email,name", accessToken);
+                    string verifyAppEndpoint = string.Format("https://graph.facebook.com/app?access_token={0}", accessToken);
 
-                    uri = new Uri(verifyAppEndpoint);
-                    response = await client.GetAsync(uri);
-                    content = await response.Content.ReadAsStringAsync();
-                    dynamic appObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                    Uri uri = new Uri(verifyTokenEndPoint);
+                    HttpResponseMessage response = await client.GetAsync(uri);
 
-                    me.Id = userObj["id"];
-                    me.Email = userObj["email"];
-                    me.Name = userObj["name"];
-                    me.IsVerified = true;
-                    me.AuthenticationType = LoginTypeEnum.Facebook;
-                    me.Role = "User";
-
-                    if (login)
+                    if (response.IsSuccessStatusCode)
                     {
+                        string content = await response.Content.ReadAsStringAsync();
+                        dynamic userObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+
+                        uri = new Uri(verifyAppEndpoint);
+                        response = await client.GetAsync(uri);
+                        content = await response.Content.ReadAsStringAsync();
+                        dynamic appObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+
+                        me.Id = userObj["id"];
+                        me.Email = userObj["email"];
+                        me.Name = userObj["name"];
+                        me.IsVerified = true;
+                        me.AuthenticationType = LoginTypeEnum.Facebook;
+                        me.Role = "User";
+                        me.Token = Guid.NewGuid().ToString();
+
                         var userData = _userRepository.FindOrCreateUser(me);
                         me.Role = userData.Role;
+                        me.Token = userData.Token;
+
+                        return me;
+                    }
+                    return null;
+                }
+                else
+                {
+                    var user = _userRepository.FindUserByToken(accessToken);
+
+                    if (user != null && user.AuthenticationType == LoginTypeEnum.Facebook)
+                    {
+                        me.Role = user.Role;
+                        me.Token = user.Token;
+                        return me;
                     }
                     else
                     {
-                        var user = _userRepository.FindUserByFacebookUserId(LoginTypeEnum.Facebook, me.Id);
-
-                        if (user != null && user.AuthenticationType == LoginTypeEnum.Facebook && user.UserId == me.Id)
-                        {
-                            me.Role = user.Role;
-                            return me;
-                        }
-                        else
-                        {
-                            return null;
-                        }
+                        return null;
                     }
-
-                    return me;
                 }
-                return null;
 
                 #endregion
             }
