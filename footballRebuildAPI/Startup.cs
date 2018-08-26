@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNet.OData.Extensions;
 using MongoDB.Bson.Serialization;
 using Football.Crosscutting.ViewModels.Reports;
+using Microsoft.AspNet.OData.Formatter;
+using Microsoft.Net.Http.Headers;
 
 namespace footballRebuildAPI
 {
@@ -63,7 +65,8 @@ namespace footballRebuildAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add CORS
+
+            #region CORS setup
 
             services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
             {
@@ -73,25 +76,45 @@ namespace footballRebuildAPI
                     .AllowCredentials()
                     .AllowAnyOrigin();
             }));
+
+            #endregion
+
             // Add framework services.
-            services.AddOData();
+
             services.AddMvc();
 
-            services.AddSignalR();
+            #region OData
 
-            
+            services.AddOData();
+
+            //Added for compatibility with OData and Swagger
+            services.AddMvcCore(options =>
+            {
+                foreach (var outputFormatter in options.OutputFormatters.OfType<ODataOutputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
+                {
+                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                }
+                foreach (var inputFormatter in options.InputFormatters.OfType<ODataInputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
+                {
+                    inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                }
+            });
+
+            #endregion
+
+            services.AddSignalR();          
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
             ServiceConfiguration.ConfigureAPIServices(services);
 
-            //Because the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
+            //Since the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
             //If the action filters were used directly, this would not be required.
             services.AddScoped<AuthorizationRequiredAttribute>();
 
 
             // Inject an implementation of ISwaggerProvider with defaulted settings applied
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() { Title="jojo", Description="jeje" }));
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() { Title="Football API specification", Description="" }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,16 +132,24 @@ namespace footballRebuildAPI
             //app.UseCors("AllowAll");
             app.UseCors("CorsPolicy");
 
+            #region Added for OData
+
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
                 routeBuilder.EnableDependencyInjection();
             });
 
+            #endregion
+
+            #region SignalR
+
             app.UseSignalR(routes =>
             {
                 routes.MapHub<LoopyHub>("/loopy", options => options.Transports = HttpTransportType.WebSockets);
             });
+
+            #endregion
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","swagger"));

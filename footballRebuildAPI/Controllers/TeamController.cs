@@ -6,16 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Football.Crosscutting.ViewModels.Teams;
 using Football.Services.Interface;
 using Football.Crosscutting.ViewModels;
-using Football.Crosscutting;
-using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Football.API.Controllers
 {
-    [Produces("application/json")]
     [Route("api/[controller]")]
-    public class TeamController : ODataController
+
+    public class TeamController
     {
         //IOptions<AppSettings> settings
         private readonly ITeamService _teamService;
@@ -34,7 +32,6 @@ namespace Football.API.Controllers
 
         [HttpGet]
         [Route("Teams/{competitionId?}")]
-        [EnableQuery]
         public async Task<List<Team>> GetAllTeams(int? competitionId=null)
         {
             ///api/Team/teams?$filter=Id%20eq%201
