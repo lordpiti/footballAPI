@@ -7,6 +7,9 @@ Its used as a sandbox to try out some features of .NET Core.
 The structure of the API implementation follows a classic 3-layer architecture (Presentation->Service->Data), while the service runs
 on a separate thread in parallel with it.
 
+## API Specification
+https://footballpitiapi.azurewebsites.net/swagger/index.html
+
 ## Main features
 
 * Developed on C# under ASP.NET Core 2
