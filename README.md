@@ -18,6 +18,7 @@ https://footballpitiapi.azurewebsites.net/swagger/index.html
 * Entity Framework Core to access an SQL Server database
 * Access to a MongoDB NoSQL database for user data and logs
 * Real-time web functionality via sockets using SignalR
+* GraphQL and OData querying support
 * Nuget package distribution for crosscutting projects
 * Ongoing service running on a parallel thread to perform custom tasks, which can be set via config files
   * Simulation of a set of games running in parallel and sending events from a Hub to connected clients
