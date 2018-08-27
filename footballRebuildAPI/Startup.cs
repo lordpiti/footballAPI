@@ -132,15 +132,23 @@ namespace footballRebuildAPI
             //app.UseCors("AllowAll");
             app.UseCors("CorsPolicy");
 
-            #region Added for OData
+            #region Add GraphiQL
+
+            // Launch {url}/graphql
+            app.UseGraphiQl();
+
+            #endregion
 
             app.UseMvc(routeBuilder =>
             {
+                #region Added for OData
+
                 routeBuilder.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
                 routeBuilder.EnableDependencyInjection();
+                
+                #endregion
             });
-
-            #endregion
+            
 
             #region SignalR
 

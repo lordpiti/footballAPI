@@ -3,8 +3,11 @@ using Football.API.TaskRunner.Jobs;
 using Football.API.TaskRunner.Services;
 using Football.BlobStorage;
 using Football.BlobStorage.Interfaces;
+using Football.GraphQL.Models;
 using Football.Services.Concrete;
 using Football.Services.Interface;
+using GraphQL;
+using GraphQL.Types;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
@@ -31,7 +34,15 @@ namespace Football.API.Config
                 .AddScoped<IBlobStorageService, BlobStorageService>()
                 .AddScoped<IGlobalMediaService, GlobalMediaService>()
                 .AddScoped<IReportService, ReportService>()
-                .AddScoped<IUserService, UserService>();
+                .AddScoped<IUserService, UserService>()
+                .AddSingleton<IDocumentExecuter, DocumentExecuter>()
+                .AddSingleton<FootballQuery>()
+                .AddSingleton<FootballMutation>()
+                .AddSingleton<PlayerType>()
+                .AddSingleton<PlayerInputType>();
+            //.AddSingleton<SkaterStatisticType>();
+            var sp = services.BuildServiceProvider();
+            services.AddSingleton<ISchema>(new FootballSchema(new FuncDependencyResolver(type => sp.GetService(type))));
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
         }
