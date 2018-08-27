@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Services.Test", "Football.Services.Test\Football.Services.Test.csproj", "{F67873AC-28CD-4533-A544-7EFCDBF58D8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.GraphQL", "Football.GraphQL\Football.GraphQL.csproj", "{859AFF6C-3395-4C00-9497-F7D666FE66DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.GraphQLUtils", "Football.GraphQLUtils\Football.GraphQLUtils.csproj", "{A6EF2C06-9737-4C7D-A720-15291D604CB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +79,10 @@ Global
 		{F67873AC-28CD-4533-A544-7EFCDBF58D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F67873AC-28CD-4533-A544-7EFCDBF58D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F67873AC-28CD-4533-A544-7EFCDBF58D8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{859AFF6C-3395-4C00-9497-F7D666FE66DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{859AFF6C-3395-4C00-9497-F7D666FE66DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{859AFF6C-3395-4C00-9497-F7D666FE66DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{859AFF6C-3395-4C00-9497-F7D666FE66DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
