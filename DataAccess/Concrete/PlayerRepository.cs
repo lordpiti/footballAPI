@@ -33,14 +33,20 @@ namespace DataAccess.Concrete
         public List<MatchPlayedInfo> GetMatchesPlayed(int id)
         {
             //https://docs.microsoft.com/en-us/ef/core/querying/related-data#related-data-and-serialization
-            var toReturn = _context.Jugador.Include(x=>x.PartidoJugado)
-                .ThenInclude(partidoJugado => partidoJugado.CodPartidoNavigation)
+            var toReturn = _context.Jugador
+                .Include(x=>x.PartidoJugado)
+                .ThenInclude(partidoJugado => partidoJugado.CodPartidoNavigation.CodLocalNavigation)
+                .Include(x => x.PartidoJugado)
+                .ThenInclude(partidoJugado => partidoJugado.CodPartidoNavigation.CodVisitanteNavigation)
                 .FirstOrDefault(x => x.CodJugador == id)
                 .PartidoJugado.Select(x => new MatchPlayedInfo(){
+                    Id = x.CodPartido,
                     Date = x.CodPartidoNavigation.Fecha,
                     LocalGoals = x.CodPartidoNavigation.GolesLocal,
                     VisitorGoals = x.CodPartidoNavigation.GolesVisitante,
-                    RecoveredBalls = x.BalonesRecuperados 
+                    RecoveredBalls = x.BalonesRecuperados,
+                    LocalTeamName = x.CodPartidoNavigation.CodLocalNavigation.Nombre,
+                    VisitorTeamName = x.CodPartidoNavigation.CodVisitanteNavigation.Nombre
                 }).ToList();
 
             return toReturn;

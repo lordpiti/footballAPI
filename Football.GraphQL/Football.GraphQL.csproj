@@ -63,6 +63,7 @@
     <Compile Include="Models\FootballQuery.cs" />
     <Compile Include="Models\FootballSchema.cs" />
     <Compile Include="Models\GraphQLQuery.cs" />
+    <Compile Include="Models\MatchPlayedType.cs" />
     <Compile Include="Models\PlayerInputType.cs" />
     <Compile Include="Models\PlayerType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -39,6 +39,7 @@ namespace Football.API.Config
                 .AddSingleton<FootballQuery>()
                 .AddSingleton<FootballMutation>()
                 .AddSingleton<PlayerType>()
+                .AddSingleton<MatchPlayedType>()
                 .AddSingleton<PlayerInputType>();
             //.AddSingleton<SkaterStatisticType>();
             var sp = services.BuildServiceProvider();

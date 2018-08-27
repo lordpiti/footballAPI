@@ -8,6 +8,10 @@ namespace Crosscutting.ViewModels
     {
         public DateTime? Date { get; set; }
 
+        public string LocalTeamName { get; set; }
+
+        public string VisitorTeamName { get; set; }
+
         public int LocalGoals { get; set; }
 
         public int VisitorGoals { get; set; }
