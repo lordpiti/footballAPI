@@ -33,6 +33,7 @@ namespace DataAccess.Concrete
         public List<MatchPlayedInfo> GetMatchesPlayed(int id)
         {
             //https://docs.microsoft.com/en-us/ef/core/querying/related-data#related-data-and-serialization
+            //https://github.com/aspnet/EntityFrameworkCore/issues/4716
             var toReturn = _context.Jugador
                 .Include(x=>x.PartidoJugado)
                 .ThenInclude(partidoJugado => partidoJugado.CodPartidoNavigation.CodLocalNavigation)
