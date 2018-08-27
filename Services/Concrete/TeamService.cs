@@ -29,6 +29,11 @@ namespace Football.Services.Concrete
             if (team!=null)
             {
                 _blobStorageService.PopulateUrlForBlob(team.PictureLogo);
+
+                foreach (var player in team.PlayerList)
+                {
+                    _blobStorageService.PopulateUrlForBlob(player.Picture);
+                }
             }
 
             return team;

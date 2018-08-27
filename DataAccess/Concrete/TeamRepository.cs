@@ -28,6 +28,8 @@ namespace Football.DataAccess.Concrete
                 var teamFromBD = await _context.Equipo.Include(x => x.TeamPicture).Include(x => x.Stadium)
                     .Include(x => x.Jugador)
                     .ThenInclude(x => x.CodIntegranteNavigation.HcoIntegrante)
+                    .Include(x => x.Jugador)
+                    .ThenInclude(x => x.CodIntegranteNavigation.Picture)
                     .FirstOrDefaultAsync(x => x.CodEquipo == id);
 
                 var team = new Team()
@@ -55,7 +57,15 @@ namespace Football.DataAccess.Concrete
                         TeamName = teamFromBD.Nombre,
                         BirthDate = x.CodIntegranteNavigation.FechaNac,
                         Position = x.Posicion,
-                        PlayerId = x.CodJugador
+                        BirthPlace = x.CodIntegranteNavigation.BirthPlace,
+                        Height = x.Altura,
+                        PlayerId = x.CodJugador,
+                        Dorsal = x.CodIntegranteNavigation.HcoIntegrante.FirstOrDefault(hco =>hco.FechaInicio.Year == year).Dorsal,
+                        Picture = x.CodIntegranteNavigation.Picture != null ? new BlobData()
+                        {
+                            ContainerReference = x.CodIntegranteNavigation.Picture.BlobStorageContainer,
+                            FileName = x.CodIntegranteNavigation.Picture.BlobStorageReference
+                        } : new BlobData() { },
                     }).ToList()
                 };
 
