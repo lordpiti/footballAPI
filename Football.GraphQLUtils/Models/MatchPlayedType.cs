@@ -1,5 +1,6 @@
 ﻿using Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Match;
+using Football.GraphQLUtils.Models;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,9 @@ namespace Football.GraphQL.Models
             //  .Resolve(context => context.Source.Id);
             //Field<StringGraphType>("matchIdComplexAndString",
             //    resolve: context => context.Source.Id.ToString());
+
+            Field<CompetitionType>("competition",
+                resolve: context => context.Source.Competition, description: "Match competition");
         }
     }
 }

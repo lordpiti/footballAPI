@@ -4,6 +4,7 @@ using Football.API.TaskRunner.Services;
 using Football.BlobStorage;
 using Football.BlobStorage.Interfaces;
 using Football.GraphQL.Models;
+using Football.GraphQLUtils.Models;
 using Football.Services.Concrete;
 using Football.Services.Interface;
 using GraphQL;
@@ -40,7 +41,8 @@ namespace Football.API.Config
                 .AddSingleton<FootballMutation>()
                 .AddSingleton<PlayerType>()
                 .AddSingleton<MatchPlayedType>()
-                .AddSingleton<PlayerInputType>();
+                .AddSingleton<PlayerInputType>()
+                .AddSingleton<CompetitionType>();
             //.AddSingleton<SkaterStatisticType>();
             var sp = services.BuildServiceProvider();
             services.AddSingleton<ISchema>(new FootballSchema(new FuncDependencyResolver(type => sp.GetService(type))));

@@ -9,6 +9,7 @@ using System.Linq;
 using Football.Crosscutting.ViewModels.Match;
 using System.Threading.Tasks;
 using Football.Crosscutting;
+using Football.Crosscutting.ViewModels.Competition;
 
 namespace DataAccess.Concrete
 {
@@ -39,6 +40,8 @@ namespace DataAccess.Concrete
                 .ThenInclude(partidoJugado => partidoJugado.CodPartidoNavigation.CodLocalNavigation)
                 .Include(x => x.PartidoJugado)
                 .ThenInclude(partidoJugado => partidoJugado.CodPartidoNavigation.CodVisitanteNavigation)
+                .Include(x => x.PartidoJugado)
+                .ThenInclude(partidoJugado => partidoJugado.CodPartidoNavigation.CodCompeticionNavigation)
                 .FirstOrDefault(x => x.CodJugador == id)
                 .PartidoJugado.Select(x => new MatchPlayedInfo(){
                     Id = x.CodPartido,
@@ -47,7 +50,14 @@ namespace DataAccess.Concrete
                     VisitorGoals = x.CodPartidoNavigation.GolesVisitante,
                     RecoveredBalls = x.BalonesRecuperados,
                     LocalTeamName = x.CodPartidoNavigation.CodLocalNavigation.Nombre,
-                    VisitorTeamName = x.CodPartidoNavigation.CodVisitanteNavigation.Nombre
+                    VisitorTeamName = x.CodPartidoNavigation.CodVisitanteNavigation.Nombre,
+                    Competition = new Competition()
+                    {
+                        Id = x.CodPartidoNavigation.CodCompeticionNavigation.CodCompeticion,
+                        Name = x.CodPartidoNavigation.CodCompeticionNavigation.Nombre,
+                        Season = x.CodPartidoNavigation.CodCompeticionNavigation.Temporada,
+                        Type = x.CodPartidoNavigation.CodCompeticionNavigation.Tipo
+                    }
                 }).ToList();
 
             return toReturn;
