@@ -8,7 +8,7 @@ The structure of the API implementation follows a classic 3-layer architecture (
 on a separate thread in parallel with it.
 
 ## API Specification
-https://footballpitiapi.azurewebsites.net/swagger/index.html
+https://footballsandbox.azurewebsites.net/swagger/index.html
 
 ## Main features
 
