@@ -27,6 +27,8 @@ using MongoDB.Bson.Serialization;
 using Football.Crosscutting.ViewModels.Reports;
 using Microsoft.AspNet.OData.Formatter;
 using Microsoft.Net.Http.Headers;
+using System.Reflection;
+using System.IO;
 
 namespace footballRebuildAPI
 {
@@ -114,7 +116,18 @@ namespace footballRebuildAPI
 
 
             // Inject an implementation of ISwaggerProvider with defaulted settings applied
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() { Title="Football API specification", Description="" }));
+            // https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.1
+            services.AddSwaggerGen(c => 
+            {
+                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() {
+                    Title = "Football API specification",
+                    Description = ""
+                });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

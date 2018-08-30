@@ -29,5 +29,9 @@
     <ProjectReference Include="..\Services\Football.Services.csproj" />
     <ProjectReference Include="..\Simulador\Simulador.csproj" />
   </ItemGroup>
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
 
 </Project>

@@ -14,6 +14,9 @@ using Football.Crosscutting.ViewModels.Reports;
 
 namespace Football.API.Controllers
 {
+    /// <summary>
+    /// Competition methods
+    /// </summary>
     [Route("api/[controller]")]
     //https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters
     //[TypeFilter(typeof(AuthorizationRequiredAttribute), Arguments = new object[] { new string[] { "Admin", "Lord" } })]
@@ -28,6 +31,12 @@ namespace Football.API.Controllers
             _reportService = reportService;
         }
 
+        /// <summary>
+        /// Get all competitions where a team has participated
+        /// </summary>
+        /// <param name="teamId">Team Id</param>
+        /// <param name="season">Season when the competition was played</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("team/{teamId?}/season/{season}")]
         [Route("team/{teamId?}")]
@@ -38,6 +47,12 @@ namespace Football.API.Controllers
             return await _competitionService.GetCompetitions(teamId, season);
         }
 
+        /// <summary>
+        /// Get info about an specific round in a competition
+        /// </summary>
+        /// <param name="competitionId">Competition Id</param>
+        /// <param name="round">Round within the competition</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{competitionId}/round/{round}")]
         public async Task<CompetitionRoundData> GetCompetitionRoundData(int competitionId, string round)
@@ -59,6 +74,12 @@ namespace Football.API.Controllers
             return await _competitionService.GetCompetitionById(competitionId);
         }
 
+        /// <summary>
+        /// Get a list with the top scorers on a competition in a specific round
+        /// </summary>
+        /// <param name="competitionId">Competition Id</param>
+        /// <param name="round">Round</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{competitionId}/round/{round}/scorers")]
         public async Task<List<Scorer>> GetTopScorers(int competitionId, string round)
