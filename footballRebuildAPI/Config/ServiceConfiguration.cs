@@ -97,7 +97,8 @@ namespace Football.API.Config
             services.AddScoped<IGeneradorPartidos, GeneradorPartidos>();
             services.AddSingleton<JobRunnerConfigService>()
                 .AddTransient<CreateMatchesJob>()
-                .AddTransient<CleanBlobStorageJob>();
+                .AddTransient<CleanBlobStorageJob>()
+                .AddTransient<KeepSitesAliveJob>();
 
             services.AddSignalR();
 
