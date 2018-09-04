@@ -19,6 +19,7 @@ namespace Football.GraphQL.Models
             Field(x => x.VisitorTeamName);
             Field(x => x.LocalGoals);
             Field(x => x.VisitorGoals);
+            Field(x => x.Round);
             
             Field<DateTimeGraphType>("date",
                 resolve: context => (DateTime)context.Source.Date);

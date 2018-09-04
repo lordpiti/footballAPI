@@ -51,6 +51,7 @@ namespace DataAccess.Concrete
                     RecoveredBalls = x.BalonesRecuperados,
                     LocalTeamName = x.CodPartidoNavigation.CodLocalNavigation.Nombre,
                     VisitorTeamName = x.CodPartidoNavigation.CodVisitanteNavigation.Nombre,
+                    Round = x.CodPartidoNavigation.Jornada,
                     Competition = new Competition()
                     {
                         Id = x.CodPartidoNavigation.CodCompeticionNavigation.CodCompeticion,

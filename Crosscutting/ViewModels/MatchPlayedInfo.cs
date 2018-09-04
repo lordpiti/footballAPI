@@ -11,6 +11,8 @@ namespace Crosscutting.ViewModels
 
         public Competition Competition { get; set; }
 
+        public string Round { get; set; }
+
         public string LocalTeamName { get; set; }
 
         public string VisitorTeamName { get; set; }
