@@ -10,6 +10,9 @@ on a separate thread in parallel with it.
 ## API Specification
 https://footballsandbox.azurewebsites.net/swagger/index.html
 
+## GraphQL sandbox
+https://footballsandbox.azurewebsites.net/graphql
+
 ## Main features
 
 * Developed on C# under ASP.NET Core 2
