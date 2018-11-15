@@ -32,5 +32,10 @@ namespace Football.API.TaskRunner.Jobs
 
             return true;
         }
+
+        public override Task executePostRun()
+        {
+            return null;
+        }
     }
 }

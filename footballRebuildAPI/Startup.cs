@@ -29,6 +29,7 @@ using Microsoft.AspNet.OData.Formatter;
 using Microsoft.Net.Http.Headers;
 using System.Reflection;
 using System.IO;
+using GraphiQl;
 
 namespace footballRebuildAPI
 {

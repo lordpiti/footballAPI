@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using Services.Interface;
 using Football.Crosscutting.ViewModels;
 using Football.Services.Interface;
+using Football.API.Cache;
 
 namespace Football.API.TaskRunner.Jobs
 {
@@ -44,6 +45,17 @@ namespace Football.API.TaskRunner.Jobs
         {
             try
             {
+                if (MemoryCacher.getDateTime() == null)
+                    MemoryCacher.setDateTime(this.NextRun);
+
+                MemoryCacher.setLive(true);
+
+                await _footballHub.Clients.All.SendAsync("StartSimulation",
+                    new
+                    {
+                        eventType = "startSimulation"
+                    });
+
                 const int numberOfTeams = 20;
                 var teamCodeList = Enumerable.Range(1, numberOfTeams).ToList();
 
@@ -58,12 +70,6 @@ namespace Football.API.TaskRunner.Jobs
 
                 var matchSet = calendario[0];
 
-                await _footballHub.Clients.All.SendAsync("StartSimulation",
-                new
-                {
-                    eventType = "startSimulation"
-                });
-
                 var taskList = new List<Task>();
 
                 for (int i=1;i< numberOfTeams/2; i++)
@@ -73,10 +79,10 @@ namespace Football.API.TaskRunner.Jobs
 
                     var task = createMatchTask(comp1, part, numeroJornada, cont);
                     taskList.Add(task);
-                    //task.Start();
                 }
 
                 Task.WaitAll(taskList.ToArray());
+
             }
             catch (Exception ex)
             {
@@ -170,6 +176,18 @@ namespace Football.API.TaskRunner.Jobs
             });
 
             return events.OrderBy(x=>x.Minute).ToList();
+        }
+
+        public override async Task executePostRun()
+        {
+            MemoryCacher.setLive(false);
+
+            MemoryCacher.setDateTime(this.NextRun);
+            await _footballHub.Clients.All.SendAsync("EndSimulation",
+            new
+            {
+                nextSimulationDateTime = this.NextRun
+            });
         }
     }
 }

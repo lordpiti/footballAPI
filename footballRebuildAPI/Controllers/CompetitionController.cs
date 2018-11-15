@@ -9,6 +9,7 @@ using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Match;
 using Football.API.Filters;
 using Football.Crosscutting.ViewModels.Reports;
+using Football.API.Cache;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -99,6 +100,22 @@ namespace Football.API.Controllers
         public async Task<bool> SaveCompetitionDetails([FromBody]Competition competition)
         {
             return await _competitionService.SaveCompetitionDetails(competition);
+        }
+
+        /// <summary>
+        /// Get the next datetime for a simulation
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("nextSimulation")]
+        public Object GetNextSimulationDateTime()
+        {
+            var nextSimulationDateTime = MemoryCacher.getDateTime();
+            var live = MemoryCacher.getLive();
+            return new {
+                nextSimulationDateTime,
+                live
+            };
         }
 
         [HttpGet]

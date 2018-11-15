@@ -91,6 +91,7 @@ namespace Football.API.TaskRunner.Jobs
 
 
                     NextRun = DateTime.Now.Add(Settings.Interval);
+                    await executePostRun();
                 }
             });
         }
@@ -138,6 +139,8 @@ namespace Football.API.TaskRunner.Jobs
             this.Name = config.Name;
             //_logger = ServiceConfiguration.ConsoleProvider.GetService<ILoggerService>();
         }
+
+        public abstract Task executePostRun();
 
     }
 }

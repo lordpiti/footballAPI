@@ -12,6 +12,7 @@ namespace Football.API.TaskRunner.Jobs
 {
     public class KeepSitesAliveJob : BaseJob
     {
+
         public override async Task<bool> Run()
         {
             var urls = new List<string>() {
@@ -34,5 +35,11 @@ namespace Football.API.TaskRunner.Jobs
 
             return true;
         }
+
+        public override Task executePostRun()
+        {
+            return null;
+        }
+
     }
 }
