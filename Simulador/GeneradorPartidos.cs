@@ -129,7 +129,7 @@ namespace Simulador
             for (int i = 0; i < numeroTarjetas; i++)
             {
                 var tarjeta = new TarjetaVO(((JugadorVO)jugadoresLocal[i]).Cod_Jugador,
-                    rand.Next(0, 90), "Amarilla", "Juego violento");
+                    rand.Next(0, 90), "Yellow", "Aggressive tackle");
                 tarjetasLocal.Add(tarjeta);
             }
 
@@ -139,7 +139,7 @@ namespace Simulador
             for (int i = 0; i < numeroTarjetas; i++)
             {
                 var tarjeta = new TarjetaVO(((JugadorVO)jugadoresVisitante[i]).Cod_Jugador,
-                    rand.Next(0, 90), "Amarilla", "Juego violento");
+                    rand.Next(0, 90), "Yellow", "Aggressive tackle");
                 tarjetasVisitante.Add(tarjeta);
             }
 

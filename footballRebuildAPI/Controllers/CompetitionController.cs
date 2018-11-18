@@ -112,8 +112,10 @@ namespace Football.API.Controllers
         {
             var nextSimulationDateTime = MemoryCacher.getDateTime();
             var live = MemoryCacher.getLive();
+            var secondsLeft = (int) (nextSimulationDateTime!=null ? ((TimeSpan)(nextSimulationDateTime - DateTime.Now)).TotalSeconds : 0);
             return new {
                 nextSimulationDateTime,
+                secondsLeft,
                 live
             };
         }

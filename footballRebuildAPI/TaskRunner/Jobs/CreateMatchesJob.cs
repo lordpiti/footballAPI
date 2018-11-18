@@ -186,7 +186,8 @@ namespace Football.API.TaskRunner.Jobs
             await _footballHub.Clients.All.SendAsync("EndSimulation",
             new
             {
-                nextSimulationDateTime = this.NextRun
+                nextSimulationDateTime = this.NextRun,
+                secondsLeft = (int)(this.NextRun != null ? ((TimeSpan)(this.NextRun - DateTime.Now)).TotalSeconds : 0)
             });
         }
     }
