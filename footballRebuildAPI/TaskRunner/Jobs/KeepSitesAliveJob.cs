@@ -16,8 +16,8 @@ namespace Football.API.TaskRunner.Jobs
         public override async Task<bool> Run()
         {
             var urls = new List<string>() {
-                "https://piti-react-test.herokuapp.com/",
-                "https://footballtpititest.herokuapp.com/"
+                "https://piti-react-test.herokuapp.com/competitions/competition-simulation",
+                "https://footballtpititest.herokuapp.com/competitions/simulation"
                 };
 
             try
