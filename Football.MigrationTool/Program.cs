@@ -8,7 +8,7 @@ namespace Football.MigrationTool
         {
             Console.WriteLine("Hello World!");
 
-            var a = new FillCalendarMatchDataMigration();
+            var a = new SearchAndPopulateMigration();
 
             a.Execute();
         }

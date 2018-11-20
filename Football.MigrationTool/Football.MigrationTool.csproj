@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Customsearch.v1" Version="1.36.1.1369" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Crosscutting\Football.Crosscutting.csproj" />
     <ProjectReference Include="..\DataAccess\Football.DataAccess.csproj" />
   </ItemGroup>
