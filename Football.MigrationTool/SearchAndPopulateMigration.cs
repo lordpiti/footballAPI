@@ -1,71 +1,175 @@
 ﻿using DataAccess.Models;
 using Football.MigrationTool.HelperClasses;
+using Football.Services.Interface;
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Football.MigrationTool
 {
-    class SearchAndPopulateMigration
+    public class SearchAndPopulateMigration
     {
-        private static DbContextOptions _contextOptions;
+        private IPlayerService _playerService;
+        private ITeamService _teamService;
+        private IGlobalMediaService _globalMediaService;
 
-        public void Execute()
+        public SearchAndPopulateMigration(IPlayerService playerService, ITeamService teamService, IGlobalMediaService globalMediaService)
         {
-            _contextOptions = new DbContextOptionsBuilder<c__database_futbol_mdfContext>()
-            .UseSqlServer(@"Server=tcp:qdijnzq4jx.database.windows.net,1433;Initial Catalog=Football;Persist Security Info=False;User ID=lordpiti@qdijnzq4jx;Password=Kidswast1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
-            .Options;
+            _playerService = playerService;
+            _teamService = teamService;
+            _globalMediaService = globalMediaService;
+        }
 
-            var context = new c__database_futbol_mdfContext((DbContextOptions<c__database_futbol_mdfContext>)_contextOptions);
-
-            const string apiKey = "AIzaSyDEMwf-TmawihildmEKe3V-vZNSmqIZhr0";
-            const string searchEngineId = "009825223228933647019:srwbnv-i5xw";
-
-            #region Update all team player names with the ones available
-
-
-
-            using (StreamReader r = new StreamReader("c:\\repos\\england-players.json"))
+        public async Task Execute()
+        {
+            try
             {
-                string json = r.ReadToEnd();
+                const string apiKey = "AIzaSyDEMwf-TmawihildmEKe3V-vZNSmqIZhr0";
+                const string searchEngineId = "009825223228933647019:srwbnv-i5xw";
 
-                var items = JsonConvert.DeserializeObject<RootObject>(json);
+                jsonFilesFromFolder();
 
-                foreach(var item in items.sheets.Players)
+                #region Update all team player names with the ones available
+
+                int jsonIndex = 7;
+
+                var jsonFileList = jsonFilesFromFolder().Skip(6);
+
+                foreach (var jsonTeam in jsonFileList)
                 {
-                    #region Google Search Code
+                    var items = JsonConvert.DeserializeObject<RootObject>(jsonTeam);
 
-                    var query = item.name;
-                    var customSearchService = new CustomsearchService(new BaseClientService.Initializer { ApiKey = apiKey });
-                    var listRequest = customSearchService.Cse.List(query);
-                    listRequest.Cx = searchEngineId;
-                    listRequest.Num = 1;
-                    //listRequest.Fields = "items(image(contextLink,thumbnailLink),link)";
-                    listRequest.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
-                    listRequest.Start = 1;
+                    var team = await _teamService.GetTeamByIdAndYear(jsonIndex, 2009);
 
-                    var search = listRequest.Execute();
-
-                    foreach (var result in search.Items)
+                    int index = 0;
+                    foreach (var item in team.PlayerList)
                     {
-                        Console.WriteLine(string.Format("Title: {0}", result.Title));
-                        Console.WriteLine(string.Format("Link: {0}", result.Link));
+                        var currentPlayerToCopy = items.sheets.Players[index];
+
+                        var nameAndSurname = currentPlayerToCopy.name.Split(' ');
+                        if (nameAndSurname.Length > 1)
+                        {
+                            item.Name = nameAndSurname[0];
+                            item.Surname = nameAndSurname[1];
+                        }
+                        else
+                        {
+                            item.Name = currentPlayerToCopy.name;
+                            item.Surname = "";
+                        }
+
+                        item.Position = currentPlayerToCopy.position;
+
+                        #region Google Search Code
+
+                        var query = currentPlayerToCopy.name;
+                        var customSearchService = new CustomsearchService(new BaseClientService.Initializer { ApiKey = apiKey });
+                        var listRequest = customSearchService.Cse.List(query);
+                        listRequest.Cx = searchEngineId;
+                        listRequest.Num = 1;
+                        //listRequest.Fields = "items(image(contextLink,thumbnailLink),link)";
+                        listRequest.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
+                        listRequest.Start = 1;
+
+                        var search = listRequest.Execute();
+
+                        var url = search.Items[0].Link;
+
+                        var imageByteArray = this.GetImage(url);
+                        if (imageByteArray !=null)
+                        {
+                            var blobData = await _globalMediaService.PostBlob(imageByteArray, "test.png", "mycontainer");
+                            item.Picture = blobData;
+                        }
+
+
+                        await _playerService.UpdatePlayer(item);
+
+                        #endregion
+
+                        index++;
                     }
 
-                    #endregion
+                    jsonIndex++;
+
+                    Thread.Sleep(10000);
                 }
+
+                #endregion
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        public byte[] GetImage(string url)
+        {
+            Stream stream = null;
+            byte[] buf;
+
+            try
+            {
+                WebProxy myProxy = new WebProxy();
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+
+                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+                stream = response.GetResponseStream();
+
+                using (BinaryReader br = new BinaryReader(stream))
+                {
+                    int len = (int)(response.ContentLength);
+                    buf = br.ReadBytes(len);
+                    br.Close();
+                }
+
+                stream.Close();
+                response.Close();
+            }
+            catch (Exception exp)
+            {
+                buf = null;
             }
 
-            #endregion
-
-            
+            return (buf);
         }
+
+        private List<string> jsonFilesFromFolder()
+        {
+            string prefix = "Football.MigrationTool.TeamData.";
+
+            var resourceNames = Assembly.GetExecutingAssembly()
+                .GetManifestResourceNames()
+                .Where(name => name.StartsWith(prefix));
+
+            return resourceNames.OrderBy(x=>x).Select(x => this.readJsonStringAsEmbeddedResource(x)).ToList();
+        }
+
+        private string readJsonStringAsEmbeddedResource(string fileName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+
+            using (Stream stream = assembly.GetManifestResourceStream(fileName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+
+                return result;
+            }
+        }
+            
     }
 }

@@ -12,6 +12,9 @@ using Microsoft.Extensions.Options;
 using Football.API.TaskRunner.Interfaces;
 using Football.API.TaskRunner;
 using Football.API.TaskRunner.Services;
+using Football.MigrationTool;
+using Services.Interface;
+using Football.Services.Interface;
 
 namespace footballRebuildAPI
 {
@@ -52,6 +55,12 @@ namespace footballRebuildAPI
         {
             var serviceProvider = ServiceConfiguration.ConsoleProvider;
             //var logger = serviceProvider.GetService<ILoggerService>();
+
+            #region add here code to run data migration custom code
+
+            //RunMigrationDataCode(serviceProvider);
+
+            #endregion
 
             //Make sure all services have been killed off before starting up again, this should not happen but better to be safe.
             if (ThreadManager.Services.Count > 0)
@@ -114,5 +123,14 @@ namespace footballRebuildAPI
                 options.Limits.MaxRequestBodySize = null;
             })
             .Build();
+
+        public static void RunMigrationDataCode(IServiceProvider serviceProvider)
+        {
+            var playerService = serviceProvider.GetService<IPlayerService>();
+            var teamService = serviceProvider.GetService<ITeamService>();
+            var globalMediaService = serviceProvider.GetService<IGlobalMediaService>();
+            var a = new SearchAndPopulateMigration(playerService, teamService, globalMediaService);
+            Task.Run(() => a.Execute());
+        }
     }
 }

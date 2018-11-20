@@ -10,12 +10,59 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TeamData\a-spain-players.json" />
+    <None Remove="TeamData\belgium-players.json" />
+    <None Remove="TeamData\croatia-players.json" />
+    <None Remove="TeamData\czech-players.json" />
+    <None Remove="TeamData\england-players.json" />
+    <None Remove="TeamData\france-players.json" />
+    <None Remove="TeamData\german-players.json" />
+    <None Remove="TeamData\hungary-players.json" />
+    <None Remove="TeamData\iceland-players.json" />
+    <None Remove="TeamData\ireland-players.json" />
+    <None Remove="TeamData\italy-players.json" />
+    <None Remove="TeamData\poland-players.json" />
+    <None Remove="TeamData\portugal-players.json" />
+    <None Remove="TeamData\romania-players.json" />
+    <None Remove="TeamData\russia-players.json" />
+    <None Remove="TeamData\slovakia-players.json" />
+    <None Remove="TeamData\sweden-players.json" />
+    <None Remove="TeamData\swiss-players.json" />
+    <None Remove="TeamData\turkey-players.json" />
+    <None Remove="TeamData\wales-players.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TeamData\a-spain-players.json" />
+    <EmbeddedResource Include="TeamData\belgium-players.json" />
+    <EmbeddedResource Include="TeamData\croatia-players.json" />
+    <EmbeddedResource Include="TeamData\czech-players.json" />
+    <EmbeddedResource Include="TeamData\england-players.json" />
+    <EmbeddedResource Include="TeamData\france-players.json" />
+    <EmbeddedResource Include="TeamData\german-players.json" />
+    <EmbeddedResource Include="TeamData\hungary-players.json" />
+    <EmbeddedResource Include="TeamData\iceland-players.json" />
+    <EmbeddedResource Include="TeamData\ireland-players.json" />
+    <EmbeddedResource Include="TeamData\italy-players.json" />
+    <EmbeddedResource Include="TeamData\poland-players.json" />
+    <EmbeddedResource Include="TeamData\portugal-players.json" />
+    <EmbeddedResource Include="TeamData\romania-players.json" />
+    <EmbeddedResource Include="TeamData\russia-players.json" />
+    <EmbeddedResource Include="TeamData\slovakia-players.json" />
+    <EmbeddedResource Include="TeamData\sweden-players.json" />
+    <EmbeddedResource Include="TeamData\swiss-players.json" />
+    <EmbeddedResource Include="TeamData\turkey-players.json" />
+    <EmbeddedResource Include="TeamData\wales-players.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Google.Apis.Customsearch.v1" Version="1.36.1.1369" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Crosscutting\Football.Crosscutting.csproj" />
     <ProjectReference Include="..\DataAccess\Football.DataAccess.csproj" />
+    <ProjectReference Include="..\Services\Football.Services.csproj" />
   </ItemGroup>
 
 </Project>

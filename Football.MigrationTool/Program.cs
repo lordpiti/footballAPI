@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Football.MigrationTool
 {
@@ -6,11 +7,9 @@ namespace Football.MigrationTool
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var a = new SearchAndPopulateMigration(null, null, null);
 
-            var a = new SearchAndPopulateMigration();
-
-            a.Execute();
+            Task.Run(() => a.Execute());
         }
     }
 }
