@@ -77,7 +77,9 @@ namespace footballRebuildAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                    .AllowAnyOrigin();
+                    .AllowAnyOrigin()
+                    .WithOrigins("http://localhost:4200", "http://localhost:3000",
+                        "https://piti-react-test.herokuapp.com", "https://footballtpititest.herokuapp.com");
             }));
 
             #endregion
