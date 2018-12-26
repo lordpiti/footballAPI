@@ -66,7 +66,7 @@ namespace Football.Services.Concrete
                         me.Name = user.Name;
                         me.IsVerified = true;
                         me.AuthenticationType = user.AuthenticationType;
-                        me.Role = user.Token;
+                        me.Role = user.Role;
                         me.Token = user.Token;
                         return me;
                     }

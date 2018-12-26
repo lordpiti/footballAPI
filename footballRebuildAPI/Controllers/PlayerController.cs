@@ -1,28 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Services.Concrete;
+﻿using AspNetCoreSignalr.SignalRHubs;
 using Crosscutting.ViewModels;
-using Services.Interface;
-using Football.Services.Interface;
-using Football.Crosscutting.ViewModels;
-using Football.Crosscutting;
-using Football.BlobStorage;
-using Microsoft.Extensions.Options;
-using Football.Crosscutting.ViewModels.Teams;
-using Football.Crosscutting.ViewModels.Match;
 using Football.API.Filters;
+using Football.Crosscutting.ViewModels.Match;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using AspNetCoreSignalr.SignalRHubs;
+using Services.Interface;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace footballRebuildAPI.Controllers
 {
     //https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing
 
     [Route("api/[controller]")]
-    [ServiceFilter(typeof(AuthorizationRequiredAttribute))]
+    //[ServiceFilter(typeof(AuthorizationRequiredAttribute))]
     public class PlayerController : Controller
     {
         private readonly IPlayerService _playerService;
@@ -62,6 +53,7 @@ namespace footballRebuildAPI.Controllers
 
         [HttpPost]
         [Route("savePlayerDetails")]
+        [TypeFilter(typeof(AuthorizationRequiredAttribute), Arguments = new object[] { new string[] { "Admin", "Lord" } })]
         public async Task<int> UpdatePlayer([FromBody]Player playerDetails)
         {
             return await _playerService.UpdatePlayer(playerDetails);

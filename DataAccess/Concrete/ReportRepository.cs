@@ -81,6 +81,7 @@ namespace Football.DataAccess.Concrete
                     ItemType = x.Tipo == "Amarilla" ? Crosscutting.Enums.MatchEventTypeEnum.YellowCard : Crosscutting.Enums.MatchEventTypeEnum.RedCard,
                     Minute = x.Minuto,
                     Reason = x.Motivo,
+                    MatchId = matchId,
                     Player = new Player() {
                         Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
                         Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos,
