@@ -28,7 +28,7 @@ namespace Football.API.Controllers
         [EnableQuery]
         public async Task<List<Team>> GetAllTeams(int? competitionId = null)
         {
-            ///api/TestOData/teams?$filter=Id%20eq%201
+            //api/TestOData/teams?$filter=Id%20eq%201
             return await _teamService.GetAllTeams(competitionId);
         }
 

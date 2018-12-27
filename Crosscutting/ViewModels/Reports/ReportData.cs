@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Football.Crosscutting.ViewModels.Competition;
+using Football.Crosscutting.ViewModels.Match;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +13,7 @@ namespace Football.Crosscutting.ViewModels.Reports
         public List<BaseItem> ReportItems { get; set; }
 
         public int MatchId { get; set; }
+
+        public MatchOverview MatchGeneralInfo { get; set; }
     }
 }

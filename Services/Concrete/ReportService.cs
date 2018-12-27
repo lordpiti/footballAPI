@@ -13,27 +13,31 @@ namespace Football.Services.Concrete
     public class ReportService : IReportService
     {
         private readonly IReportRepository _reportRepository;
+        private readonly ICompetitionRepository _competitionRepository;
         private readonly IReportNoSQLRepository _reportNoSQLRepository;
 
-        public ReportService(IReportRepository reportRepository, IReportNoSQLRepository reportNoSQLRepository)
+        public ReportService(IReportRepository reportRepository, IReportNoSQLRepository reportNoSQLRepository,
+            ICompetitionRepository competitionRepository)
         {
             _reportRepository = reportRepository;
             _reportNoSQLRepository = reportNoSQLRepository;
+            _competitionRepository = competitionRepository;
         }
 
-        public async Task<List<BaseItem>> GenerateReport(int matchId)
+        public async Task<ReportData> GenerateReport(int matchId)
         {
             var reportItems = await _reportRepository.GetMatchReportData(matchId);
+            var matchInfo = await _competitionRepository.GetMatchOverview(matchId);
 
             var report = new ReportData()
             {
-                MatchId = matchId,
-                ReportItems = reportItems
+                ReportItems = reportItems,
+                MatchGeneralInfo = matchInfo
             };
 
             _reportNoSQLRepository.CreateReport(report);
 
-            return reportItems;
+            return report;
         }
 
         public ReportData GetReportSnapshot(int matchId)

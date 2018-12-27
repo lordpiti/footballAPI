@@ -9,7 +9,7 @@ namespace Football.Services.Interface
 {
     public interface IReportService
     {
-        Task<List<BaseItem>> GenerateReport(int matchId);
+        Task<ReportData> GenerateReport(int matchId);
 
         ReportData GetReportSnapshot(int matchId);
     }

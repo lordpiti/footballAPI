@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="css\bootstrap.css" />
+    <None Remove="Templates\MatchReport.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="css\bootstrap.css" />
+    <EmbeddedResource Include="Templates\MatchReport.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="iTextSharp" Version="5.5.13" />
+    <PackageReference Include="itextsharp.xmlworker" Version="5.5.13" />
+    <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Crosscutting\Football.Crosscutting.csproj" />
+  </ItemGroup>
+
+</Project>

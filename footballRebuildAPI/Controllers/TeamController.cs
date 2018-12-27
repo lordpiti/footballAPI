@@ -34,7 +34,7 @@ namespace Football.API.Controllers
         [Route("Teams/{competitionId?}")]
         public async Task<List<Team>> GetAllTeams(int? competitionId=null)
         {
-            ///api/Team/teams?$filter=Id%20eq%201
+            //api/Team/teams?$filter=Id%20eq%201
             return await _teamService.GetAllTeams(competitionId);
         }
 

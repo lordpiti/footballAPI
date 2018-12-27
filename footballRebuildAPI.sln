@@ -27,7 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Services.Test", "Football.Services.Test\Football.Services.Test.csproj", "{F67873AC-28CD-4533-A544-7EFCDBF58D8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.GraphQLUtils", "Football.GraphQLUtils\Football.GraphQLUtils.csproj", "{A6EF2C06-9737-4C7D-A720-15291D604CB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.GraphQLUtils", "Football.GraphQLUtils\Football.GraphQLUtils.csproj", "{A6EF2C06-9737-4C7D-A720-15291D604CB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.PDFGenerator", "Football.PDFGenerator\Football.PDFGenerator.csproj", "{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
