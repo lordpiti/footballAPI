@@ -8,7 +8,7 @@ namespace Football.DataAccessNoSQL.Interface
 {
     public interface IUserRepository
     {
-        List<Object> UserList();
+        List<UserData> UserList();
 
         UserData FindOrCreateUser(LoginResponse facebookResponse);
 

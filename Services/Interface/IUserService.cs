@@ -9,7 +9,7 @@ namespace Football.Services.Interface
 {
     public interface IUserService
     {
-        List<Object> UserList();
+        List<UserData> UserList();
 
         Task<LoginResponse> Login(LoginTypeEnum loginType, string userId, string authToken, bool login = true);
 

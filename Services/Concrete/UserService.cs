@@ -138,7 +138,7 @@ namespace Football.Services.Concrete
             }
         }
 
-        public List<object> UserList()
+        public List<UserData> UserList()
         {
             return _userRepository.UserList();
         }

@@ -21,7 +21,7 @@ namespace Football.DataAccessNoSQL.Concrete
 
         }
 
-        public List<Object> UserList()
+        public List<UserData> UserList()
         {
             #region using bsondocuments and deserialising them
 
@@ -54,7 +54,7 @@ namespace Football.DataAccessNoSQL.Concrete
 
             #endregion
 
-            var allUsers = _mongoDb.GetCollection<Object>("users").AsQueryable().ToList();
+            var allUsers = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
 
             return allUsers;
         }
@@ -88,11 +88,9 @@ namespace Football.DataAccessNoSQL.Concrete
                     Token = loginResponse.Token
                 };
 
-                var collection = _mongoDb.GetCollection<BsonDocument>("users");
+                var collection = _mongoDb.GetCollection<UserData>("users");
 
-                var userDocument = newUser.ToBsonDocument();
-
-                collection.InsertOne(userDocument);
+                collection.InsertOne(newUser);
 
                 return newUser;
             }

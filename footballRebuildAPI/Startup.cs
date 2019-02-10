@@ -33,9 +33,12 @@ namespace footballRebuildAPI
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
 
-            #region Mongodb driver set up to ignore properties (like the _id) stored in the mongodb collection when deserialising to POCO objects
+            #region Mongodb driver set up
 
-            var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
+            //ignore properties(like the _id) stored in the mongodb collection when deserialising to POCO objects
+            //also store property names in camelcase
+            var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true), new CamelCaseElementNameConvention() };
+            ConventionRegistry.Register("camelCase", conventionPack, t => true);
             ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
 
             #endregion

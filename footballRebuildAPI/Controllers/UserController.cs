@@ -23,7 +23,7 @@ namespace Football.API.Controllers
 
         // GET: api/values
         [HttpGet]
-        public List<Object> Get()
+        public List<UserData> Get()
         {
             return _userService.UserList();
         }
