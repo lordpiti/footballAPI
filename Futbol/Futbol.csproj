@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <dependentAssembly>
+      <assemblyIdentity name="System.Data.SqlClient"  publicKeyToken="b03f5f7f11d50a3a"  culture="neutral" />
+      <bindingRedirect oldVersion="4.2.0.0" newVersion="4.4.0.0" />
+    </dependentAssembly>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
@@ -15,3 +17,4 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 </Project>
+
