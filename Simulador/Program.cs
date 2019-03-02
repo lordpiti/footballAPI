@@ -102,7 +102,7 @@ namespace Simulador
 
             #region League
 
-            generadorPartidos.generarLigaCompleta(20);
+            //generadorPartidos.generarLigaCompleta(20);
 
             #region Second League
 
@@ -133,7 +133,7 @@ namespace Simulador
 
             #region Cup
 
-            //generadorPartidos.generarCopaCompleta(16);
+            generadorPartidos.generarCopaCompleta(16);
 
             ////ahora creamos una competicion de copa
             //int numeroEquipos2 = 16;

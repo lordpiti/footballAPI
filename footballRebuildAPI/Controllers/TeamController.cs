@@ -36,8 +36,6 @@ namespace Football.API.Controllers
         public async Task<List<Team>> GetAllTeams(int? competitionId=null)
         {
             //api/Team/teams?$filter=Id%20eq%201
-            var haha = new FachadaPartidos();
-            var ff = haha.verCompeticion(2);
             return await _teamService.GetAllTeams(competitionId);
         }
 

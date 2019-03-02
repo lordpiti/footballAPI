@@ -227,7 +227,7 @@ namespace Simulador
                 listaEquipos.Add(i);
             }
 
-            CompeticionTotalCO comp3 = new CompeticionTotalCO(new CompeticionVO("Copa del Rey", "2014-2015", generador.generarFechaAleatoriaPartido(),
+            CompeticionTotalCO comp3 = new CompeticionTotalCO(new CompeticionVO("Copa del Rey", "2020-2021", generador.generarFechaAleatoriaPartido(),
                 generador.generarFechaAleatoriaPartido(), "ninguno", "~/images/titulos/copaeuropa.jpg", "Playoff"),
                 null, listaEquipos);
 

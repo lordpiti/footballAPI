@@ -51,9 +51,6 @@ namespace Football.API.Controllers
         [Route("")]
         public async Task<List<Competition>> GetCompetitions(int? teamId = null, string season = null)
         {
-            var a = new FachadaDatos();
-            var aa = a.verEquipos();
-
             return await _competitionService.GetCompetitions(teamId, season);
         }
 
