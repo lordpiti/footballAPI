@@ -14,7 +14,7 @@ namespace Futbol.Model.FachadaAdmin
 {
     public class FachadaAdmin
     {
-        private static String providerName = "System.Data.SqlClient";
+        private static String providerName = "system.data.sqlclient";
 
         private DbProviderFactory dbFactory;
 
