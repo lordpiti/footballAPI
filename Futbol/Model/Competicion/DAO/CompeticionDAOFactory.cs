@@ -57,7 +57,7 @@ namespace Futbol.Model.Competicion.DAO
                 String daoClassName = ConfigurationManager.
                     AppSettings[DAO_CLASS_NAME_PARAMETER];
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
+                Assembly assembly = typeof(CompeticionDAO).Assembly;
 
                 Object theObject = Activator.CreateInstance(assembly.GetType(daoClassName));
 
