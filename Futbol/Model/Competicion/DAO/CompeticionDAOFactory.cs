@@ -54,14 +54,7 @@ namespace Futbol.Model.Competicion.DAO
         public static CompeticionDAO GetDAO() {
 
             try {
-                String daoClassName = ConfigurationManager.
-                    AppSettings[DAO_CLASS_NAME_PARAMETER];
-
-                Assembly assembly = Assembly.GetExecutingAssembly();
-
-                Object theObject = Activator.CreateInstance(assembly.GetType(daoClassName));
-
-                return (CompeticionDAO)theObject;
+                return new CompeticionDAO();
 
             } catch (Exception e) {
 

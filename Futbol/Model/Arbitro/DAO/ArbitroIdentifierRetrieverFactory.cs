@@ -42,7 +42,9 @@ namespace Futbol.Model.Arbitro.DAO
 
                 theObject = Activator.CreateInstance(assembly.GetType(retrieverClassName));
 
-            } catch (Exception e) {
+
+            }
+            catch (Exception e) {
                 throw new InternalErrorException(e);
             }
 

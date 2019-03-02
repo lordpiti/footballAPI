@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Football.Crosscutting.ViewModels.Teams;
 using Football.Services.Interface;
 using Football.Crosscutting.ViewModels;
+using Futbol.Model.FachadaPartidos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,6 +36,8 @@ namespace Football.API.Controllers
         public async Task<List<Team>> GetAllTeams(int? competitionId=null)
         {
             //api/Team/teams?$filter=Id%20eq%201
+            var haha = new FachadaPartidos();
+            var ff = haha.verCompeticion(2);
             return await _teamService.GetAllTeams(competitionId);
         }
 

@@ -31,7 +31,7 @@ namespace Futbol.Model.FachadaPartidos
         }
 
         //Crea un partido con todos sus detalles
-         public PartidoTotalCO pruebaCrearPartidoTotal(PartidoTotalCO partidoTotalCO)
+        public PartidoTotalCO pruebaCrearPartidoTotal(PartidoTotalCO partidoTotalCO)
          {
              try
              {
