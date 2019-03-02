@@ -86,17 +86,37 @@ namespace Football.BlobStorage
 
                 var container = _cloudStorageClient.GetContainerReference(blobContainerReference);
 
-                var blobList = container.ListBlobs();
+                #region .net4.6 / .net core
 
-                List<string> blobNames = blobList.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
+                //var blobList = container.ListBlobs();
 
-                foreach (var item in blobList.OfType<CloudBlockBlob>().ToList())
+                //List<string> blobNames = blobList.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
+
+                //foreach (var item in blobList.OfType<CloudBlockBlob>().ToList())
+                //{
+                //    if (!guidList.Contains(item.Name))
+                //    {
+                //        await item.DeleteIfExistsAsync();
+                //    }
+                //}
+
+                #endregion
+
+                #region .net standard
+
+                var blobList = await container.ListBlobsSegmentedAsync(null);
+
+                List<string> blobNames = blobList.Results.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
+
+                foreach (var item in blobList.Results.OfType<CloudBlockBlob>().ToList())
                 {
                     if (!guidList.Contains(item.Name))
                     {
                         await item.DeleteIfExistsAsync();
                     }
                 }
+
+                #endregion
 
                 return true;
             }
