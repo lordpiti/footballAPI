@@ -1,26 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Futbol.ActionProcessor;
-
-using System.Collections;
-using Futbol.Model.Estadio.VO;
-using Futbol.Model.Integrante.VO;
-using Futbol.Model.Jugador.VO;
-using Futbol.Model.Competicion.VO;
-using Futbol.Model.Equipo.VO;
-using Futbol.Model.Partido.VO;
-using Futbol.Model.Clasificacion.VO;
-using Futbol.Model.Clasificacion;
-using Futbol.Model.PartidoJugado.VO;
-using Futbol.Model.PartidoJugado;
-using Futbol.Model.FachadaDatos.Actions;
+﻿using Futbol.Model.FachadaAdmin;
 using Futbol.Model.FachadaDatos;
-using Futbol.Model.FachadaPartidos.Actions;
 using Futbol.Model.FachadaPartidos;
-using Futbol.Model.FachadaAdmin;
-using Futbol.Model.FachadaAdmin.COs;
-using Futbol.Model.Arbitro.VO;
+using System;
+using System.Collections;
 
 
 namespace Simulador
