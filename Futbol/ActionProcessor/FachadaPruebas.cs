@@ -14,6 +14,7 @@ using Futbol.Model.Competicion.VO;
 using Futbol.Model.Equipo.VO;
 using Futbol.Model.Partido.VO;
 using Futbol.Model.PartidoJugado.VO;
+using Westwind.Utilities;
 
 
 namespace Futbol.ActionProcessor
@@ -29,10 +30,11 @@ namespace Futbol.ActionProcessor
 
         public FachadaPruebas()
         {
-            dbFactory = DbProviderFactories.GetFactory(providerName);
+            dbFactory = DataUtils.GetDbProviderFactory(providerName);
+
         }
 
 
 
-  }
+    }
 }

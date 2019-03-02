@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 using System.Reflection;
-using System.Runtime.Remoting;
+
 using Util.Exceptions;
 using System.Configuration;
 using System.Data.Common;
@@ -58,8 +58,7 @@ namespace Futbol.Model.HcoIntegrante.DAO
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
-                Object theObject = AppDomain.CurrentDomain.
-                    CreateInstanceAndUnwrap(assembly.FullName, daoClassName);
+                Object theObject = Activator.CreateInstance(assembly.GetType(daoClassName));
 
                 return (HcoIntegranteDAO)theObject;
 

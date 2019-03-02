@@ -23,6 +23,7 @@ using Futbol.Model.FachadaDatos.Actions;
 using Futbol.Model.FachadaAdmin.COs;
 using Futbol.Model.Directivo;
 using Futbol.Model.Entrenador;
+using Westwind.Utilities;
 
 namespace Futbol.Model.FachadaDatos
 {
@@ -37,11 +38,11 @@ namespace Futbol.Model.FachadaDatos
 
         public FachadaDatos()
         {
-            dbFactory = DbProviderFactories.GetFactory(providerName);
+            dbFactory = DataUtils.GetDbProviderFactory(providerName);
         }
 
 
-         public ArrayList verEquiposCompeticion(int cod_Competicion)
+        public ArrayList verEquiposCompeticion(int cod_Competicion)
          {
              try
              {

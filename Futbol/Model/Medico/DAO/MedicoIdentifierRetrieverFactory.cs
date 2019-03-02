@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 using System.Reflection;
-using System.Runtime.Remoting;
+
 using Util.Exceptions;
 using System.Data.Common;
 using System.Data;
@@ -46,8 +46,7 @@ namespace Futbol.Model.Medico.DAO
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
-                theObject = AppDomain.CurrentDomain.
-                    CreateInstanceAndUnwrap(assembly.FullName, retrieverClassName);
+                theObject = Activator.CreateInstance(assembly.GetType(retrieverClassName));
 
             } catch (Exception e) {
                 throw new InternalErrorException(e);

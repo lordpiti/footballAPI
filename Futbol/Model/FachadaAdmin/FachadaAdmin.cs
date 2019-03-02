@@ -21,6 +21,7 @@ using Futbol.Model.PartidoJugado.VO;
 using Futbol.ActionProcessor;
 using Futbol.Model.FachadaAdmin.Actions;
 using Futbol.Model.FachadaAdmin.COs;
+using Westwind.Utilities;
 
 
 
@@ -35,10 +36,10 @@ namespace Futbol.Model.FachadaAdmin
 
         public FachadaAdmin()
         {
-            dbFactory = DbProviderFactories.GetFactory(providerName);
+            dbFactory = DataUtils.GetDbProviderFactory(providerName);
         }
 
-        
+
         public JugadorCO pruebaCrearJugadorTotal(JugadorCO jugadorCO)
         {      
              try
