@@ -62,13 +62,13 @@ namespace Futbol.Model.FachadaDatos
          }
 
 
-         public ArrayList verEquipos()
+         public List<EquipoVO> verEquipos()
          {
              try
              {
                  VerTodosEquiposAction action = new VerTodosEquiposAction();
 
-                 return (ArrayList)PlainActionProcessor.process(dbFactory, action);
+                 return (List<EquipoVO>)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }
