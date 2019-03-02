@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using Util.Exceptions;
+using Westwind.Utilities;
 
 namespace Futbol.Model.FachadaPartidos
 {
@@ -26,7 +27,7 @@ namespace Futbol.Model.FachadaPartidos
 
         public FachadaPartidos()
         {
-            dbFactory = DbProviderFactories.GetFactory(providerName);
+            dbFactory = DataUtils.GetDbProviderFactory(providerName);
         }
 
         //Crea un partido con todos sus detalles

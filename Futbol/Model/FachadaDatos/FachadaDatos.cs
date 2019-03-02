@@ -1,32 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Util.Exceptions;
-
-using System.Configuration;
-using System.Data.Common;
-using System.Collections;
-using System.Xml;
-using Futbol.Model.Estadio.VO;
-using Futbol.Model.Arbitro.VO;
-using Futbol.Model.Integrante.VO;
-using Futbol.Model.Entrenador.VO;
-using Futbol.Model.Directivo.VO;
-using Futbol.Model.HcoIntegrante.VO;
-using Futbol.Model.Jugador.VO;
-using Futbol.Model.Competicion.VO;
-using Futbol.Model.Equipo.VO;
-using Futbol.Model.Partido.VO;
-using Futbol.Model.PartidoJugado.VO;
 using Futbol.ActionProcessor;
-using Futbol.Model.FachadaDatos.Actions;
-using Futbol.Model.FachadaAdmin.COs;
 using Futbol.Model.Directivo;
 using Futbol.Model.Entrenador;
+using Futbol.Model.Estadio.VO;
+using Futbol.Model.FachadaAdmin.COs;
+using Futbol.Model.FachadaDatos.Actions;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Common;
+using Util.Exceptions;
+using Westwind.Utilities;
 
 namespace Futbol.Model.FachadaDatos
 {
-     public class FachadaDatos
+    public class FachadaDatos
     {
         private static String providerName = "System.Data.SqlClient";
      /*   private static String connectionString = "Data Source=localhost\\SQLExpress;" +
@@ -37,7 +24,7 @@ namespace Futbol.Model.FachadaDatos
 
         public FachadaDatos()
         {
-            dbFactory = DbProviderFactories.GetFactory(providerName);
+            dbFactory = DataUtils.GetDbProviderFactory(providerName);
         }
 
 

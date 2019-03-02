@@ -1,16 +1,9 @@
 using System;
-using System.Data;
+using System.Configuration;
 using System.Reflection;
-using System.Runtime.Remoting;
 
 using Util.Exceptions;
-using System.Configuration;
-using System.Data.Common;
 
-/* For Testing only */
-using Futbol.Model.Arbitro.VO;
-
-using System.Collections;
 
 namespace Futbol.Model.Arbitro.DAO
 {
@@ -59,8 +52,7 @@ namespace Futbol.Model.Arbitro.DAO
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
-                Object theObject = AppDomain.CurrentDomain.
-                    CreateInstanceAndUnwrap(assembly.FullName, daoClassName);
+                Object theObject = Activator.CreateInstance(assembly.GetType(daoClassName));
 
                 return (ArbitroDAO)theObject;
 

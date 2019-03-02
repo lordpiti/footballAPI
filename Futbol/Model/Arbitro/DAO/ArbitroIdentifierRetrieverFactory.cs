@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 using System.Reflection;
-using System.Runtime.Remoting;
+
 using Util.Exceptions;
 using System.Data.Common;
 using System.Data;
@@ -35,13 +35,12 @@ namespace Futbol.Model.Arbitro.DAO
 
             try {
 
-                String retrieverClassName =
+                string retrieverClassName =
                     ConfigurationManager.AppSettings[RETRIEVER_CLASS_NAME_PARAMETER];
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
-                theObject = AppDomain.CurrentDomain.
-                    CreateInstanceAndUnwrap(assembly.FullName, retrieverClassName);
+                theObject = Activator.CreateInstance(assembly.GetType(retrieverClassName));
 
             } catch (Exception e) {
                 throw new InternalErrorException(e);
