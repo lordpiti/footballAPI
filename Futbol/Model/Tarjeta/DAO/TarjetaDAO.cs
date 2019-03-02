@@ -2,18 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
-using Util.Exceptions;
 
 using Futbol.Model.Tarjeta.VO;
 using System.Data;
 using System.Data.Common;
-
-
-
-
-
-
-
+using Util.Exceptions;
 
 namespace Futbol.Model.Tarjeta.DAO
 {

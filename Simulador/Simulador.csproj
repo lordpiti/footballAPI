@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Futbol\Futbol.csproj">
-      <Project>{6BB3BD33-791B-4F49-B1F9-C6E362AEB1D6}</Project>
+      <Project>{6bb3bd33-791b-4f49-b1f9-c6e362aeb1d6}</Project>
       <Name>Futbol</Name>
     </ProjectReference>
     <ProjectReference Include="..\Util\Util.csproj">
