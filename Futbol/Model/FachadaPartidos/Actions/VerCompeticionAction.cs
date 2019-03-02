@@ -21,7 +21,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
         public object execute(DbConnection connection)
         {
 
-            CompeticionDAO competicionDAO = CompeticionDAOFactory.GetDAO();
+            var competicionDAO = new CompeticionDAO();
        
             return (competicionDAO.buscarCompeticionId(connection,null,cod_Competicion));
 

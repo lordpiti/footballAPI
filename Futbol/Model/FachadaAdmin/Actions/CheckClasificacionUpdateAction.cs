@@ -26,9 +26,9 @@ namespace Futbol.Model.FachadaAdmin.Actions
         
         public object execute(DbConnection connection)
         {
-            ClasificacionDAO clasificacionDAO = ClasificacionDAOFactory.GetDAO();
-            PartidoDAO partidoDAO=PartidoDAOFactory.GetDAO();
-            EquiposParticipanDAO equiposParticipanDAO=EquiposParticipanDAOFactory.GetDAO();
+            ClasificacionDAO clasificacionDAO = new ClasificacionDAO();
+            PartidoDAO partidoDAO=new PartidoDAO();
+            EquiposParticipanDAO equiposParticipanDAO=new EquiposParticipanDAO();
             
             var listaEquiposParticipantes=equiposParticipanDAO.verEquiposParticipan(connection,null,cod_Competicion);
             

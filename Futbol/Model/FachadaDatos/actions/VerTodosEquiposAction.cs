@@ -22,7 +22,7 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            EquipoDAO equipoDAO = EquipoDAOFactory.GetDAO();
+            EquipoDAO equipoDAO = new EquipoDAO();
             var listaEquipos = equipoDAO.listarEquipos(connection,null,0,2);
 
 

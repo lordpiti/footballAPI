@@ -24,7 +24,7 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            DirectivoDAO directivoDAO = DirectivoDAOFactory.GetDAO();
+            DirectivoDAO directivoDAO = new DirectivoDAO();
             var listaDirectivos = directivoDAO.verDirectivosEquipo(connection, null, cod_Equipo, 0, 2);
 
             return listaDirectivos;

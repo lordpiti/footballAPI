@@ -49,14 +49,14 @@ namespace Futbol.Model.FachadaPartidos.Actions
 
 
             //Obtenemos el VO del partido
-            PartidoDAO partidoDAO = PartidoDAOFactory.GetDAO();
+            PartidoDAO partidoDAO = new PartidoDAO();
             partido = partidoDAO.verPartido(connection, null, cod_Partido);
 
-            EquipoDAO equipoDAO = EquipoDAOFactory.GetDAO();
-            PartidoJugadoDAO partidoJugadoDAO = PartidoJugadoDAOFactory.GetDAO();
-            GolDAO golDAO = GolDAOFactory.GetDAO();
-            CambioDAO cambioDAO = CambioDAOFactory.GetDAO();
-            TarjetaDAO tarjetaDAO = TarjetaDAOFactory.GetDAO();
+            EquipoDAO equipoDAO = new EquipoDAO();
+            PartidoJugadoDAO partidoJugadoDAO = new PartidoJugadoDAO();
+            GolDAO golDAO = new GolDAO();
+            CambioDAO cambioDAO = new CambioDAO();
+            TarjetaDAO tarjetaDAO = new TarjetaDAO();
             
 
             
@@ -86,8 +86,8 @@ namespace Futbol.Model.FachadaPartidos.Actions
 
             //Obtenemos los VOs del arbitro, estadio
 
-            ArbitroDAO arbitroDAO = ArbitroDAOFactory.GetDAO();
-            EstadioDAO estadioDAO = EstadioDAOFactory.GetDAO();
+            ArbitroDAO arbitroDAO = new ArbitroDAO();
+            EstadioDAO estadioDAO = new EstadioDAO();
 
             arbitro = arbitroDAO.verArbitro(connection, null, partido.Cod_Arbitro);
             estadio = estadioDAO.buscarEstadioId(connection, null, partido.Cod_Estadio);

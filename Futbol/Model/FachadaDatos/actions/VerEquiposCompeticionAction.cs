@@ -25,8 +25,8 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            EquipoDAO equipoDAO = EquipoDAOFactory.GetDAO();
-            EquiposParticipanDAO equiposParticipanDAO = EquiposParticipanDAOFactory.GetDAO();
+            EquipoDAO equipoDAO = new EquipoDAO();
+            EquiposParticipanDAO equiposParticipanDAO = new EquiposParticipanDAO();
             var listaEquipos = equiposParticipanDAO.verEquiposParticipan(connection, null, cod_Competicion);
 
 

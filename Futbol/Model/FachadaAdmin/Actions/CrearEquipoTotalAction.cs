@@ -56,7 +56,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
             //Creamos el EstadioVO
             if (estadioVO != null)
             {
-                EstadioDAO estadioDAO = EstadioDAOFactory.GetDAO();
+                EstadioDAO estadioDAO = new EstadioDAO();
                 estadioVO= estadioDAO.create(connection, transaction, estadioVO);
             }
 
@@ -64,9 +64,9 @@ namespace Futbol.Model.FachadaAdmin.Actions
             //Creamos todos los jugadoresCOs
             if (listaJugadores != null)
             {
-                HcoIntegranteDAO hcoIntegranteDAO = HcoIntegranteDAOFactory.GetDAO();
-                IntegranteDAO integranteDAO = IntegranteDAOFactory.GetDAO();
-                JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
+                HcoIntegranteDAO hcoIntegranteDAO = new HcoIntegranteDAO();
+                IntegranteDAO integranteDAO = new IntegranteDAO();
+                JugadorDAO jugadorDAO = new JugadorDAO();
             
                 foreach (JugadorCO jugadorCO in listaJugadores)
                 {

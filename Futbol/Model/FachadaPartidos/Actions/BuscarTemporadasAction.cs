@@ -19,7 +19,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
         public object execute(DbConnection connection)
         {
 
-            CompeticionDAO competicionDAO = CompeticionDAOFactory.GetDAO();
+            CompeticionDAO competicionDAO = new CompeticionDAO();
 
             return (competicionDAO.buscarTemporadas(connection,null));
 

@@ -25,8 +25,8 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            ArbitroDAO arbitroDAO = ArbitroDAOFactory.GetDAO();
-            ArbitroVO infoArbitro=arbitroDAO.verArbitro(connection, null, cod_Arbitro);
+            var arbitroDAO = new ArbitroDAO();
+            var infoArbitro=arbitroDAO.verArbitro(connection, null, cod_Arbitro);
             var partidosArbitro = arbitroDAO.buscarPartidosArbitro(connection, null, cod_Arbitro);
 
             return new ArbitroCO(infoArbitro, partidosArbitro);

@@ -36,11 +36,11 @@ namespace Futbol.Model.FachadaPartidos.Actions
         public object execute(DbConnection connection)
         {
 
-            PartidoDAO partidoDAO = PartidoDAOFactory.GetDAO();
-            CalendarioDAO calendarioDAO = CalendarioDAOFactory.GetDAO();
-            ClasificacionDAO clasificacionDAO = ClasificacionDAOFactory.GetDAO();
-            CompeticionDAO competicionDAO = CompeticionDAOFactory.GetDAO();
-            GolDAO golDAO = GolDAOFactory.GetDAO();
+            PartidoDAO partidoDAO = new PartidoDAO();
+            CalendarioDAO calendarioDAO = new CalendarioDAO();
+            ClasificacionDAO clasificacionDAO = new ClasificacionDAO();
+            CompeticionDAO competicionDAO = new CompeticionDAO();
+            GolDAO golDAO = new GolDAO();
             List<CalendarioCO> siguienteJornada =null;
             List<ClasificacionCO> clasificacion = null;
             CompeticionVO competicion=competicionDAO.buscarCompeticionId(connection,null,cod_Competicion);

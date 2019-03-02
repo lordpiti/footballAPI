@@ -21,7 +21,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
         public object execute(DbConnection connection)
         {
 
-            GolDAO golDAO = GolDAOFactory.GetDAO();
+            GolDAO golDAO = new GolDAO();
 
             return (golDAO.buscarGolId(connection, null, cod_Gol));
 

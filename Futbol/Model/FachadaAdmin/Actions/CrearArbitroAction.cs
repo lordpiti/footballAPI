@@ -24,7 +24,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
         public object execute(DbConnection connection)
         {
 
-            ArbitroDAO arbitroDAO = ArbitroDAOFactory.GetDAO();
+            ArbitroDAO arbitroDAO = new ArbitroDAO();
             ArbitroVO arbitroVOcreado = arbitroDAO.create(connection, null, arbitroVO);
 
             return arbitroVOcreado;

@@ -23,7 +23,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
 
         public object execute(DbConnection connection, DbTransaction transaction)
         {
-            CalendarioDAO calendarioDAO = CalendarioDAOFactory.GetDAO();
+            var calendarioDAO = new CalendarioDAO();
             
             foreach (CalendarioVO item in calendario)
             {

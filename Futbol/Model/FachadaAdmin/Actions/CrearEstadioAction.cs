@@ -24,7 +24,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
         public object execute(DbConnection connection)
         {
 
-            EstadioDAO estadioDAO = EstadioDAOFactory.GetDAO();
+            EstadioDAO estadioDAO = new EstadioDAO();
             EstadioVO estadioVOcreado = estadioDAO.create(connection, null, estadioVO);
 
             return estadioVOcreado;

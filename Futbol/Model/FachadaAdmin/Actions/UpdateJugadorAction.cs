@@ -27,14 +27,14 @@ namespace Futbol.Model.FachadaAdmin.Actions
         public object execute(DbConnection connection, DbTransaction transaction)
         {
 
-            IntegranteDAO integranteDAO = IntegranteDAOFactory.GetDAO();
-            HcoIntegranteDAO hcoIntegranteDAO = HcoIntegranteDAOFactory.GetDAO();
-            JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
-            EntrenadorDAO entrenadorDAO = EntrenadorDAOFactory.GetDAO();
-            DirectivoDAO directivoDAO = DirectivoDAOFactory.GetDAO();
+            IntegranteDAO integranteDAO = new IntegranteDAO();
+            HcoIntegranteDAO hcoIntegranteDAO = new HcoIntegranteDAO();
+            JugadorDAO jugadorDAO = new JugadorDAO();
+            EntrenadorDAO entrenadorDAO = new EntrenadorDAO();
+            DirectivoDAO directivoDAO = new DirectivoDAO();
             if (info.Integrante!=null)
                 integranteDAO.updateIntegrante(connection,transaction,info.Integrante);
-            HcoIntegranteVO hcoIntegranteActual = (HcoIntegranteVO) info.ListaHcoIntegrantes[info.ListaHcoIntegrantes.Count - 1];
+            var hcoIntegranteActual = info.ListaHcoIntegrantes[info.ListaHcoIntegrantes.Count - 1];
             
             hcoIntegranteDAO.updateHcoIntegrante(connection,transaction,hcoIntegranteActual);
 

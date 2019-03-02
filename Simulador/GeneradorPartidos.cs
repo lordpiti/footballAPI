@@ -49,7 +49,7 @@ namespace Simulador
         public ArrayList generar11Titular(int codEquipo)
         {
             
-            JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
+            JugadorDAO jugadorDAO = new JugadorDAO();
             ArrayList plantilla = fachadaDatos.verListaJugadoresEquipo(codEquipo);
 
             return (generador.generaXAleatoriosLista(plantilla, 11));

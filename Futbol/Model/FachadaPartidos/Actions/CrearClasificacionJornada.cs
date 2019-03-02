@@ -27,7 +27,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
 
         public object execute(DbConnection connection, DbTransaction transaction)
         {
-            ClasificacionDAO clasificacionDAO = ClasificacionDAOFactory.GetDAO();
+            ClasificacionDAO clasificacionDAO = new ClasificacionDAO();
             int contador = 1;
            foreach (ClasificacionVO item in clasificacion)
            {

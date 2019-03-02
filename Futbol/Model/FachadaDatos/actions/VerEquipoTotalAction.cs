@@ -27,11 +27,11 @@ namespace Futbol.Model.FachadaDatos.Actions
 
         public object execute(DbConnection connection)
         {
-            var equipoDAO = EquipoDAOFactory.GetDAO();
-            var jugadorDAO = JugadorDAOFactory.GetDAO();
-            var entrenadorDAO = EntrenadorDAOFactory.GetDAO();
-            var directivoDAO = DirectivoDAOFactory.GetDAO();
-            var estadioDAO=EstadioDAOFactory.GetDAO();
+            var equipoDAO = new EquipoDAO();
+            var jugadorDAO = new JugadorDAO();
+            var entrenadorDAO = new EntrenadorDAO();
+            var directivoDAO = new DirectivoDAO();
+            var estadioDAO = new EstadioDAO();
             var equipo = equipoDAO.buscarEquipoId(connection, null, cod_Equipo);
             var estadio= estadioDAO.buscarEstadioId(connection,null,equipo.Cd_Estadio);
             var listaJugadores = jugadorDAO.listarJugadoresEquipo(connection, null,

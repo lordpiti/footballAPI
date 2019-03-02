@@ -35,10 +35,10 @@ namespace Futbol.Model.FachadaPartidos.Actions
         public object execute(DbConnection connection,DbTransaction transaction)
         {
 
-            CompeticionDAO competicionDAO = CompeticionDAOFactory.GetDAO();
-            CalendarioDAO calendarioDAO = CalendarioDAOFactory.GetDAO();
+            var competicionDAO = new CompeticionDAO();
+            var calendarioDAO = new CalendarioDAO();
             
-            EquiposParticipanDAO equiposParticipanDAO = EquiposParticipanDAOFactory.GetDAO();
+            var equiposParticipanDAO = new EquiposParticipanDAO();
             
             
 

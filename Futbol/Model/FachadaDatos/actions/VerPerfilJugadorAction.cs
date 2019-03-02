@@ -26,11 +26,11 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
-            DatosTotalesJugador datosTotales = jugadorDAO.verJugador(connection, null, cod_Jugador);
-            HcoIntegranteDAO hcoIntegranteDAO = HcoIntegranteDAOFactory.GetDAO();
+            var jugadorDAO = new JugadorDAO();
+            var datosTotales = jugadorDAO.verJugador(connection, null, cod_Jugador);
+            var hcoIntegranteDAO = new HcoIntegranteDAO();
             var historial=hcoIntegranteDAO.verHistorialEquipos(connection, null, cod_Jugador);
-            PartidoJugadoDAO partidoJugadoDAO=PartidoJugadoDAOFactory.GetDAO();
+            var partidoJugadoDAO=new PartidoJugadoDAO();
             var temporadas = partidoJugadoDAO.temporadasConPartidosJugados(connection, null, cod_Jugador);
 
             return new PerfilCompletoJugador(datosTotales, historial,temporadas);

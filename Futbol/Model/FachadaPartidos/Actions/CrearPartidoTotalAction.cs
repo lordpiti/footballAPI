@@ -32,14 +32,14 @@ namespace Futbol.Model.FachadaPartidos.Actions
         public object execute(DbConnection connection,DbTransaction transaction)
         {
 
-            PartidoDAO partidoDAO = PartidoDAOFactory.GetDAO();
-            PartidoJugadoDAO partidoJugadoDAO = PartidoJugadoDAOFactory.GetDAO();
-            GolDAO golDAO = GolDAOFactory.GetDAO();
-            CambioDAO cambioDAO = CambioDAOFactory.GetDAO();
-            TarjetaDAO tarjetaDAO = TarjetaDAOFactory.GetDAO();
+            var partidoDAO = new PartidoDAO();
+            var partidoJugadoDAO = new PartidoJugadoDAO();
+            var golDAO = new GolDAO();
+            var cambioDAO = new CambioDAO();
+            var tarjetaDAO = new TarjetaDAO();
             int cod_PartidoGenerado;
 
-            PartidoVO partidoVO = partidoTotalCO.Partido;         
+            var partidoVO = partidoTotalCO.Partido;         
             var listaPartidoJugado = partidoTotalCO.PartidosJugados;
             var listaGoles = partidoTotalCO.Goles;
             var listaCambios = partidoTotalCO.Cambios; 

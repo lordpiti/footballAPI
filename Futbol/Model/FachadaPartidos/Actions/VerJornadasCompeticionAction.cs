@@ -20,7 +20,7 @@ namespace Futbol.Model.FachadaPartidos.Actions
         public object execute(DbConnection connection)
         {
 
-            PartidoDAO partidoDAO = PartidoDAOFactory.GetDAO();
+            PartidoDAO partidoDAO = new PartidoDAO();
 
             return (partidoDAO.verJornadasCompeticion(connection, null, cod_Competicion));
 

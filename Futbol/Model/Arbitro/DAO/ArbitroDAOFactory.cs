@@ -55,7 +55,7 @@ namespace Futbol.Model.Arbitro.DAO
 
                 Object theObject = Activator.CreateInstance(assembly.GetType(daoClassName));
 
-                return (ArbitroDAO)theObject;
+                return new ArbitroDAO();
 
             } catch (Exception e) {
 

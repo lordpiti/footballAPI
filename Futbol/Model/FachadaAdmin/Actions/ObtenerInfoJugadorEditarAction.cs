@@ -29,11 +29,11 @@ namespace Futbol.Model.FachadaAdmin.Actions
 
         public object execute(DbConnection connection)
         {
-            IntegranteDAO integranteDAO= IntegranteDAOFactory.GetDAO();
-            JugadorDAO jugadorDAO = JugadorDAOFactory.GetDAO();
-            EntrenadorDAO entrenadorDAO=EntrenadorDAOFactory.GetDAO();
-            DirectivoDAO directivoDAO=DirectivoDAOFactory.GetDAO();
-            HcoIntegranteDAO hcoIntegranteDAO = HcoIntegranteDAOFactory.GetDAO();
+            IntegranteDAO integranteDAO= new IntegranteDAO();
+            JugadorDAO jugadorDAO = new JugadorDAO();
+            EntrenadorDAO entrenadorDAO=new EntrenadorDAO();
+            DirectivoDAO directivoDAO=new DirectivoDAO();
+            HcoIntegranteDAO hcoIntegranteDAO = new HcoIntegranteDAO();
             JugadorVO jugadorVO;
             EntrenadorVO entrenadorVO;
             DirectivoVO directivoVO;

@@ -24,7 +24,7 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            EntrenadorDAO entrenadorDAO = EntrenadorDAOFactory.GetDAO();
+            EntrenadorDAO entrenadorDAO = new EntrenadorDAO();
             var listaEntrenadores = entrenadorDAO.verEntrenadoresEquipo(connection, null, cod_Equipo, 0, 2);
 
             return listaEntrenadores;
