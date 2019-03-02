@@ -12,6 +12,7 @@ using Football.Crosscutting.ViewModels.Reports;
 using Football.API.Cache;
 using Football.PDFGenerator;
 using System.IO;
+using Futbol.Model.FachadaDatos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,6 +51,9 @@ namespace Football.API.Controllers
         [Route("")]
         public async Task<List<Competition>> GetCompetitions(int? teamId = null, string season = null)
         {
+            var a = new FachadaDatos();
+            var aa = a.verEquipos();
+
             return await _competitionService.GetCompetitions(teamId, season);
         }
 
