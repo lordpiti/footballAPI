@@ -101,7 +101,7 @@ namespace Futbol.Model.Jugador.DAO
          }
 
 
-         public ArrayList listarJugadoresEquipo(DbConnection connection, DbTransaction transaction,int cod_Equipo,
+         public List<JugadorVO> listarJugadoresEquipo(DbConnection connection, DbTransaction transaction,int cod_Equipo,
             int startIndex, int count)
          {
              DbDataReader dataReader = null;
@@ -131,7 +131,7 @@ namespace Futbol.Model.Jugador.DAO
                      return null;
                  }
 
-                 var jugadores = new ArrayList();
+                 var jugadores = new List<JugadorVO>();
 
                  do
                  {

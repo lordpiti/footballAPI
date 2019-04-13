@@ -12,6 +12,5 @@ namespace Crosscutting.ViewModels
 
         public string MongoConnection { get; set; }
 
-        public string FacebookAppId { get; set; }
     }
 }

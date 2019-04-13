@@ -1,25 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Futbol.ActionProcessor;
-using System.Data.Common;
-using Futbol.Model.Equipo.VO;
-using Futbol.Model.Equipo.DAO;
-using Futbol.Model.Estadio.VO;
-using Futbol.Model.Estadio.DAO;
-using Futbol.Model.Integrante.VO;
-using Futbol.Model.Integrante.DAO;
-using Futbol.Model.Jugador.DAO;
-using Futbol.Model.Jugador.VO;
-using Futbol.Model.Entrenador.DAO;
-using Futbol.Model.Entrenador.VO;
 using Futbol.Model.Directivo.DAO;
 using Futbol.Model.Directivo.VO;
+using Futbol.Model.Entrenador.DAO;
+using Futbol.Model.Entrenador.VO;
+using Futbol.Model.Equipo.DAO;
+using Futbol.Model.Estadio.DAO;
+using Futbol.Model.FachadaAdmin.COs;
 using Futbol.Model.HcoIntegrante.DAO;
 using Futbol.Model.HcoIntegrante.VO;
-using System.Collections;
-
-using Futbol.Model.FachadaAdmin.COs;
+using Futbol.Model.Integrante.DAO;
+using Futbol.Model.Integrante.VO;
+using Futbol.Model.Jugador.DAO;
+using Futbol.Model.Jugador.VO;
+using System.Data.Common;
 
 
 namespace Futbol.Model.FachadaAdmin.Actions
@@ -27,9 +20,9 @@ namespace Futbol.Model.FachadaAdmin.Actions
     class CrearEquipoTotalAction : TransactionalPlainAction
     {
 
-        private EquipoTotalCO equipoTotal;
+        private EquipoTotalCO<JugadorCO> equipoTotal;
 
-        public CrearEquipoTotalAction(EquipoTotalCO equipoTotal)
+        public CrearEquipoTotalAction(EquipoTotalCO<JugadorCO> equipoTotal)
         {
             this.equipoTotal = equipoTotal;
         }
@@ -193,7 +186,7 @@ namespace Futbol.Model.FachadaAdmin.Actions
 
                 }
             }
-            return (new EquipoTotalCO(equipoVO, listaJugadores, listaEntrenadores,null,  listaDirectivos, null,
+            return (new EquipoTotalCO<JugadorCO>(equipoVO, listaJugadores, listaEntrenadores,null,  listaDirectivos, null,
                 estadioVO));
 
         }

@@ -2,6 +2,7 @@
 using Crosscutting.ViewModels;
 using Football.API.Config;
 using Football.API.Filters;
+using Football.API.Middleware;
 using Football.Crosscutting.ViewModels.Reports;
 using GraphiQl;
 using Microsoft.AspNet.OData.Extensions;
@@ -131,6 +132,9 @@ namespace footballRebuildAPI
             //Added this to be able to use DI for the SignalR Hubs on the background service
             //https://github.com/aspnet/SignalR/issues/972
             Provider = app.ApplicationServices;
+
+            // https://tahirnaushad.com/2017/08/14/asp-net-core-middleware/
+            app.UseMiddleware<CustomMiddleware>();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 

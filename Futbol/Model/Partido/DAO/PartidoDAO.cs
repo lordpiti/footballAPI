@@ -396,7 +396,7 @@ namespace Futbol.Model.Partido.DAO
 
                  do
                  {
-                     String jornada = dataReader.GetString(0);
+                     var jornada = dataReader.GetString(0);
                      var jornadaAgregar = new TemporadaCO(jornada);
                      jornadasCompeticion.Add(jornadaAgregar);
                      
@@ -408,14 +408,14 @@ namespace Futbol.Model.Partido.DAO
                  //Esto es para ordenar bien la lista de jornadas
                  if (tipo.Equals("Liga"))
                  {
-                     ArrayList listatemp = new ArrayList();
-                     foreach (TemporadaCO item in jornadasCompeticion)
+                     var listatemp = new List<int>();
+                     foreach (var item in jornadasCompeticion)
                      {
-                         listatemp.Add(Int32.Parse(item.Temporada));
+                         listatemp.Add(int.Parse(item.Temporada));
                      }
                      listatemp.Sort();
                      jornadasCompeticion.Clear();
-                     foreach (Int32 item in listatemp)
+                     foreach (var item in listatemp)
                      {
                          jornadasCompeticion.Add(new TemporadaCO(Convert.ToString(item)));
                      }
@@ -471,7 +471,7 @@ namespace Futbol.Model.Partido.DAO
                  do
                  {
                      Int32 cod_Partido = dataReader.GetInt32(0);
-                     Int32 cod_Local = dataReader.GetInt32(1);
+                    int cod_Local = dataReader.GetInt32(1);
                      Int32 cod_Visitante = dataReader.GetInt32(2);
                      DateTime fecha = dataReader.GetDateTime(3);
                      String clima = dataReader.GetString(4);
@@ -576,7 +576,7 @@ namespace Futbol.Model.Partido.DAO
 
                  do
                  {
-                     Int32 cod_Partido = dataReader.GetInt32(0);
+                    int cod_Partido = dataReader.GetInt32(0);
                      String nombreLocal = dataReader.GetString(1);
                      String nombreVisitante = dataReader.GetString(2);
                      Int32 golesLocal = dataReader.GetInt32(3);

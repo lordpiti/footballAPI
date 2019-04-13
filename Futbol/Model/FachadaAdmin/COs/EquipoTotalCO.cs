@@ -16,10 +16,10 @@ using Futbol.Model.Entrenador;
 
 namespace Futbol.Model.FachadaAdmin.COs
 {
-    public class EquipoTotalCO
+    public class EquipoTotalCO<T>
     {
         private EquipoVO equipo;
-        private ArrayList listaJugadores;
+        private List<T> listaJugadores;
         private List<EntrenadorPlantillaCO> listaEntrenadoresView;
         private List<EntrenadorCO> listaEntrenadoresCreate;
         private List<DirectivoCO> _listaDirectivosCreate;
@@ -27,7 +27,7 @@ namespace Futbol.Model.FachadaAdmin.COs
         private EstadioVO estadio;
 
 
-        public EquipoTotalCO(EquipoVO equipo,ArrayList listaJugadores, List<EntrenadorCO> listaEntrenadoresCreate,
+        public EquipoTotalCO(EquipoVO equipo,List<T> listaJugadores, List<EntrenadorCO> listaEntrenadoresCreate,
             List<EntrenadorPlantillaCO> listaEntrenadoresView,List<DirectivoCO> listaDirectivosCreate, List<DirectivoPlantillaCO> listaDirectivosView, EstadioVO estadio)
         {
             this.equipo = equipo;
@@ -53,7 +53,7 @@ namespace Futbol.Model.FachadaAdmin.COs
         }
 
 
-        public ArrayList ListaJugadores
+        public List<T> ListaJugadores
         {
             get { return listaJugadores; }
             set { listaJugadores = value; }

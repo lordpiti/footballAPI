@@ -112,13 +112,13 @@ namespace Futbol.Model.FachadaAdmin
              catch (Exception e) { throw new InternalErrorException(e); }
          }
 
-        public EquipoTotalCO crearEquipoTotal(EquipoTotalCO equipoTotal)
+        public EquipoTotalCO<JugadorCO> crearEquipoTotal(EquipoTotalCO<JugadorCO> equipoTotal)
         {
              try
              {   
                  CrearEquipoTotalAction action = new CrearEquipoTotalAction(equipoTotal);
                  
-                 return (EquipoTotalCO)PlainActionProcessor.process(dbFactory, action);
+                 return (EquipoTotalCO<JugadorCO>)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }

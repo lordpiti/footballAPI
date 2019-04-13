@@ -16,28 +16,23 @@ namespace Futbol.Model.FachadaDatos
 {
     public class JugadorCO : MiembroCO
     {
-        private JugadorVO jugador;
 
 
-        public JugadorCO(JugadorVO jugador, ArrayList listaHcoIntegrantes,
+        public JugadorCO(JugadorVO jugador, List<HcoIntegranteVO> listaHcoIntegrantes,
             IntegranteVO integrante)
         {
             
             base.Integrante = integrante;
             base.ListaHcoIntegrantes = listaHcoIntegrantes;
-            this.jugador = jugador;
+            this.Jugador = jugador;
         }
 
 
-        public JugadorVO Jugador
-        {
-            get { return jugador; }
-            set { jugador = value; }
-        }
+        public JugadorVO Jugador { get; set; }
 
         public override int cod_Integrante()
         {
-            return this.jugador.Cod_Integrante;
+            return this.Jugador.Cod_Integrante;
         }
 
 

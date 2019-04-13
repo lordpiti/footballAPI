@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Text;
 using Util;
-
+using Futbol.Model.Jugador.VO;
 
 namespace Simulador
 {
@@ -141,9 +141,9 @@ namespace Simulador
 
 
         //elige x elementos aleatorios de una lista dada sin repetirse
-        public ArrayList generaXAleatoriosLista(ArrayList lista,int x)
+        public List<T> generaXAleatoriosLista<T>(List<T> lista,int x)
         {
-            ArrayList listaFinal=new ArrayList();
+            var listaFinal=new List<T>();
             int indice;
             for (int i = 0; i < x; i++) {
                 indice = rand.Next(0, lista.Count);
@@ -165,9 +165,9 @@ namespace Simulador
 
 
         //elige x elementos aleatorios de una lista dada sin repetirse
-        public ArrayList generaGoleadoresLista(ArrayList lista, int x)
+        public List<JugadorVO> generaGoleadoresLista(List<JugadorVO> lista, int x)
         {
-            ArrayList listaFinal = new ArrayList();
+            var listaFinal = new List<JugadorVO>();
             int indice;
             for (int i = 0; i < x; i++)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Futbol.Model.Jugador.VO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace Simulador
 {
     public interface IGeneradorCosas
     {
-        ArrayList generaGoleadoresLista(ArrayList lista, int x);
+        List<JugadorVO> generaGoleadoresLista(List<JugadorVO> lista, int x);
         List<List<Jornada>> generaLiga(List<int> equipos);
         float generarAltura();
         string generarApellidoAleatorio();
@@ -18,7 +19,7 @@ namespace Simulador
         int generarPosesion();
         List<Jornada> generarRondaCopa(List<int> equipos);
         string generarZurdoDiestro();
-        ArrayList generaXAleatoriosLista(ArrayList lista, int x);
+        List<T> generaXAleatoriosLista<T>(List<T> lista, int x);
         string obtenerNombreRondaCopa(int numeroEquipos);
     }
 }

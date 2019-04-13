@@ -31,6 +31,7 @@ using Futbol.Model.FachadaDatos.Actions;
 using Futbol.Model.FachadaAdmin.COs;
 using Futbol.Model.Directivo;
 using Futbol.Model.Entrenador;
+using Futbol.Model.EquiposParticipan.VO;
 
 namespace Futbol.Model.FachadaDatos
 {
@@ -49,13 +50,13 @@ namespace Futbol.Model.FachadaDatos
         }
 
 
-        public ArrayList verEquiposCompeticion(int cod_Competicion)
+        public List<EquiposParticipanVO> verEquiposCompeticion(int cod_Competicion)
          {
              try
              {
                  VerEquiposCompeticionAction action = new VerEquiposCompeticionAction(cod_Competicion);
 
-                 return (ArrayList)PlainActionProcessor.process(dbFactory, action);
+                 return (List<EquiposParticipanVO>)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }
@@ -75,13 +76,13 @@ namespace Futbol.Model.FachadaDatos
          }
 
 
-        public ArrayList verListaJugadoresEquipo(int cod_Equipo)
+        public List<JugadorVO> verListaJugadoresEquipo(int cod_Equipo)
          {
              try
              {
                  VerJugadoresEquipoAction action = new VerJugadoresEquipoAction(cod_Equipo);
 
-                 return (ArrayList)PlainActionProcessor.process(dbFactory, action);
+                 return (List<JugadorVO>)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }
@@ -150,13 +151,13 @@ namespace Futbol.Model.FachadaDatos
          }
 
 
-         public EquipoTotalCO verEquipoTotal(int cod_Equipo)
+         public EquipoTotalCO<JugadorVO> verEquipoTotal(int cod_Equipo)
          {
              try
              {
                  VerEquipoTotalAction action = new VerEquipoTotalAction(cod_Equipo);
 
-                 return (EquipoTotalCO)PlainActionProcessor.process(dbFactory, action);
+                 return (EquipoTotalCO<JugadorVO>)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }

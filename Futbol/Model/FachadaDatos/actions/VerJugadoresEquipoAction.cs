@@ -24,8 +24,8 @@ namespace Futbol.Model.FachadaDatos.Actions
         public object execute(DbConnection connection)
         {
 
-            JugadorDAO jugadorDAO = new JugadorDAO();
-            ArrayList listaJugadores = jugadorDAO.listarJugadoresEquipo(connection, null,
+            var jugadorDAO = new JugadorDAO();
+            var listaJugadores = jugadorDAO.listarJugadoresEquipo(connection, null,
                 cod_Equipo, 0, 2);
 
             return listaJugadores;

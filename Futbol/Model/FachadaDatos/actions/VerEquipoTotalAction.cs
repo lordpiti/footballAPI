@@ -13,6 +13,7 @@ using Futbol.Model.Estadio.VO;
 using Futbol.Model.FachadaAdmin.COs;
 using System.Collections;
 using Futbol.Model.Directivo;
+using Futbol.Model.Jugador.VO;
 
 namespace Futbol.Model.FachadaDatos.Actions
 {
@@ -39,7 +40,7 @@ namespace Futbol.Model.FachadaDatos.Actions
             var listaEntrenadores = entrenadorDAO.verEntrenadoresEquipo(connection, null, cod_Equipo, 0, 2);
             var listaDirectivos = directivoDAO.verDirectivosEquipo(connection, null, cod_Equipo, 0, 2);
 
-            return new EquipoTotalCO(equipo, listaJugadores, null, listaEntrenadores, null, listaDirectivos, estadio);
+            return new EquipoTotalCO<JugadorVO>(equipo, listaJugadores, null, listaEntrenadores, null, listaDirectivos, estadio);
         }
     }
 }

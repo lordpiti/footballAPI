@@ -46,11 +46,11 @@ namespace Simulador
 
 
         //genera el 11 titular aleatorio de un equipo
-        public ArrayList generar11Titular(int codEquipo)
+        public List<JugadorVO> generar11Titular(int codEquipo)
         {
             
-            JugadorDAO jugadorDAO = new JugadorDAO();
-            ArrayList plantilla = fachadaDatos.verListaJugadoresEquipo(codEquipo);
+            var jugadorDAO = new JugadorDAO();
+            var plantilla = fachadaDatos.verListaJugadoresEquipo(codEquipo);
 
             return (generador.generaXAleatoriosLista(plantilla, 11));
         
@@ -69,8 +69,8 @@ namespace Simulador
 
             PartidoVO partido = generarPartidoSimple(codCompeticion, jornada, codLocal, codVisitante,1);
 
-            ArrayList jugadoresLocal = generar11Titular(codLocal);
-            ArrayList jugadoresVisitante = generar11Titular(codVisitante);
+            var jugadoresLocal = generar11Titular(codLocal);
+            var jugadoresVisitante = generar11Titular(codVisitante);
             var listaPartidosJugados = new List<PartidoJugadoVO>();
             var golesLocal=new List<GolVO>();
             var golesVisitante = new List<GolVO>();
@@ -83,7 +83,7 @@ namespace Simulador
             //titulares y suplentes
             int contador = 1;
             int numeroCambios = jugadoresLocal.Count - 11;
-            foreach (JugadorVO item in jugadoresLocal) 
+            foreach (var item in jugadoresLocal) 
             {
                 if (contador>11) listaPartidosJugados.Add(generarPartidoJugadoSimple(item.Cod_Jugador, "Suplente"));       
                 else listaPartidosJugados.Add(generarPartidoJugadoSimple(item.Cod_Jugador, "Titular"));
@@ -95,8 +95,8 @@ namespace Simulador
             var cambiosLocal = new List<CambioVO>();
             for (int i = 0; i < numeroCambios; i++)
             {
-                var cambio=new CambioVO(((JugadorVO)jugadoresLocal[11 + i]).Cod_Jugador,
-                    ((JugadorVO)jugadoresLocal[1 + i]).Cod_Jugador, rand.Next(0, 90));
+                var cambio=new CambioVO((jugadoresLocal[11 + i]).Cod_Jugador,
+                    (jugadoresLocal[1 + i]).Cod_Jugador, rand.Next(0, 90));
                 cambiosLocal.Add(cambio);
             }
         
@@ -107,7 +107,7 @@ namespace Simulador
             //titulares y suplentes
             contador = 1;
             numeroCambios = jugadoresVisitante.Count - 11;
-            foreach (JugadorVO item in jugadoresVisitante)
+            foreach (var item in jugadoresVisitante)
             {
                 if (contador > 11) listaPartidosJugados.Add(generarPartidoJugadoSimple(item.Cod_Jugador, "Suplente"));
                 else listaPartidosJugados.Add(generarPartidoJugadoSimple(item.Cod_Jugador, "Titular"));
@@ -146,8 +146,8 @@ namespace Simulador
 
             //generamos ahora los goles concretos del partido
             
-            ArrayList goleadoresLocal=generador.generaGoleadoresLista(jugadoresLocal, partido.Goles_Local);
-            ArrayList goleadoresVisitante = generador.generaGoleadoresLista(jugadoresVisitante, partido.Goles_Visitante);
+            var goleadoresLocal=generador.generaGoleadoresLista(jugadoresLocal, partido.Goles_Local);
+            var goleadoresVisitante = generador.generaGoleadoresLista(jugadoresVisitante, partido.Goles_Visitante);
 
             foreach (JugadorVO item in goleadoresLocal) { 
                golesLocal.Add(new GolVO(item.Cod_Jugador,generador.generarPosesion(),"Pie","http://www.youtube.com/v/fV5UGc9nBAc&hl=en&fs=1"));  

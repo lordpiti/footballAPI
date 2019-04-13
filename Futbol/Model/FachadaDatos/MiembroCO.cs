@@ -9,31 +9,19 @@ namespace Futbol.Model.FachadaDatos
 {
     public class MiembroCO
     {
-        protected ArrayList listaHcoIntegrantes;
-        protected IntegranteVO integrante;
+        public List<HcoIntegranteVO> ListaHcoIntegrantes { get; set; }
+        public IntegranteVO Integrante { get; set; }
 
-        public MiembroCO(IntegranteVO integrante, ArrayList listaHcoIntegrantes)
+        public MiembroCO(IntegranteVO integrante, List<HcoIntegranteVO> listaHcoIntegrantes)
         {
-            this.integrante = integrante;
-            this.listaHcoIntegrantes = listaHcoIntegrantes;
+            this.Integrante = integrante;
+            this.ListaHcoIntegrantes = listaHcoIntegrantes;
         }
 
         public MiembroCO()
         {
         }
 
-        public IntegranteVO Integrante
-        {
-            get { return integrante; }
-            set { integrante = value; }
-        }
-
-
-        public ArrayList ListaHcoIntegrantes
-        {
-            get { return listaHcoIntegrantes; }
-            set { listaHcoIntegrantes = value; }
-        }
 
         public virtual int cod_Integrante()
         {

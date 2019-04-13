@@ -20,7 +20,7 @@ namespace Futbol.Model.FachadaDatos
 
 
 
-        public DirectivoCO(DirectivoVO directivo, ArrayList listaHcoIntegrantes,
+        public DirectivoCO(DirectivoVO directivo, List<HcoIntegranteVO> listaHcoIntegrantes,
             IntegranteVO integrante)
         {
             this.directivo = directivo;
