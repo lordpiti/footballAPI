@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using System;
@@ -25,7 +26,7 @@ namespace footballRebuildAPI
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -79,7 +80,9 @@ namespace footballRebuildAPI
 
             // Add framework services.
 
-            services.AddMvc();
+            services.AddMvc(x => {
+                x.EnableEndpointRouting = false;
+            });
 
             #region OData
 
@@ -115,7 +118,7 @@ namespace footballRebuildAPI
             // https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.1
             services.AddSwaggerGen(c => 
             {
-                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() {
+                c.SwaggerDoc("v1", new OpenApiInfo() {
                     Title = "Football API specification",
                     Description = ""
                 });
@@ -127,7 +130,7 @@ namespace footballRebuildAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             //Added this to be able to use DI for the SignalR Hubs on the background service
             //https://github.com/aspnet/SignalR/issues/972
@@ -135,11 +138,6 @@ namespace footballRebuildAPI
 
             // https://tahirnaushad.com/2017/08/14/asp-net-core-middleware/
             app.UseMiddleware<CustomMiddleware>();
-
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-
-
-            loggerFactory.AddDebug();
 
             //app.UseCors("AllowAll");
             app.UseCors("CorsPolicy");

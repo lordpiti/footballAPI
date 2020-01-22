@@ -6,6 +6,8 @@ using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
 using Football.GraphQL.Models;
+using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 namespace Football.API.Controllers
 {
@@ -25,7 +27,11 @@ namespace Football.API.Controllers
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
             if (query == null) { throw new ArgumentNullException(nameof(query)); }
-            var inputs = query.Variables.ToInputs();
+
+            var mquery = JObject.Parse(JsonSerializer.Serialize(query.Variables));
+
+
+            var inputs = mquery.ToInputs();
             var executionOptions = new ExecutionOptions
             {
                 Schema = _schema,

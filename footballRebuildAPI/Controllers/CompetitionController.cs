@@ -7,12 +7,10 @@ using Football.Services.Interface;
 using Football.Crosscutting.ViewModels.Competition;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Match;
-using Football.API.Filters;
 using Football.Crosscutting.ViewModels.Reports;
 using Football.API.Cache;
 using Football.PDFGenerator;
 using System.IO;
-using Futbol.Model.FachadaDatos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

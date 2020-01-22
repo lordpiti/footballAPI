@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.API", "footballRebuildAPI\Football.API.csproj", "{ABDCB1F2-2A9B-4D62-A5A1-49D39E2D8996}"
 EndProject
@@ -19,17 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.DataAccessNoSQL", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{7E02A9D9-84CE-41A6-92D4-0275CA3B992D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futbol", "Futbol\Futbol.csproj", "{6BB3BD33-791B-4F49-B1F9-C6E362AEB1D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Futbol", "Futbol\Futbol.csproj", "{6BB3BD33-791B-4F49-B1F9-C6E362AEB1D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulador", "Simulador\Simulador.csproj", "{F233671A-DDF6-4F23-BAD4-C76293416E61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulador", "Simulador\Simulador.csproj", "{F233671A-DDF6-4F23-BAD4-C76293416E61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{7F9DF1EC-7E34-488D-B8CE-3AB06E7A6EC4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Services.Test", "Football.Services.Test\Football.Services.Test.csproj", "{F67873AC-28CD-4533-A544-7EFCDBF58D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Util", "Util\Util.csproj", "{7F9DF1EC-7E34-488D-B8CE-3AB06E7A6EC4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.GraphQLUtils", "Football.GraphQLUtils\Football.GraphQLUtils.csproj", "{A6EF2C06-9737-4C7D-A720-15291D604CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.PDFGenerator", "Football.PDFGenerator\Football.PDFGenerator.csproj", "{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.PDFGenerator", "Football.PDFGenerator\Football.PDFGenerator.csproj", "{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Services.Test", "Football.Services.Test\Football.Services.Test.csproj", "{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +77,6 @@ Global
 		{7F9DF1EC-7E34-488D-B8CE-3AB06E7A6EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F9DF1EC-7E34-488D-B8CE-3AB06E7A6EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F9DF1EC-7E34-488D-B8CE-3AB06E7A6EC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F67873AC-28CD-4533-A544-7EFCDBF58D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F67873AC-28CD-4533-A544-7EFCDBF58D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F67873AC-28CD-4533-A544-7EFCDBF58D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F67873AC-28CD-4533-A544-7EFCDBF58D8B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -89,6 +85,10 @@ Global
 		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

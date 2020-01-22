@@ -26,14 +26,14 @@ namespace Football.DataAccess.Concrete
         {
             if (teamId == null)
             {
-                var ey = _context.Competicion.ToAsyncEnumerable();
+                var ey = await _context.Competicion.ToListAsync();
 
                 if (!string.IsNullOrEmpty(season))
                 {
-                    ey = ey.Where(x => x.Temporada == season);
+                    ey = ey.Where(x => x.Temporada == season).ToList();
                 }
 
-                return await ey.Select(x=>new Competition()
+                return ey.Select(x=>new Competition()
                 {
                     Id = x.CodCompeticion,
                     Name = x.Nombre,

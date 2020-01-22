@@ -25,7 +25,8 @@ namespace Football.DataAccess.Concrete
         {
             try
             {
-                var teamFromBD = await _context.Equipo.Include(x => x.TeamPicture).Include(x => x.Stadium)
+                var teamFromBD = await _context.Equipo.Include(x => x.TeamPicture)
+                    .Include(x => x.Stadium)
                     .Include(x => x.Jugador)
                     .ThenInclude(x => x.CodIntegranteNavigation.HcoIntegrante)
                     .Include(x => x.Jugador)

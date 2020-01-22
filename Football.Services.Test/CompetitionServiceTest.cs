@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Football.Services.Concrete;
 using Moq;
@@ -113,7 +113,7 @@ namespace Football.Services.Test
             // Creamos el mock sobre nuestra interfaz
             var mockRepository = new Mock<ICompetitionRepository>();
 
-            // Definimos el comportamiento del método GetCount y su resultado
+            // Definimos el comportamiento del m�todo GetCount y su resultado
             mockRepository.Setup(m => m.GetCompetitionRoundData(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(_getMockCompetitionData());
             mockRepository.Setup(m => m.GetTopScorers(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(_getMockScorers());
 
@@ -129,7 +129,7 @@ namespace Football.Services.Test
 
             //foreach(var item in obtained.MatchList)
             //{
-                _mockBlobStorageService.Verify(mock => mock.PopulateUrlForBlob(It.IsAny<BlobData>()), Times.Exactly(6));
+            _mockBlobStorageService.Verify(mock => mock.PopulateUrlForBlob(It.IsAny<BlobData>()), Times.Exactly(6));
             //}
             // Creamos una instancia del objeto mockeado y la testeamos
             Assert.AreEqual(_getMockCompetitionData().MatchList.Count, obtained.MatchList.Count);

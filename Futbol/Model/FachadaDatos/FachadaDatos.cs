@@ -1,37 +1,18 @@
 using Futbol.ActionProcessor;
 using Futbol.Model.Directivo;
 using Futbol.Model.Entrenador;
+using Futbol.Model.Equipo.VO;
+using Futbol.Model.EquiposParticipan.VO;
 using Futbol.Model.Estadio.VO;
 using Futbol.Model.FachadaAdmin.COs;
 using Futbol.Model.FachadaDatos.Actions;
+using Futbol.Model.Jugador.VO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using Util.Exceptions;
 using Westwind.Utilities;
-
-using System.Configuration;
-using System.Data.Common;
-using System.Collections;
-using System.Xml;
-using Futbol.Model.Estadio.VO;
-using Futbol.Model.Arbitro.VO;
-using Futbol.Model.Integrante.VO;
-using Futbol.Model.Entrenador.VO;
-using Futbol.Model.Directivo.VO;
-using Futbol.Model.HcoIntegrante.VO;
-using Futbol.Model.Jugador.VO;
-using Futbol.Model.Competicion.VO;
-using Futbol.Model.Equipo.VO;
-using Futbol.Model.Partido.VO;
-using Futbol.Model.PartidoJugado.VO;
-using Futbol.ActionProcessor;
-using Futbol.Model.FachadaDatos.Actions;
-using Futbol.Model.FachadaAdmin.COs;
-using Futbol.Model.Directivo;
-using Futbol.Model.Entrenador;
-using Futbol.Model.EquiposParticipan.VO;
 
 namespace Futbol.Model.FachadaDatos
 {
