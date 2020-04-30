@@ -127,7 +127,7 @@ namespace Simulador
 
 
 
-        public ArrayList generaCuerpoTécnico(int cod_Equipo)
+        public ArrayList generaCuerpoTecnico(int cod_Equipo)
         {
             //sustituir el 4 q multiplica al 22 de abajo por el numero de equipos
             //de la BD
