@@ -19,16 +19,16 @@ namespace DataAccess.Concrete
         {
         }
 
-        public List<Player> GetAllPlayers()
+        public async Task<List<Player>> GetAllPlayers()
         {
-            return _context.Jugador.Include(x => x.CodIntegranteNavigation).Include(x=>x.CodEquipoNavigation).Select(x => new Player()
+            return await _context.Jugador.Include(x => x.CodIntegranteNavigation).Include(x=>x.CodEquipoNavigation).Select(x => new Player()
             {
                 Name = x.CodIntegranteNavigation.Nombre,
                 Surname = x.CodIntegranteNavigation.Apellidos,
                 TeamName = x.CodEquipoNavigation.Nombre,
                 PlayerId = x.CodJugador,
                 TeamId = (int)x.CodEquipo
-            }).ToList();
+            }).ToListAsync();
         }
 
         public List<MatchPlayedInfo> GetMatchesPlayed(int id)

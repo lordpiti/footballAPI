@@ -32,9 +32,9 @@ namespace footballRebuildAPI.Controllers
 
         [HttpGet]
         [Route("")]
-        public IEnumerable<Player> List()
+        public async Task<IEnumerable<Player>> List()
         {
-            return _playerService.GetPlayers();
+            return await _playerService.GetPlayers();
         }
 
         [HttpGet]

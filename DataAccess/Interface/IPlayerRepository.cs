@@ -9,7 +9,7 @@ namespace DataAccess.Interface
 {
     public interface IPlayerRepository
     {
-        List<Player> GetAllPlayers();
+        Task<List<Player>> GetAllPlayers();
 
         List<MatchPlayedInfo> GetMatchesPlayed(int id);
 

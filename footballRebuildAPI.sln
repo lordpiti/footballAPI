@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.GraphQLUtils", "Fo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.PDFGenerator", "Football.PDFGenerator\Football.PDFGenerator.csproj", "{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Services.Test", "Football.Services.Test\Football.Services.Test.csproj", "{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.Services.Test", "Football.Services.Test\Football.Services.Test.csproj", "{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

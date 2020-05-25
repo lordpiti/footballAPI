@@ -62,6 +62,7 @@ namespace footballRebuildAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCompression();
 
             #region CORS setup
 
@@ -103,6 +104,8 @@ namespace footballRebuildAPI
 
             #endregion
 
+
+
             services.AddSignalR();          
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
@@ -136,8 +139,10 @@ namespace footballRebuildAPI
             //https://github.com/aspnet/SignalR/issues/972
             Provider = app.ApplicationServices;
 
-            // https://tahirnaushad.com/2017/08/14/asp-net-core-middleware/
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-3.1
             app.UseMiddleware<CustomMiddleware>();
+
+            app.UseResponseCompression();
 
             //app.UseCors("AllowAll");
             app.UseCors("CorsPolicy");
@@ -146,6 +151,17 @@ namespace footballRebuildAPI
 
             // Launch {url}/graphql
             app.UseGraphiQl();
+
+            #endregion
+
+            app.UseRouting();
+
+            #region SignalR
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<LoopyHub>("/loopy", options => options.Transports = HttpTransportType.WebSockets);
+            });
 
             #endregion
 
@@ -158,16 +174,7 @@ namespace footballRebuildAPI
                 
                 #endregion
             });
-            
-
-            #region SignalR
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<LoopyHub>("/loopy", options => options.Transports = HttpTransportType.WebSockets);
-            });
-
-            #endregion
+           
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","swagger"));
