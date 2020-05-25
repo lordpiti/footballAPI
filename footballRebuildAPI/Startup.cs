@@ -116,6 +116,10 @@ namespace footballRebuildAPI
             //If the action filters were used directly, this would not be required.
             services.AddScoped<AuthorizationRequiredAttribute>();
 
+            //https://miniprofiler.com/dotnet/HowTo/ProfileEFCore
+            services.AddMiniProfiler(options =>
+                options.RouteBasePath = "/profiler"
+            ).AddEntityFramework();
 
             // Inject an implementation of ISwaggerProvider with defaulted settings applied
             // https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.1
@@ -135,6 +139,8 @@ namespace footballRebuildAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseStaticFiles();
+
             //Added this to be able to use DI for the SignalR Hubs on the background service
             //https://github.com/aspnet/SignalR/issues/972
             Provider = app.ApplicationServices;
@@ -153,6 +159,8 @@ namespace footballRebuildAPI
             app.UseGraphiQl();
 
             #endregion
+
+            app.UseMiniProfiler();
 
             app.UseRouting();
 
@@ -174,8 +182,8 @@ namespace footballRebuildAPI
                 
                 #endregion
             });
-           
 
+            //https://code-maze.com/swagger-ui-asp-net-core-web-api/
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","swagger"));
         }
