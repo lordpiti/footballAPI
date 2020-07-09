@@ -97,73 +97,86 @@ namespace Football.DataAccessEFCore3.Concrete
 
         public async Task<CompetitionRoundData> GetCompetitionRoundData(int competitionId, string round)
         {
-            var matchList = await _context.Calendario
-                .Where(x => x.CodCompeticion == competitionId && x.Jornada == round)
-                .Include(x => x.MatchCodPartidoNavigation).Select(x => x.MatchCodPartidoNavigation)
-                .Include(x => x.CodLocalNavigation.TeamPictureGlobalMedia)
-                .Include(x => x.CodLocalNavigation.CodEstadioNavigation)
-                .Include(x => x.CodVisitanteNavigation.TeamPictureGlobalMedia)
-                .Include(x => x.CodVisitanteNavigation.CodEstadioNavigation)
-                .Select(x => new MatchGeneralInfo()
-                {
-                    Date = x.Fecha,
-                    GoalsLocal = x.GolesLocal,
-                    GoalsVisitor = x.GolesVisitante,
-                    MatchId = x.CodPartido,
-                    LocalTeam = new Team()
-                    {
-                        Name = x.CodLocalNavigation.Nombre,
-                        Id = x.CodLocalNavigation.CodEquipo,
-                        PictureLogo = new Crosscutting.BlobData()
-                        {
-                            ContainerReference = x.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                            FileName = x.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
-                        }
-                    },
-                    VisitorTeam = new Team()
-                    {
-                        Name = x.CodVisitanteNavigation.Nombre,
-                        Id = x.CodVisitanteNavigation.CodEquipo,
-                        PictureLogo = new Crosscutting.BlobData()
-                        {
-                            ContainerReference = x.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                            FileName = x.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
-                        }
-                    },
-                    Stadium = new Stadium()
-                    {
-                        Id = x.CodEstadioNavigation.CodEstadio,
-                        Name = x.CodEstadioNavigation.Nombre
-                    }
-                }).ToListAsync();
-
-
-
-            var clasificationData = await _context.Clasificacion.Include(x => x.CodEquipoNavigation)
-                .Where(x => x.CodCompeticion == competitionId && x.Jornada == Convert.ToInt32(round))
-                .OrderBy(x => x.Posicion).Select(x => new TeamStatsRound()
-                {
-                    Position = x.Posicion,
-                    TeamId = x.CodEquipo,
-                    TeamLogo = x.CodEquipoNavigation.TeamPictureGlobalMedia != null ? new BlobData()
-                    {
-                        ContainerReference = x.CodEquipoNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                        FileName = x.CodEquipoNavigation.TeamPictureGlobalMedia.BlobStorageReference
-                    } : new BlobData(),
-                    TeamName = x.CodEquipoNavigation.Nombre,
-                    GoalsAgainst = x.GolesContra,
-                    GoalsFor = x.GolesFavor,
-                    MatchesDraw = x.Empatados,
-                    MatchesLost = x.Perdidos,
-                    MatchesWon = x.Ganados,
-                    Points = x.Puntos
-                }).ToListAsync();
-
-            return new CompetitionRoundData()
+            try
             {
-                MatchList = matchList,
-                TeamStatsRoundList = clasificationData
-            };
+                var matchListQuery = await _context.Calendario
+                    .Where(x => x.CodCompeticion == competitionId && x.Jornada == round)
+                    .Include(x => x.MatchCodPartidoNavigation)
+                    .ThenInclude(x => x.CodLocalNavigation.TeamPictureGlobalMedia)
+                    .Include(x => x.MatchCodPartidoNavigation)
+                    .ThenInclude(x => x.CodLocalNavigation.CodEstadioNavigation)
+                    .Include(x => x.MatchCodPartidoNavigation)
+                    .ThenInclude(x => x.CodVisitanteNavigation.TeamPictureGlobalMedia)
+                    .Include(x => x.MatchCodPartidoNavigation)
+                    .ThenInclude(x => x.CodVisitanteNavigation.CodEstadioNavigation)
+                    .ToListAsync();
+                    
+                var matchList = matchListQuery
+                    .Select(x => new MatchGeneralInfo()
+                    {
+                        Date = x.Fecha,
+                        GoalsLocal = x.MatchCodPartidoNavigation.GolesLocal,
+                        GoalsVisitor = x.MatchCodPartidoNavigation.GolesVisitante,
+                        MatchId = x.MatchCodPartidoNavigation.CodPartido,
+                        LocalTeam = new Team()
+                        {
+                            Name = x.MatchCodPartidoNavigation.CodLocalNavigation.Nombre,
+                            Id = x.MatchCodPartidoNavigation.CodLocalNavigation.CodEquipo,
+                            PictureLogo = new Crosscutting.BlobData()
+                            {
+                                ContainerReference = x.MatchCodPartidoNavigation.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
+                                FileName = x.MatchCodPartidoNavigation.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                            }
+                        },
+                        VisitorTeam = new Team()
+                        {
+                            Name = x.MatchCodPartidoNavigation.CodVisitanteNavigation.Nombre,
+                            Id = x.MatchCodPartidoNavigation.CodVisitanteNavigation.CodEquipo,
+                            PictureLogo = new Crosscutting.BlobData()
+                            {
+                                ContainerReference = x.MatchCodPartidoNavigation.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
+                                FileName = x.MatchCodPartidoNavigation.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                            }
+                        },
+                        Stadium = new Stadium()
+                        {
+                            Id = x.MatchCodPartidoNavigation.CodEstadioNavigation.CodEstadio,
+                            Name = x.MatchCodPartidoNavigation.CodEstadioNavigation.Nombre
+                        }
+                    }).ToList();
+
+
+                var clasificationData = await _context.Clasificacion.Include(x => x.CodEquipoNavigation)
+                    .Where(x => x.CodCompeticion == competitionId && x.Jornada == Convert.ToInt32(round))
+                    .OrderBy(x => x.Posicion).Select(x => new TeamStatsRound()
+                    {
+                        Position = x.Posicion,
+                        TeamId = x.CodEquipo,
+                        TeamLogo = x.CodEquipoNavigation.TeamPictureGlobalMedia != null ? new BlobData()
+                        {
+                            ContainerReference = x.CodEquipoNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
+                            FileName = x.CodEquipoNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                        } : new BlobData(),
+                        TeamName = x.CodEquipoNavigation.Nombre,
+                        GoalsAgainst = x.GolesContra,
+                        GoalsFor = x.GolesFavor,
+                        MatchesDraw = x.Empatados,
+                        MatchesLost = x.Perdidos,
+                        MatchesWon = x.Ganados,
+                        Points = x.Puntos
+                    }).ToListAsync();
+
+                return new CompetitionRoundData()
+                {
+                    MatchList = matchList,
+                    TeamStatsRoundList = clasificationData
+                };
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         public async Task<MatchOverview> GetMatchOverview(int matchId)
@@ -328,9 +341,9 @@ namespace Football.DataAccessEFCore3.Concrete
                     .Include(x => x.CodJugadorNavigation).ThenInclude(x=>x.CodIntegranteNavigation)
                     .Include(x => x.CodJugadorNavigation).ThenInclude(x => x.CodEquipoNavigation)
                     .Where(x => x.CodPartidoNavigation.CodCompeticion == competitionId && Convert.ToInt32(x.CodPartidoNavigation.Jornada)<=Convert.ToInt32(round))
-                    .GroupBy(x => x.CodJugadorNavigation).ToListAsync();
+                    .ToListAsync();
 
-                var result = scorersGrouped.Select(x => new Scorer{
+                var result = scorersGrouped.GroupBy(x => x.CodJugadorNavigation).Select(x => new Scorer{
                     Player = new Player() {
                         Name = x.Key.CodIntegranteNavigation.Nombre,
                         Surname = x.Key.CodIntegranteNavigation.Apellidos,
@@ -351,29 +364,33 @@ namespace Football.DataAccessEFCore3.Concrete
 
         public async Task<TournamentDraw> GetDraw(int competitionId)
         {
-            var sixteen = await _context.Partido
+            var sixteenQuery = await _context.Partido
                 .Include(x => x.CodLocalNavigation.TeamPictureGlobalMedia)
                 .Include(x => x.CodVisitanteNavigation.TeamPictureGlobalMedia)
                 .Include(x => x.CodEstadioNavigation)
                 .Where(match => match.CodCompeticion == competitionId && match.Jornada == "1/8 Final")
-                .Select(x => createMatchFromDb(x))
                 .ToListAsync();
 
-            var eight = await _context.Partido
+            var sixteen = sixteenQuery
+                .Select(x => createMatchFromDb(x)).ToList();
+
+            var eightQuery = await _context.Partido
                 .Include(x => x.CodLocalNavigation.TeamPictureGlobalMedia)
                 .Include(x => x.CodVisitanteNavigation.TeamPictureGlobalMedia)
                 .Include(x => x.CodEstadioNavigation)
                 .Where(match => match.CodCompeticion == competitionId && match.Jornada == "1/4 Final")
-                .Select(x => createMatchFromDb(x))
                 .ToListAsync();
 
-            var semifinals = await _context.Partido
+            var eight = eightQuery.Select(x => createMatchFromDb(x)).ToList();
+
+            var semifinalsQuery = await _context.Partido
                 .Include(x => x.CodLocalNavigation.TeamPictureGlobalMedia)
                 .Include(x => x.CodVisitanteNavigation.TeamPictureGlobalMedia)
                 .Include(x => x.CodEstadioNavigation)
                 .Where(match => match.CodCompeticion == competitionId &&  match.Jornada == "Semifinal")
-                .Select(x => createMatchFromDb(x))
                 .ToListAsync();
+
+            var semifinals = semifinalsQuery.Select(x => createMatchFromDb(x)).ToList();
 
             var final = await _context.Partido
                 .Include(x => x.CodLocalNavigation.TeamPictureGlobalMedia)
