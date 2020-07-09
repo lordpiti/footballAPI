@@ -15,6 +15,7 @@ using Football.API.TaskRunner.Services;
 using Football.MigrationTool;
 using Services.Interface;
 using Football.Services.Interface;
+using Microsoft.Extensions.Hosting;
 
 namespace footballRebuildAPI
 {
@@ -48,7 +49,7 @@ namespace footballRebuildAPI
 
             }).Start();
 
-            BuildWebHost(args).Run();
+            BuildWebHost(args).Build().Run();
         }
 
         public static void Start()
@@ -115,14 +116,24 @@ namespace footballRebuildAPI
             Thread.Sleep(10000);
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>()
-            .UseKestrel(options =>
+        public static IHostBuilder BuildWebHost(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
             {
-                options.Limits.MaxRequestBodySize = null;
-            })
-            .Build();
+                webBuilder.ConfigureKestrel(serverOptions =>
+                {
+                    // Set properties and call methods on options
+                    serverOptions.Limits.MaxRequestBodySize = null;
+                })
+                .UseStartup<Startup>();
+            });
+        //WebHost.CreateDefaultBuilder(args)
+        //    .UseStartup<Startup>()
+        //    .UseKestrel(options =>
+        //    {
+        //        options.Limits.MaxRequestBodySize = null;
+        //    })
+        //    .Build();
 
         public static void RunMigrationDataCode(IServiceProvider serviceProvider)
         {

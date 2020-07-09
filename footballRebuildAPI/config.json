@@ -15,13 +15,6 @@
         "Interval": "5.00:00:00"
       },
       "Enabled": true
-    },
-    {
-      "Name": "KeepSitesAliveJob",
-      "Settings": {
-        "Interval": "0.00:01:00"
-      },
-      "Enabled":  true
     }
   ]
 }

@@ -18,7 +18,7 @@ namespace Football.API.Middleware
         public async Task Invoke(HttpContext context)
         {
             //await context.Response.WriteAsync("Hello World! (Use in Class)\n");
-            Console.WriteLine("HAHA");
+            Console.WriteLine("Custom middleware");
             await this.next(context);
         }
     }

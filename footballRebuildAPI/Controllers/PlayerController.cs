@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.SignalR;
 using Services.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace footballRebuildAPI.Controllers
 {
@@ -17,10 +19,12 @@ namespace footballRebuildAPI.Controllers
     public class PlayerController : Controller
     {
         private readonly IPlayerService _playerService;
+        private readonly ILogger _logger;
 
-        public PlayerController(IPlayerService playerService, IHubContext<LoopyHub> context)
+        public PlayerController(IPlayerService playerService, ILogger<PlayerController> logger, IHubContext<LoopyHub> context)
         {
             _playerService = playerService;
+            _logger = logger;
         }
         
         [HttpGet]

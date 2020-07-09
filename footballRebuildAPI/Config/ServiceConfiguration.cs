@@ -38,12 +38,12 @@ namespace Football.API.Config
                 .AddScoped<IReportService, ReportService>()
                 .AddScoped<IUserService, UserService>()
                 .AddSingleton<IDocumentExecuter, DocumentExecuter>()
-                .AddSingleton<FootballQuery>()
-                .AddSingleton<FootballMutation>()
-                .AddSingleton<PlayerType>()
-                .AddSingleton<MatchPlayedType>()
-                .AddSingleton<PlayerInputType>()
-                .AddSingleton<CompetitionType>();
+                .AddScoped<FootballQuery>()
+                .AddScoped<FootballMutation>()
+                .AddScoped<PlayerType>()
+                .AddScoped<MatchPlayedType>()
+                .AddScoped<PlayerInputType>()
+                .AddScoped<CompetitionType>();
             //.AddSingleton<SkaterStatisticType>();
             var sp = services.BuildServiceProvider();
             services.AddSingleton<ISchema>(new FootballSchema(new FuncDependencyResolver(type => sp.GetService(type))));
