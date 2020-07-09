@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Football.Services.Concrete;
 using Moq;
-using Football.DataAccess.Interface;
+using Football.DataAccessEFCore3.Interface;
 using Football.Crosscutting.ViewModels;
 using System.Collections.Generic;
 using Football.Crosscutting.ViewModels.Competition;

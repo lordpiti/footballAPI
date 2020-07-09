@@ -1,5 +1,5 @@
 ﻿using Football.Crosscutting.ViewModels.Reports;
-using Football.DataAccess.Interface;
+using Football.DataAccessEFCore3.Interface;
 using Football.DataAccessNoSQL.Interface;
 using Football.Services.Interface;
 using System;

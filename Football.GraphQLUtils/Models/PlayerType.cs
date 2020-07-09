@@ -1,5 +1,5 @@
 ﻿using Crosscutting.ViewModels;
-using DataAccess.Interface;
+using Football.DataAccessEFCore3.Interface;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;

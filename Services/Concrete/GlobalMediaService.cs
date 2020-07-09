@@ -5,7 +5,7 @@ using System.Text;
 using Football.Crosscutting;
 using System.Threading.Tasks;
 using Football.BlobStorage.Interfaces;
-using Football.DataAccess.Interface;
+using Football.DataAccessEFCore3.Interface;
 using Football.Crosscutting.ViewModels;
 
 namespace Football.Services.Concrete

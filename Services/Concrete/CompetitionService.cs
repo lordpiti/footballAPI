@@ -2,7 +2,7 @@
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Competition;
 using Football.Crosscutting.ViewModels.Match;
-using Football.DataAccess.Interface;
+using Football.DataAccessEFCore3.Interface;
 using Football.Services.Interface;
 using System.Collections.Generic;
 using System.Linq;

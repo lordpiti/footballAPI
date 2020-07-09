@@ -1,14 +1,9 @@
-﻿using DataAccess.Concrete;
-using DataAccess.Interface;
-using DataAccess.Models;
+﻿using Football.DataAccessEFCore3.Models;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using DataAccess;
 using Microsoft.Extensions.Configuration;
-using Football.DataAccess.Interface;
-using Football.DataAccess.Concrete;
+using Football.DataAccessEFCore3.Interface;
+using Football.DataAccessEFCore3.Concrete;
 using Football.DataAccessNoSQL.Concrete;
 using Football.DataAccessNoSQL.Interface;
 

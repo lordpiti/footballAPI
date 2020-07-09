@@ -1,5 +1,5 @@
 ﻿using Crosscutting.ViewModels;
-using DataAccess.Interface;
+using Football.DataAccessEFCore3.Interface;
 using Football.BlobStorage.Interfaces;
 using Football.Crosscutting.ViewModels.Match;
 using Services.Interface;
