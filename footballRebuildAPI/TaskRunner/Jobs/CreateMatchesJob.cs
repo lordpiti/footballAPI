@@ -24,21 +24,17 @@ namespace Football.API.TaskRunner.Jobs
     public class CreateMatchesJob : BaseJob
     {
         private readonly IOptions<AppSettings> _settings;
-        private IPlayerService _playerService;
-        private ITeamService _teamService;
         private IHubContext<LoopyHub> _footballHub;
         private IGeneradorCosas _generadorCosas;
         private IGeneradorPartidos _generadorPartidos;
 
-        public CreateMatchesJob(IOptions<AppSettings> settings, IPlayerService playerService, ITeamService teamService,
+        public CreateMatchesJob(IOptions<AppSettings> settings,
             IGeneradorCosas generadorCosas, IGeneradorPartidos generadorPartidos)
         {
             _settings = settings;
             _footballHub = Startup.Provider.GetService<IHubContext<LoopyHub>>();
             _generadorCosas = generadorCosas;
             _generadorPartidos = generadorPartidos;
-            _playerService = playerService;
-            _teamService = teamService;
         }
 
         public override async Task<bool> Run()
@@ -98,8 +94,15 @@ namespace Football.API.TaskRunner.Jobs
 
             var events = await GenerateEventListForGame(match, cont);
 
-            var teamLocal = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
-            var teamVisitor = await _teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
+            // We can't use DI on this class for the player and team services because, they will both be accessed concurrently
+            // from different threads. If we use the same service injected on this for all threads, we would be using the same
+            // repository, and hence the same DbContext for EF. EF is NOT thread safe so we can't do this as we would get an
+            // error in EF Core 3. Instead, we ask the Service Provider for a new instance of the service for each thread, and
+            // this way it's all good
+            var teamService = ServiceConfiguration.ConsoleProvider.GetService<ITeamService>();
+
+            var teamLocal = await teamService.GetTeamByIdAndYear(match.Partido.Cod_Local, 2009);
+            var teamVisitor = await teamService.GetTeamByIdAndYear(match.Partido.Cod_Visitante, 2009);
 
             await _footballHub.Clients.All.SendAsync("SendCreateMatch",
                 new
@@ -129,7 +132,8 @@ namespace Football.API.TaskRunner.Jobs
             var events = new List<MatchEventRT>();
 
             var playerIds = partido.PartidosJugados.Select(x => x.Cod_Jugador).ToList();
-            var players = await _playerService.GetPlayersFromList(playerIds);
+            var playerService = ServiceConfiguration.ConsoleProvider.GetService<IPlayerService>();
+            var players = await playerService.GetPlayersFromList(playerIds);
 
             var cards = partido.Tarjetas.Select(x => new MatchEventRT()
             {
