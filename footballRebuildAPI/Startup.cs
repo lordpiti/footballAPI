@@ -81,9 +81,9 @@ namespace footballRebuildAPI
 
             // Add framework services.
 
-            services.AddMvc(x => {
-                x.EnableEndpointRouting = false;
-            });
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             #region OData
 
@@ -156,7 +156,7 @@ namespace footballRebuildAPI
             #region Add GraphiQL
 
             // Launch {url}/graphql
-            app.UseGraphiQl();
+            app.UseGraphiQl("/graphiql");
 
             #endregion
 
@@ -164,22 +164,23 @@ namespace footballRebuildAPI
 
             app.UseRouting();
 
-            #region SignalR
+            // https://stackoverflow.com/questions/57846127/what-are-the-differences-between-app-userouting-and-app-useendpoints/59966192#59966192
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+
+                #region SignalR
+
                 endpoints.MapHub<LoopyHub>("/loopy", options => options.Transports = HttpTransportType.WebSockets);
-            });
 
-            #endregion
+                #endregion
 
-            app.UseMvc(routeBuilder =>
-            {
-                #region Added for OData
+                #region OData
 
-                routeBuilder.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
-                routeBuilder.EnableDependencyInjection();
-                
+                endpoints.EnableDependencyInjection();
+                endpoints.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
+
                 #endregion
             });
 

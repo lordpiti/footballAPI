@@ -1,8 +1,4 @@
 ﻿using System;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
 using System.Threading.Tasks;
 using System.IO;
 using Football.Crosscutting;
@@ -11,6 +7,8 @@ using Microsoft.Extensions.Options;
 using Crosscutting.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.Storage;
 
 namespace Football.BlobStorage
 {

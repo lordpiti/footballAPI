@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Football.GraphQL.Models;
 using Newtonsoft.Json.Linq;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Football.API.Controllers
 {
@@ -28,15 +29,11 @@ namespace Football.API.Controllers
         {
             if (query == null) { throw new ArgumentNullException(nameof(query)); }
 
-            var mquery = JObject.Parse(JsonSerializer.Serialize(query.Variables));
-
-
-            var inputs = mquery.ToInputs();
             var executionOptions = new ExecutionOptions
             {
                 Schema = _schema,
                 Query = query.Query,
-                Inputs = inputs
+                Inputs = query.Variables.ToInputs()
             };
 
             var result = await _documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);

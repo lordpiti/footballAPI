@@ -9,6 +9,7 @@ using Football.PDFGenerator;
 using Football.Services.Concrete;
 using Football.Services.Interface;
 using GraphQL;
+using GraphQL.Http;
 using GraphQL.Types;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,10 @@ namespace Football.API.Config
                 .AddScoped<IGlobalMediaService, GlobalMediaService>()
                 .AddScoped<IReportService, ReportService>()
                 .AddScoped<IUserService, UserService>()
-                .AddSingleton<IDocumentExecuter, DocumentExecuter>()
+                .AddScoped<IDependencyResolver>(_ => new
+    FuncDependencyResolver(_.GetRequiredService))
+            .AddScoped<IDocumentExecuter, DocumentExecuter>()
+            .AddScoped<IDocumentWriter, DocumentWriter>()
                 .AddScoped<FootballQuery>()
                 .AddScoped<FootballMutation>()
                 .AddScoped<PlayerType>()
@@ -46,7 +50,8 @@ namespace Football.API.Config
                 .AddScoped<CompetitionType>();
             //.AddSingleton<SkaterStatisticType>();
             var sp = services.BuildServiceProvider();
-            services.AddSingleton<ISchema>(new FootballSchema(new FuncDependencyResolver(type => sp.GetService(type))));
+            services.AddScoped<ISchema, FootballSchema>();
+            //services.AddSingleton<ISchema>(new FootballSchema(new FuncDependencyResolver(type => sp.GetService(type))));
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
         }
