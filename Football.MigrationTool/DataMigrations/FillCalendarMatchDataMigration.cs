@@ -1,11 +1,9 @@
 ﻿using DataAccess.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace Football.MigrationTool
+namespace Football.MigrationTool.DataMigrations
 {
     public class FillCalendarMatchDataMigration
     {

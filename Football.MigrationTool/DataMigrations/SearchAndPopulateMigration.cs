@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Football.MigrationTool
+namespace Football.MigrationTool.DataMigrations
 {
     public class SearchAndPopulateMigration
     {

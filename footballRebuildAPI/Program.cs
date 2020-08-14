@@ -16,6 +16,7 @@ using Football.MigrationTool;
 using Services.Interface;
 using Football.Services.Interface;
 using Microsoft.Extensions.Hosting;
+using Football.MigrationTool.DataMigrations;
 
 namespace footballRebuildAPI
 {
@@ -140,8 +141,9 @@ namespace footballRebuildAPI
             var playerService = serviceProvider.GetService<IPlayerService>();
             var teamService = serviceProvider.GetService<ITeamService>();
             var globalMediaService = serviceProvider.GetService<IGlobalMediaService>();
-            var a = new SearchAndPopulateMigration(playerService, teamService, globalMediaService);
-            Task.Run(() => a.Execute());
+            var a = new PositionsMigration(playerService);
+            var t = Task.Run(() => a.Execute());
+            t.Wait();
         }
     }
 }

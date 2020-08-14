@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Football.MigrationTool.DataMigrations;
+using System;
 using System.Threading.Tasks;
 
 namespace Football.MigrationTool
@@ -7,9 +8,19 @@ namespace Football.MigrationTool
     {
         static void Main(string[] args)
         {
-            var a = new SearchAndPopulateMigration(null, null, null);
+            var a = new PositionsMigration(null);
 
-            Task.Run(() => a.Execute());
+            try
+            {
+                var t = Task.Run( async () => {
+                    await a.Execute(); });
+
+                t.Wait();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

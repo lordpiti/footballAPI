@@ -104,8 +104,6 @@ namespace footballRebuildAPI
 
             #endregion
 
-
-
             services.AddSignalR();          
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));

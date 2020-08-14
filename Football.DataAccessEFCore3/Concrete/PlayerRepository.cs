@@ -27,7 +27,9 @@ namespace Football.DataAccessEFCore3.Concrete
                 Surname = x.CodIntegranteNavigation.Apellidos,
                 TeamName = x.CodEquipoNavigation.Nombre,
                 PlayerId = x.CodJugador,
-                TeamId = (int)x.CodEquipo
+                TeamId = (int)x.CodEquipo,
+                Position = x.Posicion,
+                PositionCode = x.Position
             }).ToListAsync();
         }
 
@@ -150,6 +152,25 @@ namespace Football.DataAccessEFCore3.Concrete
                 else
                 {
                     playerToUpdate.CodIntegranteNavigation.PictureGlobalMedia = imageExists;
+                }
+
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<int> UpdatePlayers(List<Player> players)
+        {
+            try
+            {
+                foreach (var player in players)
+                {
+                    var playerToUpdate = await _context.Jugador.Include(x => x.CodIntegranteNavigation).FirstOrDefaultAsync(x => x.CodJugador == player.PlayerId);
+
+                    playerToUpdate.Position = player.PositionCode;
                 }
 
                 return await _context.SaveChangesAsync();

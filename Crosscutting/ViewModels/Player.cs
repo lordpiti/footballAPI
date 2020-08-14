@@ -1,4 +1,5 @@
 ﻿using Football.Crosscutting;
+using Football.Crosscutting.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,5 +31,7 @@ namespace Crosscutting.ViewModels
         public string Position { get; set; }
 
         public string BirthPlace { get; set; }
+
+        public PositionEnum? PositionCode {get;set;}
     }
 }

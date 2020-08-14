@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Football.Crosscutting.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Football.DataAccessEFCore3.Models
@@ -23,6 +24,8 @@ namespace Football.DataAccessEFCore3.Models
         public string Posicion { get; set; }
         public string Pierna { get; set; }
         public bool Married { get; set; }
+
+        public PositionEnum? Position { get; set; }
 
         public virtual Equipo CodEquipoNavigation { get; set; }
         public virtual Integrante CodIntegranteNavigation { get; set; }

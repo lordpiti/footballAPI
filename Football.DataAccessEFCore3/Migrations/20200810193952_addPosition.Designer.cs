@@ -4,14 +4,16 @@ using Football.DataAccessEFCore3.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Football.DataAccessEFCore3.Migrations
 {
     [DbContext(typeof(FootballContext))]
-    partial class FootballContextModelSnapshot : ModelSnapshot
+    [Migration("20200810193952_addPosition")]
+    partial class addPosition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
