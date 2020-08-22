@@ -73,8 +73,12 @@ namespace footballRebuildAPI
                     .AllowAnyHeader()
                     .AllowCredentials()
                     .AllowAnyOrigin()
-                    .WithOrigins("http://localhost:4200", "http://localhost:3000",
-                        "https://piti-react-test.herokuapp.com", "https://footballtpititest.herokuapp.com");
+                    .WithOrigins(
+                    "http://localhost:4200",
+                    "http://localhost:3000",
+                    "https://piti-react-test.herokuapp.com",
+                    "https://footballtpititest.herokuapp.com",
+                    "https://top-squad.herokuapp.com");
             }));
 
             #endregion
