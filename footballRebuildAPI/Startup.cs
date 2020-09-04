@@ -108,7 +108,9 @@ namespace footballRebuildAPI
 
             #endregion
 
-            services.AddSignalR();          
+            services.AddSignalR();
+
+            services.AddHttpClient();
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 

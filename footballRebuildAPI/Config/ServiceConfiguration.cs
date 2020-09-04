@@ -18,10 +18,7 @@ using Services.Concrete;
 using Services.Interface;
 using Simulador;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Football.API.Config
 {
@@ -38,6 +35,7 @@ namespace Football.API.Config
                 .AddScoped<IGlobalMediaService, GlobalMediaService>()
                 .AddScoped<IReportService, ReportService>()
                 .AddScoped<IUserService, UserService>()
+                .AddScoped<ITopSquadService, TopSquadService>()
                 .AddScoped<IDependencyResolver>(_ => new
     FuncDependencyResolver(_.GetRequiredService))
             .AddScoped<IDocumentExecuter, DocumentExecuter>()

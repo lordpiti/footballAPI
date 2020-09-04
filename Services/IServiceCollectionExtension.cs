@@ -6,6 +6,8 @@ using Football.DataAccessEFCore3.Interface;
 using Football.DataAccessEFCore3.Concrete;
 using Football.DataAccessNoSQL.Concrete;
 using Football.DataAccessNoSQL.Interface;
+using Football.Services.Proxy;
+using Football.Services.Proxy.Configuration;
 
 namespace Services
 {
@@ -19,7 +21,9 @@ namespace Services
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IReportNoSQLRepository, ReportNoSQLRepository>()
                 .AddScoped<IReportRepository, ReportRepository>()
-                .AddScoped<IGlobalMediaRepository, GlobalMediaRepository>();
+                .AddScoped<IGlobalMediaRepository, GlobalMediaRepository>()
+                .AddSingleton<TopSquadApiConfiguration>()
+                .AddScoped<ITopSquadApiClient, TopSquadApiClient>();
 
             if (transient)
             {

@@ -12,5 +12,7 @@ namespace Crosscutting.ViewModels
 
         public string MongoConnection { get; set; }
 
+        public string TopSquadApiUrl { get; set; }
+
     }
 }
