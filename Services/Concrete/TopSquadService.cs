@@ -1,10 +1,12 @@
-﻿using Football.Crosscutting.ViewModels.TopSquad;
+﻿using Crosscutting.ViewModels;
+using Football.BlobStorage.Interfaces;
+using Football.Crosscutting.ViewModels.TopSquad;
+using Football.DataAccessEFCore3.Interface;
 using Football.Services.Interface;
 using Football.Services.Proxy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Football.Services.Concrete
@@ -12,13 +14,17 @@ namespace Football.Services.Concrete
     public class TopSquadService : ITopSquadService
     {
         private ITopSquadApiClient _topSquadApiClient;
+        private IPlayerRepository _playerRepository;
+        private IBlobStorageService _blobStorageService;
 
-        public TopSquadService(ITopSquadApiClient topSquadApiClient)
+        public TopSquadService(ITopSquadApiClient topSquadApiClient, IPlayerRepository playerRepository, IBlobStorageService blobStorageService)
         {
             _topSquadApiClient = topSquadApiClient;
+            _playerRepository = playerRepository;
+            _blobStorageService = blobStorageService;
         }
 
-        public async Task<IEnumerable<TopSquad>> Test()
+        public async Task<IEnumerable<Player>> GetTopSquad()
         {
             var allTopSquads = await _topSquadApiClient.GetAllTopSquads();
 
@@ -35,9 +41,16 @@ namespace Football.Services.Concrete
             var midfielders = sortedPlayers.Where(x => x.PositionCode == 3).Take(4);
             var forwards = sortedPlayers.Where(x => x.PositionCode == 4).Take(2);
 
-            var toReturn = goalkeeper.Concat(defenders).Concat(midfielders).Concat(forwards);
+            var toReturn = goalkeeper.Concat(defenders).Concat(midfielders).Concat(forwards).Select(x=>Int32.Parse(x.Id));
 
-            return allTopSquads;
+            var topSquad = await _playerRepository.GetPlayersFromList(toReturn);
+
+            foreach (var player in topSquad)
+            {
+                _blobStorageService.PopulateUrlForBlob(player.Picture);
+            }
+
+            return topSquad.OrderBy(x=>x.PositionCode);
         }
     }
 }

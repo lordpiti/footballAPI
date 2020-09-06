@@ -1,4 +1,5 @@
-﻿using Football.Crosscutting.ViewModels.TopSquad;
+﻿using Crosscutting.ViewModels;
+using Football.Crosscutting.ViewModels.TopSquad;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Football.Services.Interface
 {
     public interface ITopSquadService
     {
-        Task<IEnumerable<TopSquad>> Test();
+        Task<IEnumerable<Player>> GetTopSquad();
     }
 }

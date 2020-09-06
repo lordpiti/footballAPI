@@ -19,7 +19,7 @@ namespace Football.DataAccessEFCore3.Interface
 
         Task<int> UpdatePlayer(Player player);
 
-        Task<List<Player>> GetPlayersFromList(List<int> playerIdList);
+        Task<List<Player>> GetPlayersFromList(IEnumerable<int> playerIdList);
 
         Task<int> UpdatePlayers(List<Player> players);
     }

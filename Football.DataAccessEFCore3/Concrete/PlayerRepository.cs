@@ -104,7 +104,7 @@ namespace Football.DataAccessEFCore3.Concrete
             };
         }
 
-        public async Task<List<Player>> GetPlayersFromList(List<int> playerIdList)
+        public async Task<List<Player>> GetPlayersFromList(IEnumerable<int> playerIdList)
         {
             var playersFromDb = await _context.Jugador.Include(x => x.CodIntegranteNavigation).Where(x => playerIdList.Any(y => x.CodJugador == y )).ToListAsync();
 
@@ -121,7 +121,8 @@ namespace Football.DataAccessEFCore3.Concrete
                 Height = playerFromDb.Altura,
                 PlayerId = playerFromDb.CodJugador,
                 TeamId = (int)playerFromDb.CodEquipo,
-                BirthPlace = playerFromDb.CodIntegranteNavigation.BirthPlace
+                BirthPlace = playerFromDb.CodIntegranteNavigation.BirthPlace,
+                PositionCode = playerFromDb.Position
             }).ToList();
         }
 

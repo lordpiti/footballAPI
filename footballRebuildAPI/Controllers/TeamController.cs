@@ -8,6 +8,7 @@ using Football.Services.Interface;
 using Football.Crosscutting.ViewModels;
 using Futbol.Model.FachadaPartidos;
 using Football.Crosscutting.ViewModels.TopSquad;
+using Crosscutting.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -65,11 +66,11 @@ namespace Football.API.Controllers
             return await _teamService.GetTeamSeasonClasificationChartData(teamId, competitionId);
         }
 
-        [Route("TopSquads")]
+        [Route("TopSquad")]
         [HttpGet]
-        public async Task<IEnumerable<TopSquad>> GetTopSquads()
+        public async Task<IEnumerable<Player>> GetTopSquad()
         {
-            var topSquad = await _topSquadService.Test();
+            var topSquad = await _topSquadService.GetTopSquad();
             return topSquad;
         }
     }
