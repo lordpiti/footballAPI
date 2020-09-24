@@ -7,7 +7,7 @@ Its used as a sandbox to try out some features of .NET Core.
 The structure of the API implementation follows a classic 3-layer architecture (Presentation->Service->Data), while the service runs
 on a separate thread in parallel with it.
 
-All class library projects have been migrated to .NET Standard 2.0. The API itself targets .NET Core 2.2 but can target other implementation of .NET.
+All class library projects have been migrated to .NET Standard 2.0. The API itself targets .NET Core 3.1 but can target other implementation of .NET.
 
 ## API Specification
 https://footballsandbox.azurewebsites.net/swagger/index.html
