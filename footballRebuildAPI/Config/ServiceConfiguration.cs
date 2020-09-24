@@ -58,9 +58,11 @@ namespace Football.API.Config
         /// Configure services that are used only by the console and then calls to add shared services
         /// </summary>
         /// <param name="services"></param>
-        public static void ConfigureAPIServices(IServiceCollection services)
+        /// <param name="configuration"></param>
+        public static void ConfigureAPIServices(IServiceCollection services, IConfigurationRoot configuration)
         {
-            
+            Configuration = configuration;
+
             ConfigureServices(services, false);
             services.AddScoped<IPlayerService, PlayerService>();
             services.AddScoped<ITeamService, TeamService>();
@@ -106,49 +108,6 @@ namespace Football.API.Config
                 .AddTransient<KeepSitesAliveJob>();
 
             services.AddSignalR();
-
-            //// Badgers
-            //services.AddScoped<TestBadger>();
-            //services.AddScoped<AmazonCleanupBadger>();
-            //services.AddScoped<DailyBadger>();
-            //services.AddScoped<EventBadger>();
-            //services.AddScoped<KeepAliveBadger>();
-
-            //// Domain services
-            //services.AddScoped<IImportedEventsService, ImportedEventsService>();
-            //services.AddScoped<IEmailService, SendGridService>();
-            //services.AddScoped<IAmazonService, AmazonService>();
-            //services.AddScoped<IDailyService, DailyService>();
-            //services.AddScoped<ITwitterService, TwitterService>();
-            //services.AddScoped<IAmazonApi, AmazonApi>();
-            //services.AddScoped<IQueueService, QueueService>();
-            //services.AddScoped<IDonationService, DonationService>();
-            //services.AddScoped<IProjectService, ProjectService>();
-            //services.AddScoped<ITimelineService, TimelineService>();
-
-            ////Singleton domain services
-            //services.AddSingleton<ILoggerService, LoggerService>();
-            //services.AddSingleton<ILog, LoggerService>();
-            //services.AddSingleton<IEventHandlerService, EventHandlerService>();
-            //services.AddSingleton<BadgerConfigService>();
-
-            //// Setup options with DI
-            //services.AddOptions();
-
-            //// Configure MySubOptions using a sub-section of the appsettings.json file
-
-            //var appSettings = Configuration.GetSection("AppSettings");
-            //services.Configure<AppSettings>(appSettings);
-
-            //var badgerSettings = Configuration.GetSection("BadgerSettings");
-            //services.Configure<TaskBadgerConfig>(badgerSettings);
-
-
-            //foreach (var setting in appSettings.GetChildren())
-            //{
-            //    ConfigurationManager.AppSettings[setting.Key] = setting.Value;
-            //}
-
 
             return services.BuildServiceProvider();
         }

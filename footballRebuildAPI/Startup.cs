@@ -60,7 +60,7 @@ namespace footballRebuildAPI
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddResponseCompression();
 
@@ -114,7 +114,7 @@ namespace footballRebuildAPI
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
-            ServiceConfiguration.ConfigureAPIServices(services);
+            ServiceConfiguration.ConfigureAPIServices(services, Configuration);
 
             //Since the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
             //If the action filters were used directly, this would not be required.
@@ -141,7 +141,7 @@ namespace footballRebuildAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseStaticFiles();
 
