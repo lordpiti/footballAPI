@@ -7,8 +7,8 @@ using Microsoft.Extensions.Options;
 using Crosscutting.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Football.BlobStorage
 {
