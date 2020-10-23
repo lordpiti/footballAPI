@@ -22,27 +22,3 @@ namespace Football.API.IntegrationTests.Tests
         }
     }
 }
-
-public abstract class Jaja
-{
-    public void Method()
-    {
-        Console.WriteLine("");
-    }
-
-    public abstract void Method2();
-}
-
-public class Subjaja : Jaja
-{
-    public new void Method()
-    {
-        base.Method();
-        Console.WriteLine("");
-    }
-
-    public override void Method2()
-    {
-
-    }
-}
