@@ -12,8 +12,7 @@
         {
             var connectionString = settings.Value.MongoConnection;
 
-            int pos = connectionString.LastIndexOf("/") + 1;
-            var databaseName = connectionString.Substring(pos, connectionString.Length - pos);
+            var databaseName = "haha";
 
             var _client = new MongoClient(connectionString);
             var db = _client.GetDatabase(databaseName);
