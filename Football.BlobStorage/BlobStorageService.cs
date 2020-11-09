@@ -7,42 +7,51 @@ using Microsoft.Extensions.Options;
 using Crosscutting.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace Football.BlobStorage
 {
     public class BlobStorageService : IBlobStorageService
     {
-        private readonly CloudBlobClient _cloudStorageClient;
+        private readonly BlobContainerClient _blobContainerClient;
 
         public BlobStorageService(IOptions<AppSettings> options)
         {
-            var cloudStorageAccount = CloudStorageAccount.Parse(options.Value.BlobStorageConnectionString);
-
-            _cloudStorageClient = cloudStorageAccount.CreateCloudBlobClient();
+            _blobContainerClient = new BlobContainerClient(options.Value.BlobStorageConnectionString, "mycontainer");
         }
 
         public async Task<BlobData> PostBlob(byte[] data, string fileName, string containerReference)
         {
-            var container = _cloudStorageClient.GetContainerReference(containerReference);
-
-            // Create the container if it doesn't already exist.
-            await container.CreateIfNotExistsAsync();
-
-            await container.SetPermissionsAsync(
-                new BlobContainerPermissions
-                {
-                    PublicAccess = BlobContainerPublicAccessType.Blob
-                });
+            await _blobContainerClient.CreateIfNotExistsAsync();
 
             var blobReference = Guid.NewGuid().ToString() + "-" + fileName;
-            // Retrieve reference to a blob with an specified name
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobReference);
-            //TODO: if exists, then create another one
-            //blockBlob.Exists();
+
+            #region Container Access Policy
+
+            //List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
+            //{
+            //    new BlobSignedIdentifier
+            //    {
+            //        Id = "mysignedidentifier",
+            //        AccessPolicy = new BlobAccessPolicy
+            //        {
+            //            StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
+            //            ExpiresOn = DateTimeOffset.UtcNow.AddDays(1),
+            //            Permissions = "rw"
+            //        }
+            //    }
+            //};
+
+            // Set the container's access policy.
+            //await _blobContainerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
+
+            #endregion
+
+            BlobClient blob = _blobContainerClient.GetBlobClient(blobReference);
             Stream fileStream = new MemoryStream(data);
-            await blockBlob.UploadFromStreamAsync(fileStream);
+            await blob.UploadAsync(fileStream);
+
 
             //System.IO.File.WriteAllBytes("c:\\test\\jaja.png", data);
 
@@ -50,25 +59,23 @@ namespace Football.BlobStorage
             {
                 ContainerReference = containerReference,
                 FileName = blobReference,
-                Url = blockBlob.Uri.ToString()
+                Url = blob.Uri.ToString()
             };
         }
 
         public async Task<BlobData> GetBlobById(string blobReference, string blobContainerReference)
         {
-            CloudBlobContainer container = _cloudStorageClient.GetContainerReference(blobContainerReference);
-
             // Retrieve reference to a blob
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobReference);
+            BlobClient blobBlock = _blobContainerClient.GetBlobClient(blobReference);
 
             using (var memoryStream = new MemoryStream())
             {
-                await blockBlob.DownloadToStreamAsync(memoryStream);
+                await blobBlock.DownloadToAsync(memoryStream);
 
                 var blob = new BlobData() {
                     Bytes = memoryStream.ToArray(),
                     FileName = blobReference,
-                    Url = blockBlob.Uri.ToString()
+                    Url = blobBlock.Uri.ToString()
                 };
 
                 return blob;
@@ -82,10 +89,9 @@ namespace Football.BlobStorage
                 //https://stackoverflow.com/questions/23485514/getting-list-of-names-of-azure-blob-files-in-a-container
                 //https://stackoverflow.com/questions/36497399/how-to-delete-files-from-blob-container
 
-                var container = _cloudStorageClient.GetContainerReference(blobContainerReference);
-
                 #region .net4.6 / .net core
 
+                //var container = _cloudStorageClient.GetContainerReference(blobContainerReference);
                 //var blobList = container.ListBlobs();
 
                 //List<string> blobNames = blobList.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
@@ -102,15 +108,27 @@ namespace Football.BlobStorage
 
                 #region .net standard
 
-                var blobList = await container.ListBlobsSegmentedAsync(null);
+                //TODO: implement
+                //var container = _cloudStorageClient.GetContainerReference(blobContainerReference);
+                //var blobList = await container.ListBlobsSegmentedAsync(null);
 
-                List<string> blobNames = blobList.Results.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
+                //List<string> blobNames = blobList.Results.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
 
-                foreach (var item in blobList.Results.OfType<CloudBlockBlob>().ToList())
+                //foreach (var item in blobList.Results.OfType<CloudBlockBlob>().ToList())
+                //{
+                //    if (!guidList.Contains(item.Name))
+                //    {
+                //        await item.DeleteIfExistsAsync();
+                //    }
+                //}
+
+               var blobList = _blobContainerClient.GetBlobsAsync();
+
+               await foreach (var item in blobList)
                 {
                     if (!guidList.Contains(item.Name))
                     {
-                        await item.DeleteIfExistsAsync();
+                        _blobContainerClient.DeleteBlobIfExists(item.Name, DeleteSnapshotsOption.IncludeSnapshots);
                     }
                 }
 
@@ -129,7 +147,7 @@ namespace Football.BlobStorage
         {
             if (!string.IsNullOrEmpty(blobReference) && !string.IsNullOrEmpty(blobContainerReference))
             {
-                return _cloudStorageClient.BaseUri + blobContainerReference + "/" + blobReference;
+                return _blobContainerClient.Uri + "/" + blobReference;
             }
             else
             {
