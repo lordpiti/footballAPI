@@ -32,7 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Football.GraphQLUtils\Football.GraphQLUtils.csproj" />
     <ProjectReference Include="..\Football.MigrationTool\Football.MigrationTool.csproj" />
-    <ProjectReference Include="..\Football.PDFGenerator\Football.PDFGenerator.csproj" />
     <ProjectReference Include="..\Futbol\Futbol.csproj" />
     <ProjectReference Include="..\Services\Football.Services.csproj" />
     <ProjectReference Include="..\Simulador\Simulador.csproj" />

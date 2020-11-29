@@ -1,11 +1,5 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
-using iTextSharp.tool.xml.html;
-using iTextSharp.tool.xml.parser;
-using iTextSharp.tool.xml.pipeline.css;
-using iTextSharp.tool.xml.pipeline.end;
-using iTextSharp.tool.xml.pipeline.html;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
 using RazorLight;
 using System;
 using System.Collections.Generic;
@@ -76,7 +70,7 @@ namespace Football.PDFGenerator
             }
         }
 
-        private XMLParser createXMLParser(List<string> cssResourceNames, Document document, PdfWriter writer)
+        private iText.StyledXmlParser.IXmlParser createXMLParser(List<string> cssResourceNames, Document document, PdfWriter writer)
         {
             var cssStreamList = new DisposableCollection<Stream>();
             var streamReaderList = new DisposableCollection<StreamReader>();

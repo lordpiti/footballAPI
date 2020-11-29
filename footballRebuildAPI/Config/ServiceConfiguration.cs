@@ -5,7 +5,6 @@ using Football.BlobStorage;
 using Football.BlobStorage.Interfaces;
 using Football.GraphQL.Models;
 using Football.GraphQLUtils.Models;
-using Football.PDFGenerator;
 using Football.Services.Concrete;
 using Football.Services.Interface;
 using GraphQL;
@@ -66,7 +65,6 @@ namespace Football.API.Config
             ConfigureServices(services, false);
             services.AddScoped<IPlayerService, PlayerService>();
             services.AddScoped<ITeamService, TeamService>();
-            services.AddScoped<IPDFGeneratorService, PDFGeneratorService>();
         }
 
 

@@ -27,15 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Util", "Util\Util.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.GraphQLUtils", "Football.GraphQLUtils\Football.GraphQLUtils.csproj", "{A6EF2C06-9737-4C7D-A720-15291D604CB2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.PDFGenerator", "Football.PDFGenerator\Football.PDFGenerator.csproj", "{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.Services.Test", "Football.Services.Test\Football.Services.Test.csproj", "{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.DataAccessEFCore3", "Football.DataAccessEFCore3\Football.DataAccessEFCore3.csproj", "{5E3F743F-6226-4036-BC8B-BCADC327E5DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.API.IntegrationTests", "Football.API.IntegrationTests\Football.API.IntegrationTests.csproj", "{26DE57BB-EB35-4945-B6A4-300ECDBFAAF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionApp1", "FunctionApp1\FunctionApp1.csproj", "{BCF8FF29-B7CA-495C-904D-FBCBDDEA8A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionApp1", "FunctionApp1\FunctionApp1.csproj", "{BCF8FF29-B7CA-495C-904D-FBCBDDEA8A89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,10 +85,6 @@ Global
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6EF2C06-9737-4C7D-A720-15291D604CB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D987154-DC3E-47EA-9BA7-5F4FAA4FC2D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89649552-A7FA-4DE1-86A1-A4CCB8BCB21C}.Release|Any CPU.ActiveCfg = Release|Any CPU

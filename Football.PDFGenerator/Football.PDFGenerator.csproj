@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
-    <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.2" />
+    <PackageReference Include="itext7" Version="7.1.13" />
+    <PackageReference Include="itext7.pdfhtml" Version="3.0.2" />
     <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
   </ItemGroup>
 

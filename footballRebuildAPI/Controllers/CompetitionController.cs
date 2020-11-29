@@ -9,8 +9,6 @@ using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Match;
 using Football.Crosscutting.ViewModels.Reports;
 using Football.API.Cache;
-using Football.PDFGenerator;
-using System.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,14 +24,11 @@ namespace Football.API.Controllers
     {
         private readonly ICompetitionService _competitionService;
         private readonly IReportService _reportService;
-        private readonly IPDFGeneratorService _pdfGeneratorService;
 
-        public CompetitionController(ICompetitionService competitionService, IReportService reportService,
-            IPDFGeneratorService pdfGeneratorService)
+        public CompetitionController(ICompetitionService competitionService, IReportService reportService)
         {
             _competitionService = competitionService;
             _reportService = reportService;
-            _pdfGeneratorService = pdfGeneratorService;
         }
 
         /// <summary>
@@ -131,22 +126,22 @@ namespace Football.API.Controllers
             return await _reportService.GenerateReport(matchId);
         }
 
-        [HttpGet]
-        [Route("{matchId}/reportSnapshot")]
-        public async Task<FileStreamResult> GetReportSnapshot(int matchId)
-        {
-            var reporSnapshotData = _reportService.GetReportSnapshot(matchId);
+        //[HttpGet]
+        //[Route("{matchId}/reportSnapshot")]
+        //public async Task<FileStreamResult> GetReportSnapshot(int matchId)
+        //{
+        //    var reporSnapshotData = _reportService.GetReportSnapshot(matchId);
 
-            if (reporSnapshotData == null)
-            {
-                reporSnapshotData = await _reportService.GenerateReport(matchId);
-            }
+        //    if (reporSnapshotData == null)
+        //    {
+        //        reporSnapshotData = await _reportService.GenerateReport(matchId);
+        //    }
 
-            var ms = await this._pdfGeneratorService.GenerateMatchReportPDF(reporSnapshotData);
+        //    var ms = await this._pdfGeneratorService.GenerateMatchReportPDF(reporSnapshotData);
 
-            ms = new MemoryStream(ms.ToArray());
+        //    ms = new MemoryStream(ms.ToArray());
 
-            return File(ms, System.Net.Mime.MediaTypeNames.Application.Octet, "MatchReport.pdf");
-        }
+        //    return File(ms, System.Net.Mime.MediaTypeNames.Application.Octet, "MatchReport.pdf");
+        //}
     }
 }
