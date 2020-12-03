@@ -1,17 +1,15 @@
-﻿using GraphQL;
-using GraphQL.Types;
+﻿using GraphQL.Types;
+using GraphQL.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Football.GraphQL.Models
 {
     public class FootballSchema : Schema
     {
-        public FootballSchema(IDependencyResolver resolver): base(resolver)
+        public FootballSchema(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            Query = resolver.Resolve<FootballQuery>();
-            Mutation = resolver.Resolve<FootballMutation>();
+            Query = serviceProvider.GetRequiredService<FootballQuery>();
+            Mutation = serviceProvider.GetRequiredService<FootballMutation>();
         }
     }
 }

@@ -8,7 +8,7 @@ using Football.GraphQLUtils.Models;
 using Football.Services.Concrete;
 using Football.Services.Interface;
 using GraphQL;
-using GraphQL.Http;
+using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,20 +35,17 @@ namespace Football.API.Config
                 .AddScoped<IReportService, ReportService>()
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<ITopSquadService, TopSquadService>()
-                .AddScoped<IDependencyResolver>(_ => new
-    FuncDependencyResolver(_.GetRequiredService))
-            .AddScoped<IDocumentExecuter, DocumentExecuter>()
-            .AddScoped<IDocumentWriter, DocumentWriter>()
+
+                // GraphQL DI
+                .AddSingleton<IDocumentExecuter, DocumentExecuter>()
+                .AddSingleton<IDocumentWriter, DocumentWriter>()
                 .AddScoped<FootballQuery>()
                 .AddScoped<FootballMutation>()
                 .AddScoped<PlayerType>()
                 .AddScoped<MatchPlayedType>()
                 .AddScoped<PlayerInputType>()
-                .AddScoped<CompetitionType>();
-            //.AddSingleton<SkaterStatisticType>();
-            var sp = services.BuildServiceProvider();
-            services.AddScoped<ISchema, FootballSchema>();
-            //services.AddSingleton<ISchema>(new FootballSchema(new FuncDependencyResolver(type => sp.GetService(type))));
+                .AddScoped<CompetitionType>()
+                .AddScoped<ISchema, FootballSchema>();
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
         }
