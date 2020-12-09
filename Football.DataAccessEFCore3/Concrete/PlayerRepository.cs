@@ -66,6 +66,45 @@ namespace Football.DataAccessEFCore3.Concrete
             return toReturn;
         }
 
+        public async Task<List<Competition>> GetCompetitionsByPlayer(int id)
+        {
+            var result = await _context.PartidoJugado.Where(x => x.CodJugador == id)
+                .Include(x => x.CodPartidoNavigation)
+                .ThenInclude(x => x.CodCompeticionNavigation)
+                .Select(x => new Competition()
+                {
+                    Id = x.CodPartidoNavigation.CodCompeticionNavigation.CodCompeticion,
+                    Name = x.CodPartidoNavigation.CodCompeticionNavigation.Nombre,
+                    Season = x.CodPartidoNavigation.CodCompeticionNavigation.Temporada,
+                    Type = x.CodPartidoNavigation.CodCompeticionNavigation.Tipo
+                }).Distinct()
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<List<MatchPlayedInfo>> GetMatchesByCompetitionAndPlayer(int competitionId, int playerId)
+        {
+            var result = await _context.PartidoJugado.Where(x => x.CodJugador == playerId)
+                .Include(x => x.CodPartidoNavigation).ThenInclude(x => x.CodCompeticionNavigation)
+                .Include(x => x.CodPartidoNavigation).ThenInclude(x => x.CodLocalNavigation)
+                .Include(x => x.CodPartidoNavigation).ThenInclude(x => x.CodVisitanteNavigation)
+                .Where(x => x.CodPartidoNavigation.CodCompeticionNavigation.CodCompeticion == competitionId)
+                .Select(x => new MatchPlayedInfo()
+                {
+                    Id = x.CodPartido,
+                    Date = x.CodPartidoNavigation.Fecha,
+                    LocalGoals = x.CodPartidoNavigation.GolesLocal,
+                    VisitorGoals = x.CodPartidoNavigation.GolesVisitante,
+                    RecoveredBalls = x.BalonesRecuperados,
+                    LocalTeamName = x.CodPartidoNavigation.CodLocalNavigation.Nombre,
+                    VisitorTeamName = x.CodPartidoNavigation.CodVisitanteNavigation.Nombre,
+                    Round = x.CodPartidoNavigation.Jornada,
+                }).ToListAsync();
+
+            return result;
+        }
+
         public async Task<MatchPlayerStatistics> GetMatchPlayerStatistics(int playerId, int matchId)
         {
             var dbData = await _context.PartidoJugado.FirstOrDefaultAsync(x => x.CodJugador == playerId && x.CodPartido == matchId);

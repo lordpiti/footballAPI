@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Football.Crosscutting.ViewModels.Competition;
 
 namespace Services.Concrete
 {
@@ -35,6 +36,16 @@ namespace Services.Concrete
         public async Task<MatchPlayerStatistics> GetMatchPlayerStatistics(int playerId, int matchId)
         {
             return await _playerRepository.GetMatchPlayerStatistics(playerId, matchId);
+        }
+
+        public async Task<List<Competition>> GetCompetitionsByPlayer(int id)
+        {
+            return await _playerRepository.GetCompetitionsByPlayer(id);
+        }
+
+        public async Task<List<MatchPlayedInfo>> GetMatchesByCompetitionAndPlayer(int competitionId, int playerId)
+        {
+            return await _playerRepository.GetMatchesByCompetitionAndPlayer(competitionId, playerId);
         }
 
         public async Task<Player> GetPlayer(int playerId)

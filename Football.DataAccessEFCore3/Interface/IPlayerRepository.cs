@@ -1,4 +1,5 @@
 ﻿using Crosscutting.ViewModels;
+using Football.Crosscutting.ViewModels.Competition;
 using Football.Crosscutting.ViewModels.Match;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace Football.DataAccessEFCore3.Interface
         List<MatchPlayedInfo> GetMatchesPlayed(int id);
 
         Task<MatchPlayerStatistics> GetMatchPlayerStatistics(int playerId, int matchId);
+
+        Task<List<Competition>> GetCompetitionsByPlayer(int id);
+
+        Task<List<MatchPlayedInfo>> GetMatchesByCompetitionAndPlayer(int competitionId, int playerId);
 
         Task<Player> GetPlayer(int playerId);
 
