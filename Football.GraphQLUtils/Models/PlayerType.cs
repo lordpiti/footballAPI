@@ -29,7 +29,7 @@ namespace Football.GraphQL.Models
                 resolve: context =>
                 {
                     var competitionId = context.GetArgument<int>("competitionId");
-                    return playerRepository.GetMatchesByCompetitionAndPlayer(context.Source.PlayerId, competitionId);
+                    return playerRepository.GetMatchesByCompetitionAndPlayer(competitionId, context.Source.PlayerId);
                 }, description: "Player's matches played by competition");
         }
     }
