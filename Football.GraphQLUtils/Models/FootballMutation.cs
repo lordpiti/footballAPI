@@ -1,5 +1,7 @@
 ﻿using Crosscutting.ViewModels;
+using Football.Crosscutting.ViewModels.Competition;
 using Football.DataAccessEFCore3.Interface;
+using Football.GraphQLUtils.Models;
 using GraphQL;
 using GraphQL.Types;
 using System;
@@ -10,19 +12,30 @@ namespace Football.GraphQL.Models
 {
     public class FootballMutation : ObjectGraphType
     {
-        public FootballMutation(IPlayerRepository playerRepository)
+        public FootballMutation(IPlayerRepository playerRepository, ICompetitionRepository competitionRepository)
         {
             Name = "CreatePlayerMutation";
 
-            Field<PlayerType>(
-                "createPlayer",
+            //Field<IntGraphType>(
+            //    "updatePlayer",
+            //    arguments: new QueryArguments(
+            //        new QueryArgument<NonNullGraphType<PlayerInputType>> { Name = "player" }
+            //    ),
+            //    resolve: context =>
+            //    {
+            //        var player = context.GetArgument<Player>("player");
+            //        return playerRepository.UpdatePlayer(player);
+            //    });
+
+            Field<IntGraphType>(
+                "updateCompetition",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<PlayerInputType>> { Name = "player" }
-                ),
+                    new QueryArgument<NonNullGraphType<CompetitionInputType>> { Name = "competition" }
+                    ),
                 resolve: context =>
                 {
-                    var player = context.GetArgument<Player>("player");
-                    return playerRepository.UpdatePlayer(player);
+                    var competition = context.GetArgument<Competition>("competition");
+                    return competitionRepository.SaveCompetitionDetails(competition);
                 });
         }
     }

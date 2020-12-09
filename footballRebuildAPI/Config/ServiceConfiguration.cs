@@ -45,6 +45,7 @@ namespace Football.API.Config
                 .AddScoped<MatchPlayedType>()
                 .AddScoped<PlayerInputType>()
                 .AddScoped<CompetitionType>()
+                .AddScoped<CompetitionInputType>()
                 .AddScoped<ISchema, FootballSchema>();
 
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));

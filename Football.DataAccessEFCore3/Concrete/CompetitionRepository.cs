@@ -1,11 +1,9 @@
-﻿using Football.DataAccessEFCore3.Concrete;
-using Football.DataAccessEFCore3.Models;
+﻿using Football.DataAccessEFCore3.Models;
 using Football.Crosscutting.ViewModels.Competition;
 using Football.DataAccessEFCore3.Interface;
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Crosscutting.ViewModels;
@@ -181,6 +179,8 @@ namespace Football.DataAccessEFCore3.Concrete
 
         public async Task<MatchOverview> GetMatchOverview(int matchId)
         {
+            #region Get Match Data
+
             var match = await _context.Partido
                 .Include(x=>x.CodEstadioNavigation)
                 .Include(x => x.CodLocalNavigation.TeamPictureGlobalMedia)
@@ -189,11 +189,21 @@ namespace Football.DataAccessEFCore3.Concrete
                 .Include(x => x.CodVisitanteNavigation.CodEstadioNavigation)
                 .FirstOrDefaultAsync(x=>x.CodPartido == matchId);
 
+            #endregion
+
+            #region Get Player data and game statistics
+
+            // This code is to run a query to get all required data at once
+            // Before, it was split into different smaller queries, which can be seen
+            // commented below
+
             var players = await _context.PartidoJugado
+                .Where(x => x.CodPartido == matchId)
                 .Include(x => x.CodPartidoNavigation)
                 .Include(x=>x.CodJugadorNavigation).ThenInclude(x=>x.CodIntegranteNavigation).ThenInclude(x=>x.HcoIntegrante)
-                .Where(x => x.CodPartido == matchId)
-                    .Select(x=>new Player()
+                .Include(x =>x.CodJugadorNavigation).ThenInclude(x=>x.Tarjeta)
+                .Include(x => x.CodJugadorNavigation).ThenInclude(x => x.Gol)        
+                    .Select(x=>new MatchPlayerDataTotal()
                     {
                         PlayerId = x.CodJugador,
                         Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
@@ -202,7 +212,30 @@ namespace Football.DataAccessEFCore3.Concrete
                             .FirstOrDefault().CodEquipo,
                         Dorsal = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
                             .FirstOrDefault().Dorsal,
-                        Start = x.Titular == "Titular"
+                        Start = x.Titular == "Titular",
+                        Bookings = x.CodJugadorNavigation.Tarjeta.Where(x => x.CodPartido == matchId).Select(t => new Booking()
+                        {
+                            Minute = t.Minuto,
+                            Type = t.Tipo,
+                            Player = new Player()
+                            {
+                                PlayerId = x.CodJugador,
+                                Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
+                                Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
+                            }
+                        }),
+                        Goals = x.CodJugadorNavigation.Gol.Where(x => x.CodPartido == matchId).Select(g => new Goal()
+                        {
+                            Minute = g.Minuto,
+                            Type = g.Tipo,
+                            VideoUrl = g.Video,
+                            Player = new Player()
+                            {
+                                PlayerId = x.CodJugador,
+                                Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
+                                Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
+                            }
+                        })
                         //These are the right queries, but the database is not properly populated yet ... so i stick to the version above for the moment
                         //TeamId = x.CodJugadorNavigation.CodIntegranteNavigation.HcoIntegrante
                         //    .FirstOrDefault(y => y.FechaInicio < x.CodPartidoNavigation.Fecha && (y.FechaFin > x.CodPartidoNavigation.Fecha || y.FechaFin == null)).CodEquipo,
@@ -211,34 +244,41 @@ namespace Football.DataAccessEFCore3.Concrete
                     })
                     .ToListAsync();
 
-            var bookings = await _context.Tarjeta.Include(x => x.CodJugadorNavigation).ThenInclude(x=>x.CodIntegranteNavigation)
-                .Where(x => x.CodPartido == matchId)
-                .Select(x => new Booking()
-                {
-                    Minute = x.Minuto,
-                    Type = x.Tipo,
-                    Player = new Player()
-                     {
-                        PlayerId = x.CodJugador,
-                        Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
-                        Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
-                     }
-                }).ToListAsync();
+            #endregion
 
-            var goals = await _context.Gol.Include(x => x.CodJugadorNavigation).ThenInclude(x => x.CodIntegranteNavigation)
-                .Where(x => x.CodPartido == matchId)
-                .Select(x => new Goal()
-                {
-                    Minute = x.Minuto,
-                    Type = x.Tipo,
-                    VideoUrl =x.Video,
-                    Player = new Player()
-                    {
-                        PlayerId = x.CodJugador,
-                        Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
-                        Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
-                    }
-                }).ToListAsync();
+            #region Old queries to get boookings and goals separately
+
+            //var bookings = await _context.Tarjeta.Include(x => x.CodJugadorNavigation).ThenInclude(x=>x.CodIntegranteNavigation)
+            //    .Where(x => x.CodPartido == matchId)
+            //    .Select(x => new Booking()
+            //    {
+            //        Minute = x.Minuto,
+            //        Type = x.Tipo,
+            //        Player = new Player()
+            //         {
+            //            PlayerId = x.CodJugador,
+            //            Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
+            //            Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
+            //         }
+            //    }).ToListAsync();
+
+            //var goals = await _context.Gol.Include(x => x.CodJugadorNavigation).ThenInclude(x => x.CodIntegranteNavigation)
+            //    .Where(x => x.CodPartido == matchId)
+            //    .Select(x => new Goal()
+            //    {
+            //        Minute = x.Minuto,
+            //        Type = x.Tipo,
+            //        VideoUrl =x.Video,
+            //        Player = new Player()
+            //        {
+            //            PlayerId = x.CodJugador,
+            //            Name = x.CodJugadorNavigation.CodIntegranteNavigation.Nombre,
+            //            Surname = x.CodJugadorNavigation.CodIntegranteNavigation.Apellidos
+            //        }
+            //    }).ToListAsync();
+            #endregion
+
+            #region Get Substitute data
 
             var substitutions = await _context.Cambio.Include(x => x.CodJugadorSaleNavigation).ThenInclude(x => x.CodIntegranteNavigation)
                 .Include(x => x.CodJugadorEntraNavigation).ThenInclude(x => x.CodIntegranteNavigation)
@@ -260,13 +300,15 @@ namespace Football.DataAccessEFCore3.Concrete
                     }
                 }).ToListAsync();
 
+            #endregion
+
             var matchOverview = new MatchOverview()
             {
-                Players = players,
+                Players = players.ToList<Player>(),
                 StatisticsIncidences = new StatisticsIncidences()
                 {
-                    Bookings = bookings,
-                    Goals = goals,
+                    Bookings = players.SelectMany(x => x.Bookings).ToList(),
+                    Goals = players.SelectMany(x => x.Goals).ToList(),
                     Substitutions = substitutions,
                     CornersLocal = match.CornersLocal,
                     CornersVisitor = match.CornersVisitante,
@@ -474,7 +516,7 @@ namespace Football.DataAccessEFCore3.Concrete
             currentCompetition.Temporada = competition.Season;
             currentCompetition.Tipo = competition.Type;
 
-            var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == competition.Logo.FileName);
+            var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => competition.Logo !=null && x.BlobStorageReference == competition.Logo.FileName);
 
             if (imageExists == null)
             {

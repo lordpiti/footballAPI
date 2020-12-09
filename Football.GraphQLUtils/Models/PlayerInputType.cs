@@ -15,6 +15,7 @@ namespace Football.GraphQL.Models
             Field<StringGraphType>("height");
             Field<IntGraphType>("weightLbs");
             Field<DateGraphType>("birthDate");
+            Field<IntGraphType>("playerId");
         }
     }
 }
