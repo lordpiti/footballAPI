@@ -1,30 +1,32 @@
 ﻿using Football.BlobStorage.Interfaces;
-using Football.Crosscutting;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Teams;
-using Football.DataAccessEFCore3.Interface;
+using Football.DataAccessEFCore3.Concrete;
+using Football.DataAccessEFCore3.Models;
 using Football.Services.Interface;
-using System;
+using Football.Services.Mappers;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Football.Services.Concrete
 {
     public class TeamService : ITeamService
     {
-        private readonly ITeamRepository _teamRepository;
         private readonly IBlobStorageService _blobStorageService;
+        private readonly IFootballUnitOfWork _footballUnitOfWork;
 
-        public TeamService(ITeamRepository teamRepository, IBlobStorageService blobStorageService)
+        public TeamService(IBlobStorageService blobStorageService, IFootballUnitOfWork footballUnitOfWork)
         {
-            _teamRepository = teamRepository;
             _blobStorageService = blobStorageService;
+            _footballUnitOfWork = footballUnitOfWork;
         }
 
         public async Task<Team> GetTeamByIdAndYear(int id, int year)
         {
-            var team = await _teamRepository.GetTeamByIdAndYear(id, year);
+            var teamfromBD = await _footballUnitOfWork.TeamRepository.GetTeamByIdAndYear(id);
+
+            var team = TeamMapper.Map(teamfromBD, year);
 
             if (team!=null)
             {
@@ -39,9 +41,11 @@ namespace Football.Services.Concrete
             return team;
         }
 
-        public async Task<List<Team>> GetAllTeams(int? competitionId = null)
+        public async Task<IEnumerable<Team>> GetAllTeams(int? competitionId = null)
         {
-            var teams = await _teamRepository.GetAllTeams(competitionId);
+            var teamsFromBD = await _footballUnitOfWork.TeamRepository.GetAllTeams(competitionId);
+
+            var teams = TeamMapper.Map(teamsFromBD);
 
             foreach (var team in teams)
             {
@@ -51,25 +55,57 @@ namespace Football.Services.Concrete
             return teams;
         }
 
-        public async Task AddTeamPicture(int teamId, BlobData mediaItem)
-        {
-            await _teamRepository.AddTeamPicture(teamId, mediaItem);
-        }
-
         public async Task<int> UpdateTeam(Team team)
         {
-            return await _teamRepository.UpdateTeam(team);
+            var existingteam = await _footballUnitOfWork.TeamRepository.FindByCondition(x => x.CodEquipo == team.Id);
+
+            existingteam.Nombre = team.Name;
+            existingteam.Localidad = team.City;
+
+            var imageExists = await _footballUnitOfWork.GlobalMediaRepository.FindByCondition(x => x.BlobStorageReference == team.PictureLogo.FileName);
+
+            if (imageExists == null)
+            {
+                imageExists = new GlobalMedia()
+                {
+                    BlobStorageReference = team.PictureLogo.FileName,
+                    FileName = team.PictureLogo.FileName,
+                    BlobStorageContainer = "mycontainer"
+                };
+            }
+
+            _footballUnitOfWork.TeamRepository.AddTeamPicture(existingteam, imageExists);
+
+            return await _footballUnitOfWork.CommitAsync();
         }
 
         public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
             string competitionName, string season)
         {
-            return await _teamRepository.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
+            var clasificationDataFromDb = await _footballUnitOfWork.TeamRepository.GetTeamSeasonClasificationChartData(teamId, competitionName, season);
+
+            var clasificationSeasonData = clasificationDataFromDb.Select(x => new ClasificationRoundData()
+            {
+                Position = x.Posicion,
+                GoalsAgainst = x.GolesContra,
+                GoalsFor = x.GolesFavor,
+                Round = x.Jornada
+            }).ToList();
+
+            var team = await _footballUnitOfWork.TeamRepository.GetTeamByIdAndYear(teamId);
+
+            return new ClasificationChartData()
+            {
+                Season = season,
+                TeamName = team.Nombre,
+                ClasificationSeasonData = clasificationSeasonData
+            };
+
         }
 
         public async Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId, int competitionId)
         {
-            return await _teamRepository.GetTeamSeasonClasificationChartData(teamId, competitionId);
+            return await _footballUnitOfWork.TeamRepository.GetTeamSeasonClasificationChartData(teamId, competitionId);
         }
     }
 }

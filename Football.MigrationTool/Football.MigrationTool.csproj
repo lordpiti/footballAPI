@@ -61,7 +61,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crosscutting\Football.Crosscutting.csproj" />
-    <ProjectReference Include="..\DataAccess\Football.DataAccess.csproj" />
+    <ProjectReference Include="..\Football.DataAccessEFCore3\Football.DataAccessEFCore3.csproj" />
     <ProjectReference Include="..\Services\Football.Services.csproj" />
   </ItemGroup>
 

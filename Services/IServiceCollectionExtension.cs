@@ -23,12 +23,14 @@ namespace Services
                 .AddScoped<IReportRepository, ReportRepository>()
                 .AddScoped<IGlobalMediaRepository, GlobalMediaRepository>()
                 .AddSingleton<TopSquadApiConfiguration>()
-                .AddScoped<ITopSquadApiClient, TopSquadApiClient>();
+                .AddScoped<ITopSquadApiClient, TopSquadApiClient>()
+                .AddScoped<IFootballUnitOfWork, FootballUnitOfWork>();
 
             if (transient)
             {
                 servicesOutput.AddTransient<IPlayerRepository, PlayerRepository>()
-                                .AddTransient<ITeamRepository, TeamRepository>();
+                                .AddTransient<ITeamRepository, TeamRepository>()
+                                .AddTransient<IFootballUnitOfWork, FootballUnitOfWork>();
             }
             else
             {

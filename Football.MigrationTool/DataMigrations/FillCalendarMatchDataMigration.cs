@@ -1,7 +1,7 @@
-﻿using DataAccess.Models;
-using System;
+﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Football.DataAccessEFCore3.Models;
 
 namespace Football.MigrationTool.DataMigrations
 {
@@ -11,11 +11,11 @@ namespace Football.MigrationTool.DataMigrations
 
         public void Execute()
         {
-            _contextOptions = new DbContextOptionsBuilder<c__database_futbol_mdfContext>()
+            _contextOptions = new DbContextOptionsBuilder<FootballContext>()
             .UseSqlServer(@"Server=tcp:qdijnzq4jx.database.windows.net,1433;Initial Catalog=Football;Persist Security Info=False;User ID=lordpiti@qdijnzq4jx;Password=Kidswast1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
             .Options;
 
-            var context = new c__database_futbol_mdfContext((DbContextOptions<c__database_futbol_mdfContext>)_contextOptions);
+            var context = new FootballContext((DbContextOptions<FootballContext>)_contextOptions);
 
             var b = context.Calendario;
 
@@ -26,7 +26,7 @@ namespace Football.MigrationTool.DataMigrations
 
                 if (matchFound != null)
                 {
-                    item.Match = matchFound;
+                    item.MatchCodPartidoNavigation = matchFound;
                 }
             }
             try

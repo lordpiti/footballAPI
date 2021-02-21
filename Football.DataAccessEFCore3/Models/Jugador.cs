@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Football.DataAccessEFCore3.Models
 {
-    public partial class Jugador
+    public partial class Jugador:BaseEntity
     {
         public Jugador()
         {

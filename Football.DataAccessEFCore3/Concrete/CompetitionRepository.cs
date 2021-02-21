@@ -14,7 +14,7 @@ using Football.Crosscutting.ViewModels.Match;
 
 namespace Football.DataAccessEFCore3.Concrete
 {
-    public class CompetitionRepository : EFRepositoryBase, ICompetitionRepository
+    public class CompetitionRepository : EFRepositoryBase<Competicion>, ICompetitionRepository
     {
         public CompetitionRepository(FootballContext context) : base(context)
         {

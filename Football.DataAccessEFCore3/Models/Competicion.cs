@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Football.DataAccessEFCore3.Models
 {
-    public partial class Competicion
+    public partial class Competicion : BaseEntity
     {
         public Competicion()
         {

@@ -1,6 +1,8 @@
 ﻿using Football.Crosscutting;
 using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Teams;
+using Football.DataAccessEFCore3.Concrete;
+using Football.DataAccessEFCore3.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,18 +10,16 @@ using System.Threading.Tasks;
 
 namespace Football.DataAccessEFCore3.Interface
 {
-    public interface ITeamRepository
+    public interface ITeamRepository : IRepositoryBase<Equipo>
     {
-        Task<Team> GetTeamByIdAndYear(int id, int year);
+        Task<Equipo> GetTeamByIdAndYear(int id);
 
-        Task<List<Team>> GetAllTeams(int? competitionId = null);
+        Task<IEnumerable<Equipo>> GetAllTeams(int? competitionId = null);
 
-        Task<int> UpdateTeam(Team team);
+        void AddTeamPicture(Equipo team, GlobalMedia globalMedia);
 
-        Task AddTeamPicture(int teamId, BlobData mediaItem);
-
-        Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
-            string competitionName, string season);
+        Task<IEnumerable<Clasificacion>> GetTeamSeasonClasificationChartData(int teamId,
+                    string competitionName, string season);
 
         Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
             int competitionId);

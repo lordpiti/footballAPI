@@ -11,7 +11,7 @@ using Football.DataAccessEFCore3.Models;
 
 namespace Football.DataAccessEFCore3.Concrete
 {
-    public class GlobalMediaRepository : EFRepositoryBase, IGlobalMediaRepository
+    public class GlobalMediaRepository : EFRepositoryBase<GlobalMedia>, IGlobalMediaRepository
     {
         public GlobalMediaRepository(FootballContext context) : base(context)
         {

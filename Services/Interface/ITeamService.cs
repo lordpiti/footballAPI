@@ -12,11 +12,9 @@ namespace Football.Services.Interface
     {
         Task<Team> GetTeamByIdAndYear(int id, int year);
 
-        Task<List<Team>> GetAllTeams(int? competitionId = null);
+        Task<IEnumerable<Team>> GetAllTeams(int? competitionId = null);
 
         Task<int> UpdateTeam(Team team);
-
-        Task AddTeamPicture(int teamId, BlobData mediaItem);
 
         Task<ClasificationChartData> GetTeamSeasonClasificationChartData(int teamId,
             string competitionName, string season);

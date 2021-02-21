@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Football.DataAccessEFCore3.Concrete
 {
-    public class ReportRepository : EFRepositoryBase, IReportRepository
+    public class ReportRepository : EFRepositoryBase<Jugador>, IReportRepository
     {
         public ReportRepository(FootballContext context) : base(context)
         {

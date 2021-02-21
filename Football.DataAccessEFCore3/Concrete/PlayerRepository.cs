@@ -13,7 +13,7 @@ using Football.Crosscutting.ViewModels.Competition;
 
 namespace Football.DataAccessEFCore3.Concrete
 {
-    public class PlayerRepository: EFRepositoryBase, IPlayerRepository
+    public class PlayerRepository: EFRepositoryBase<Jugador>, IPlayerRepository
     {
         public PlayerRepository(FootballContext context) : base(context)
         {

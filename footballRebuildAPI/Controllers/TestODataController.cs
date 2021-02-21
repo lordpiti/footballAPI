@@ -26,7 +26,7 @@ namespace Football.API.Controllers
         [HttpGet]
         [Route("Teams/{competitionId?}")]
         [EnableQuery]
-        public async Task<List<Team>> GetAllTeams(int? competitionId = null)
+        public async Task<IEnumerable<Team>> GetAllTeams(int? competitionId = null)
         {
             //api/TestOData/teams?$filter=Id%20eq%201
             return await _teamService.GetAllTeams(competitionId);

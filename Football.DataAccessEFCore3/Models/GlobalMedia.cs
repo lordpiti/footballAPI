@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Football.DataAccessEFCore3.Models
 {
-    public partial class GlobalMedia
+    public partial class GlobalMedia : BaseEntity
     {
         public GlobalMedia()
         {
