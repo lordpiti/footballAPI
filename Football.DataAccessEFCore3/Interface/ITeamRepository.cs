@@ -16,7 +16,7 @@ namespace Football.DataAccessEFCore3.Interface
 
         Task<IEnumerable<Equipo>> GetAllTeams(int? competitionId = null);
 
-        void AddTeamPicture(Equipo team, GlobalMedia globalMedia);
+        Task SaveTeam(Equipo team);
 
         Task<IEnumerable<Clasificacion>> GetTeamSeasonClasificationChartData(int teamId,
                     string competitionName, string season);

@@ -54,6 +54,24 @@ namespace Football.Services.Mappers
             return team;
         }
 
+        public static Equipo Map(Team team)
+        {
+            var teamFromBd = new Equipo()
+            {
+                CodEquipo = team.Id,
+                Nombre = team.Name,
+                Localidad = team.City,
+                TeamPictureGlobalMedia = team.PictureLogo != null ? new GlobalMedia()
+                {
+                    BlobStorageReference = team.PictureLogo.FileName,
+                    FileName = team.PictureLogo.FileName,
+                    BlobStorageContainer = "mycontainer"
+                } : new GlobalMedia()
+            };
+
+            return teamFromBd;
+        }
+
         public static IEnumerable<Team> Map(IEnumerable<Equipo> teams)
         {
             return teams.Select(x =>

@@ -15,7 +15,6 @@ namespace Football.DataAccessEFCore3.Concrete
         public FootballUnitOfWork(FootballContext context)
         {
             _context = context;
-            // check if the context is shared, otherwise inject context once here and create repositories individually passing it in the constructor
             this.CompetitionRepository = new CompetitionRepository(_context);
             this.TeamRepository = new TeamRepository(_context);
             this.GlobalMediaRepository = new GlobalMediaRepository(_context);

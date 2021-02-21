@@ -54,9 +54,20 @@ namespace Football.DataAccessEFCore3.Concrete
             }
         }
 
-        public void AddTeamPicture(Equipo team, GlobalMedia globalMedia)
+        public async Task SaveTeam(Equipo team)
         {
-            team.TeamPictureGlobalMedia = globalMedia;
+            var existingteam = await FindByCondition(x => x.CodEquipo == team.CodEquipo);
+
+            if (existingteam != null)
+            {
+                existingteam.TeamPictureGlobalMedia = team.TeamPictureGlobalMedia;
+                existingteam.Nombre = team.Nombre;
+                existingteam.Localidad = team.Localidad;
+            }
+            else
+            {
+                await _context.AddAsync(team);
+            }
         }
 
         public async Task<IEnumerable<Clasificacion>> GetTeamSeasonClasificationChartData(int teamId, 

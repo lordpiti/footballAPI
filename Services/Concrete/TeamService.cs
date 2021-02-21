@@ -57,10 +57,7 @@ namespace Football.Services.Concrete
 
         public async Task<int> UpdateTeam(Team team)
         {
-            var existingteam = await _footballUnitOfWork.TeamRepository.FindByCondition(x => x.CodEquipo == team.Id);
-
-            existingteam.Nombre = team.Name;
-            existingteam.Localidad = team.City;
+            var teamOnDb = Mappers.TeamMapper.Map(team);
 
             var imageExists = await _footballUnitOfWork.GlobalMediaRepository.FindByCondition(x => x.BlobStorageReference == team.PictureLogo.FileName);
 
@@ -74,7 +71,9 @@ namespace Football.Services.Concrete
                 };
             }
 
-            _footballUnitOfWork.TeamRepository.AddTeamPicture(existingteam, imageExists);
+            teamOnDb.TeamPictureGlobalMedia = imageExists;
+
+            await _footballUnitOfWork.TeamRepository.SaveTeam(teamOnDb);
 
             return await _footballUnitOfWork.CommitAsync();
         }
