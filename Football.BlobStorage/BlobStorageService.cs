@@ -58,7 +58,8 @@ namespace Football.BlobStorage
             return new BlobData()
             {
                 ContainerReference = containerReference,
-                FileName = blobReference,
+                BlobStorageReference = blobReference,
+                FileName = fileName,
                 Url = blob.Uri.ToString()
             };
         }
@@ -160,7 +161,7 @@ namespace Football.BlobStorage
         {
             if (data != null)
             {
-                data.Url = getUrlForBlob(data.FileName, data.ContainerReference);
+                data.Url = getUrlForBlob(data.BlobStorageReference, data.ContainerReference);
             }
         }
     }

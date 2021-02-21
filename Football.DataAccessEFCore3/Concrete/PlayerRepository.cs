@@ -135,7 +135,8 @@ namespace Football.DataAccessEFCore3.Concrete
                 Name = playerFromDb.CodIntegranteNavigation.Nombre,
                 Position = playerFromDb.Posicion,
                 Picture = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia != null ? new BlobData() {
-                    FileName = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageReference,
+                    FileName = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia.FileName,
+                    BlobStorageReference = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageReference,
                     ContainerReference = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageContainer
                 }: new BlobData() { }, Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
                 Height = playerFromDb.Altura,
@@ -154,6 +155,7 @@ namespace Football.DataAccessEFCore3.Concrete
                 Picture = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia != null ? new BlobData()
                 {
                     FileName = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia.FileName,
+                    BlobStorageReference = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageReference,
                     ContainerReference = playerFromDb.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageContainer
                 } : new BlobData() { },
                 Surname = playerFromDb.CodIntegranteNavigation.Apellidos,
@@ -178,13 +180,13 @@ namespace Football.DataAccessEFCore3.Concrete
                 playerToUpdate.CodIntegranteNavigation.BirthPlace = player.BirthPlace;
                 playerToUpdate.Posicion = player.Position??"Forward";
 
-                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == player.Picture.FileName);
+                var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => x.BlobStorageReference == player.Picture.BlobStorageReference);
 
                 if (imageExists == null)
                 {
                     playerToUpdate.CodIntegranteNavigation.PictureGlobalMedia = new GlobalMedia()
                     {
-                        BlobStorageReference = player.Picture.FileName,
+                        BlobStorageReference = player.Picture.BlobStorageReference,
                         FileName = player.Picture.FileName,
                         BlobStorageContainer = "mycontainer"
                     };

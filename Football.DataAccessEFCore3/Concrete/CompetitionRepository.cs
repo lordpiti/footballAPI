@@ -72,7 +72,8 @@ namespace Football.DataAccessEFCore3.Concrete
                         PictureLogo = new Crosscutting.BlobData()
                         {
                             ContainerReference = x.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                            FileName = x.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                            FileName = x.CodLocalNavigation.TeamPictureGlobalMedia.FileName,
+                            BlobStorageReference = x.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
                         }
                     },
                     VisitorTeam = new Team()
@@ -82,7 +83,8 @@ namespace Football.DataAccessEFCore3.Concrete
                         PictureLogo = new Crosscutting.BlobData()
                         {
                             ContainerReference = x.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                            FileName = x.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                            FileName = x.CodVisitanteNavigation.TeamPictureGlobalMedia.FileName,
+                            BlobStorageReference = x.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
                         }
                     },
                     Stadium = new Stadium()
@@ -123,7 +125,8 @@ namespace Football.DataAccessEFCore3.Concrete
                             PictureLogo = new Crosscutting.BlobData()
                             {
                                 ContainerReference = x.MatchCodPartidoNavigation.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                                FileName = x.MatchCodPartidoNavigation.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                                FileName = x.MatchCodPartidoNavigation.CodLocalNavigation.TeamPictureGlobalMedia.FileName,
+                                BlobStorageReference = x.MatchCodPartidoNavigation.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
                             }
                         },
                         VisitorTeam = new Team()
@@ -133,7 +136,8 @@ namespace Football.DataAccessEFCore3.Concrete
                             PictureLogo = new Crosscutting.BlobData()
                             {
                                 ContainerReference = x.MatchCodPartidoNavigation.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                                FileName = x.MatchCodPartidoNavigation.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                                FileName = x.MatchCodPartidoNavigation.CodVisitanteNavigation.TeamPictureGlobalMedia.FileName,
+                                BlobStorageReference= x.MatchCodPartidoNavigation.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
                             }
                         },
                         Stadium = new Stadium()
@@ -153,7 +157,8 @@ namespace Football.DataAccessEFCore3.Concrete
                         TeamLogo = x.CodEquipoNavigation.TeamPictureGlobalMedia != null ? new BlobData()
                         {
                             ContainerReference = x.CodEquipoNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                            FileName = x.CodEquipoNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                            FileName = x.CodEquipoNavigation.TeamPictureGlobalMedia.FileName,
+                             BlobStorageReference = x.CodEquipoNavigation.TeamPictureGlobalMedia.BlobStorageReference
                         } : new BlobData(),
                         TeamName = x.CodEquipoNavigation.Nombre,
                         GoalsAgainst = x.GolesContra,
@@ -330,7 +335,8 @@ namespace Football.DataAccessEFCore3.Concrete
                         PictureLogo = match.CodLocalNavigation.TeamPictureGlobalMedia != null ? new Crosscutting.BlobData()
                         {
                             ContainerReference = match.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                            FileName = match.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                            FileName = match.CodLocalNavigation.TeamPictureGlobalMedia.FileName,
+                            BlobStorageReference = match.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
                         } : new Crosscutting.BlobData()
                     },
                     VisitorTeam = new Team()
@@ -340,7 +346,8 @@ namespace Football.DataAccessEFCore3.Concrete
                         PictureLogo = match.CodVisitanteNavigation.TeamPictureGlobalMedia != null ? new Crosscutting.BlobData()
                         {
                             ContainerReference = match.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                            FileName = match.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                            FileName = match.CodVisitanteNavigation.TeamPictureGlobalMedia.FileName,
+                            BlobStorageReference = match.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
                         } : new Crosscutting.BlobData()
                     },
                     Stadium = new Stadium()
@@ -370,8 +377,9 @@ namespace Football.DataAccessEFCore3.Concrete
                 Logo = competition.CompetitionLogoGlobalMedia!=null?new BlobData()
                 {
                     ContainerReference = competition.CompetitionLogoGlobalMedia.BlobStorageContainer,
-                    FileName = competition.CompetitionLogoGlobalMedia.BlobStorageReference
-                }:new BlobData()
+                    FileName = competition.CompetitionLogoGlobalMedia.FileName,
+                    BlobStorageReference = competition.CompetitionLogoGlobalMedia.BlobStorageReference
+                } :new BlobData()
             };
         }
 
@@ -516,13 +524,13 @@ namespace Football.DataAccessEFCore3.Concrete
             currentCompetition.Temporada = competition.Season;
             currentCompetition.Tipo = competition.Type;
 
-            var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => competition.Logo !=null && x.BlobStorageReference == competition.Logo.FileName);
+            var imageExists = await _context.GlobalMedia.FirstOrDefaultAsync(x => competition.Logo !=null && x.BlobStorageReference == competition.Logo.BlobStorageReference);
 
             if (imageExists == null)
             {
                 currentCompetition.CompetitionLogoGlobalMedia = new GlobalMedia()
                 {
-                    BlobStorageReference = competition.Logo.FileName,
+                    BlobStorageReference = competition.Logo.BlobStorageReference,
                     FileName = competition.Logo.FileName,
                     BlobStorageContainer = "mycontainer"
                 };
@@ -551,7 +559,8 @@ namespace Football.DataAccessEFCore3.Concrete
                     PictureLogo = match.CodLocalNavigation.TeamPictureGlobalMedia != null ? new Crosscutting.BlobData()
                     {
                         ContainerReference = match.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                        FileName = match.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                        FileName = match.CodLocalNavigation.TeamPictureGlobalMedia.FileName,
+                        BlobStorageReference = match.CodLocalNavigation.TeamPictureGlobalMedia.BlobStorageReference
                     } : new Crosscutting.BlobData()
                 },
                 VisitorTeam = new Team()
@@ -561,7 +570,8 @@ namespace Football.DataAccessEFCore3.Concrete
                     PictureLogo = match.CodVisitanteNavigation.TeamPictureGlobalMedia != null ? new Crosscutting.BlobData()
                     {
                         ContainerReference = match.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageContainer,
-                        FileName = match.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
+                        FileName = match.CodVisitanteNavigation.TeamPictureGlobalMedia.FileName,
+                        BlobStorageReference = match.CodVisitanteNavigation.TeamPictureGlobalMedia.BlobStorageReference
                     } : new Crosscutting.BlobData()
                 },
                 MatchId = match.CodPartido,

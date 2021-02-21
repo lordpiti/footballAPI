@@ -59,13 +59,13 @@ namespace Football.Services.Concrete
         {
             var teamOnDb = Mappers.TeamMapper.Map(team);
 
-            var imageExists = await _footballUnitOfWork.GlobalMediaRepository.FindByCondition(x => x.BlobStorageReference == team.PictureLogo.FileName);
+            var imageExists = await _footballUnitOfWork.GlobalMediaRepository.FindByCondition(x => x.BlobStorageReference == team.PictureLogo.BlobStorageReference);
 
             if (imageExists == null)
             {
                 imageExists = new GlobalMedia()
                 {
-                    BlobStorageReference = team.PictureLogo.FileName,
+                    BlobStorageReference = team.PictureLogo.BlobStorageReference,
                     FileName = team.PictureLogo.FileName,
                     BlobStorageContainer = "mycontainer"
                 };

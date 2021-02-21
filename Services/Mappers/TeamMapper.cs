@@ -29,7 +29,8 @@ namespace Football.Services.Mappers
                 PictureLogo = teamFromBD.TeamPictureGlobalMedia != null ? new BlobData()
                 {
                     ContainerReference = teamFromBD.TeamPictureGlobalMedia.BlobStorageContainer,
-                    FileName = teamFromBD.TeamPictureGlobalMedia.BlobStorageReference
+                    FileName = teamFromBD.TeamPictureGlobalMedia.FileName,
+                    BlobStorageReference = teamFromBD.TeamPictureGlobalMedia.BlobStorageReference
                 } : new BlobData() { },
                 PlayerList = teamFromBD.Jugador.Where(x => x.CodIntegranteNavigation.HcoIntegrante.Any(hco => hco.FechaInicio.Year == year))
                     .Select(x => new Player()
@@ -46,7 +47,8 @@ namespace Football.Services.Mappers
                         Picture = x.CodIntegranteNavigation.PictureGlobalMedia != null ? new BlobData()
                         {
                             ContainerReference = x.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageContainer,
-                            FileName = x.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageReference
+                            FileName = x.CodIntegranteNavigation.PictureGlobalMedia.FileName,
+                            BlobStorageReference = x.CodIntegranteNavigation.PictureGlobalMedia.BlobStorageReference
                         } : new BlobData() { },
                     }).ToList()
             };
@@ -63,7 +65,7 @@ namespace Football.Services.Mappers
                 Localidad = team.City,
                 TeamPictureGlobalMedia = team.PictureLogo != null ? new GlobalMedia()
                 {
-                    BlobStorageReference = team.PictureLogo.FileName,
+                    BlobStorageReference = team.PictureLogo.BlobStorageReference,
                     FileName = team.PictureLogo.FileName,
                     BlobStorageContainer = "mycontainer"
                 } : new GlobalMedia()
@@ -81,7 +83,8 @@ namespace Football.Services.Mappers
                     Name = x.Nombre,
                     PictureLogo = new BlobData()
                     {
-                        FileName = x.TeamPictureGlobalMedia.BlobStorageReference,
+                        FileName = x.TeamPictureGlobalMedia.FileName,
+                        BlobStorageReference = x.TeamPictureGlobalMedia.BlobStorageReference,
                         ContainerReference = x.TeamPictureGlobalMedia.BlobStorageContainer
                     }
                 }).ToList();
