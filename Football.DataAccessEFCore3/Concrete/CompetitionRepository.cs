@@ -11,6 +11,7 @@ using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Teams;
 using Football.Crosscutting;
 using Football.Crosscutting.ViewModels.Match;
+using System.Linq.Expressions;
 
 namespace Football.DataAccessEFCore3.Concrete
 {
@@ -24,14 +25,11 @@ namespace Football.DataAccessEFCore3.Concrete
         {
             if (teamId == null)
             {
-                var ey = await _context.Competicion.ToListAsync();
+                Expression<Func<Competicion, bool>> predicate = !string.IsNullOrEmpty(season) ? x => x.Temporada == season : null;
 
-                if (!string.IsNullOrEmpty(season))
-                {
-                    ey = ey.Where(x => x.Temporada == season).ToList();
-                }
+                var competitionList = await Get(predicate).ToListAsync();
 
-                return ey.Select(x=>new Competition()
+                return competitionList.Select(x=>new Competition()
                 {
                     Id = x.CodCompeticion,
                     Name = x.Nombre,
@@ -40,15 +38,31 @@ namespace Football.DataAccessEFCore3.Concrete
                 }).ToList();
             }
 
-            return await _context.EquiposParticipan.Include(x => x.CodCompeticionNavigation)
+            #region another valid query, possible slower as it generates a subquery
+
+            //var test = await Get().Include(x=>x.EquiposParticipan)
+            //    .Where(x => x.EquiposParticipan.Any(y => y.CodEquipo == teamId))
+            //    .Select(x => new Competition
+            //    {
+            //        Name = x.Nombre,
+            //        Season = x.Temporada,
+            //        Id = x.CodCompeticion,
+            //        Type = x.Tipo
+            //    }).ToListAsync();
+
+            #endregion
+
+            var goodOne = await _context.EquiposParticipan.Include(x => x.CodCompeticionNavigation)
             .Where(x => x.CodEquipo == teamId)
-            .Select(x => new Competition{
+            .Select(x => new Competition
+            {
                 Name = x.CodCompeticionNavigation.Nombre,
                 Season = x.CodCompeticionNavigation.Temporada,
                 Id = x.CodCompeticion,
                 Type = x.CodCompeticionNavigation.Tipo
             }).ToListAsync();
-            
+
+            return goodOne;
         }
 
         public async Task<List<MatchGeneralInfo>> GetMatches(int competitionId, string round)

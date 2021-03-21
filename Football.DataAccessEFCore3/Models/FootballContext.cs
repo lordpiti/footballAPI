@@ -59,7 +59,7 @@ namespace Football.DataAccessEFCore3.Models
                 entity.ToTable("abono");
 
                 entity.HasIndex(e => new { e.LoginName, e.CodCompeticion })
-                    .HasName("UQ__abono__4A62EF7D0F85E508")
+                    .HasDatabaseName("UQ__abono__4A62EF7D0F85E508")
                     .IsUnique();
 
                 entity.Property(e => e.IdAbono).HasColumnName("id_abono");
