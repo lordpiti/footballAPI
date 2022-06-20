@@ -542,12 +542,14 @@ namespace Football.DataAccessEFCore3.Concrete
 
             if (imageExists == null)
             {
-                currentCompetition.CompetitionLogoGlobalMedia = new GlobalMedia()
-                {
-                    BlobStorageReference = competition.Logo.BlobStorageReference,
-                    FileName = competition.Logo.FileName,
-                    BlobStorageContainer = "mycontainer"
-                };
+                if (competition.Logo != null) {
+                    currentCompetition.CompetitionLogoGlobalMedia = new GlobalMedia()
+                    {
+                        BlobStorageReference = competition.Logo.BlobStorageReference,
+                        FileName = competition.Logo.FileName,
+                        BlobStorageContainer = "mycontainer"
+                    };
+                }
             }
             else
             {

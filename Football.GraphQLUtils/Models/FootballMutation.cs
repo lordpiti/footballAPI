@@ -27,7 +27,7 @@ namespace Football.GraphQL.Models
             //        return playerRepository.UpdatePlayer(player);
             //    });
 
-            Field<IntGraphType>(
+            Field<BooleanGraphType>(
                 "updateCompetition",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<CompetitionInputType>> { Name = "competition" }
