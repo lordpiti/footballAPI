@@ -13,7 +13,7 @@ namespace Football.GraphQL.Models
         public string NamedQuery { get; set; }
         public string Query { get; set; }
 
-        [JsonConverter(typeof(ObjectDictionaryConverter))]
+        [JsonConverter(typeof(InputsJsonConverter))]
         public Dictionary<string, object> Variables { get; set; }
         //public JObject Variables { get; set; } //https://github.com/graphql-dotnet/graphql-dotnet/issues/389
     }

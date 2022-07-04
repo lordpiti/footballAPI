@@ -38,7 +38,7 @@ namespace Football.API.Config
 
                 // GraphQL DI
                 .AddSingleton<IDocumentExecuter, DocumentExecuter>()
-                .AddSingleton<IDocumentWriter, DocumentWriter>()
+                .AddSingleton<IGraphQLSerializer, GraphQLSerializer> ()
                 .AddScoped<FootballQuery>()
                 .AddScoped<FootballMutation>()
                 .AddScoped<PlayerType>()

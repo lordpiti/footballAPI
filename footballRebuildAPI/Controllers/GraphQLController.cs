@@ -6,7 +6,7 @@ using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
 using Football.GraphQL.Models;
-using System.Text.Json;
+using GraphQL.Execution;
 
 namespace Football.API.Controllers
 {
@@ -32,10 +32,14 @@ namespace Football.API.Controllers
                 Schema = _schema,
                 Query = query.Query,
                 OperationName = query.OperationName,
-                Inputs = query.Variables.ToInputs()
+                Variables = query.Variables.ToInputs()
             };
 
             var result = await _documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);
+
+            // Needed as https://graphql-dotnet.github.io/docs/migrations/migration4 details
+            // When outputting the ExecutionResult directly in the response, need to convert the data properly like this
+            result.Data = ((ExecutionNode)result.Data).ToValue();
 
             if (result.Errors?.Count > 0)
             {

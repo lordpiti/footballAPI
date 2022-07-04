@@ -1,6 +1,7 @@
 ﻿using GraphQL.Types;
 using GraphQL.Utilities;
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Football.GraphQL.Models
 {

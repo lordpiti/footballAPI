@@ -11,10 +11,12 @@ namespace Football.GraphQL.Models
     {
         public FootballQuery(IPlayerRepository playerRepository)
         {
-            Field<PlayerType>(
+            FieldAsync<PlayerType>(
                 "player",
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context => playerRepository.GetPlayer(context.GetArgument<int>("id")));
+                resolve: async context => { 
+                    return await playerRepository.GetPlayer(context.GetArgument<int>("id")); 
+                });
             
 
             //Field<PlayerType>(
