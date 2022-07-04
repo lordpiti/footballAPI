@@ -17,15 +17,10 @@ namespace Football.GraphQL.Models
                 resolve: async context => { 
                     return await playerRepository.GetPlayer(context.GetArgument<int>("id")); 
                 });
-            
 
-            //Field<PlayerType>(
-            //    "randomPlayer",
-            //    resolve: context => playerRepository.GetRandom());
-
-            Field<ListGraphType<PlayerType>>(
+            FieldAsync<ListGraphType<PlayerType>>(
                 "players",
-                resolve: context => playerRepository.GetAllPlayers());
+                resolve: async context => await playerRepository.GetAllPlayers());
         }
     }
 }
