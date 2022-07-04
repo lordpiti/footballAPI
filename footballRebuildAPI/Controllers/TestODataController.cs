@@ -1,7 +1,8 @@
 ﻿using Football.Crosscutting.ViewModels;
 using Football.Services.Interface;
-using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

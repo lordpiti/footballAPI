@@ -1,9 +1,6 @@
 ﻿using Football.DataAccessEFCore3.Interface;
 using GraphQL;
 using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Football.GraphQL.Models
 {

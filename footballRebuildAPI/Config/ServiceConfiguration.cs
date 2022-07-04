@@ -92,7 +92,7 @@ namespace Football.API.Config
 
             Configuration = builder.Build();
 
-            var services = new ServiceCollection();
+            var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
             ConfigureServices(services, true);
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<ITeamService, TeamService>();

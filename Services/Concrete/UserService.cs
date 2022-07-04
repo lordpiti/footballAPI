@@ -158,8 +158,8 @@ namespace Football.Services.Concrete
 
                 var client = new RestClient(originalUrl+formattedRequestUrl);
 
-                var request = new RestRequest(formattedRequestUrl, Method.GET);
-                IRestResponse response = client.Get(request);
+                var request = new RestRequest(formattedRequestUrl, Method.Get);
+                var response = client.Get(request);
                 var content = response.Content;
                 return content;
             }

@@ -5,8 +5,8 @@ using Football.API.Filters;
 using Football.API.Middleware;
 using Football.Crosscutting.ViewModels.Reports;
 using GraphiQl;
-using Microsoft.AspNet.OData.Extensions;
-using Microsoft.AspNet.OData.Formatter;
+using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
@@ -86,11 +86,10 @@ namespace footballRebuildAPI
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddOData(option => option.Select().Filter().Count().OrderBy().Expand());
 
             #region OData
-
-            services.AddOData();
 
             //Added for compatibility with OData and Swagger
             services.AddMvcCore(options =>
@@ -176,13 +175,6 @@ namespace footballRebuildAPI
                 #region SignalR
 
                 endpoints.MapHub<LoopyHub>("/loopy", options => options.Transports = HttpTransportType.WebSockets);
-
-                #endregion
-
-                #region OData
-
-                endpoints.EnableDependencyInjection();
-                endpoints.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
 
                 #endregion
             });
