@@ -13,7 +13,7 @@ All class library projects have been migrated to .NET Standard 2.0. The API itse
 https://footballsandbox.azurewebsites.net/swagger/index.html
 
 ## GraphQL sandbox
-https://footballsandbox.azurewebsites.net/graphql
+https://footballsandbox.azurewebsites.net/graphiql
 
 ## Main features
 
