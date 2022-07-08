@@ -17,10 +17,10 @@ https://footballsandbox.azurewebsites.net/graphql
 
 ## Main features
 
-* Developed on C# under ASP.NET Core 3.1
+* Developed on C# under ASP.NET Core 6
 * API authentication via tokens using Facebook and Google APIs
 * File storage management via Azure Blob Storage API
-* Entity Framework Core 3 to access an SQL Server database
+* Entity Framework Core 6 to access an SQL Server database
 * Access to a MongoDB NoSQL database for user data and logs
 * Real-time web functionality via sockets using SignalR
 * GraphQL and OData querying support
