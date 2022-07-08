@@ -1,8 +1,5 @@
 ﻿using GraphQL.SystemTextJson;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Football.GraphQL.Models

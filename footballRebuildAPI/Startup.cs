@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace footballRebuildAPI
 {
@@ -110,6 +111,8 @@ namespace footballRebuildAPI
 
             services.AddHttpClient();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.Configure<AppSettings>(options => Configuration.GetSection("AppSettings").Bind(options));
 
             ServiceConfiguration.ConfigureAPIServices(services, Configuration);
@@ -122,6 +125,9 @@ namespace footballRebuildAPI
             services.AddMiniProfiler(options =>
                 options.RouteBasePath = "/profiler"
             ).AddEntityFramework();
+
+            // https://developpaper.com/webapi-performance-monitoring-integration-of-miniprofiler-and-swagger/
+            // Everytime we update the miniprofiler package we must follow instructions above
 
             // Inject an implementation of ISwaggerProvider with defaulted settings applied
             // https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.1

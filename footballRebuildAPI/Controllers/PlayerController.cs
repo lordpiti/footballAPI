@@ -8,7 +8,7 @@ using Services.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using System;
+using Microsoft.AspNetCore.Http;
 
 namespace footballRebuildAPI.Controllers
 {
@@ -20,11 +20,13 @@ namespace footballRebuildAPI.Controllers
     {
         private readonly IPlayerService _playerService;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _accessor;
 
-        public PlayerController(IPlayerService playerService, ILogger<PlayerController> logger, IHubContext<LoopyHub> context)
+        public PlayerController(IPlayerService playerService, ILogger<PlayerController> logger, IHubContext<LoopyHub> context, IHttpContextAccessor accessor)
         {
             _playerService = playerService;
             _logger = logger;
+            _accessor = accessor;
         }
         
         [HttpGet]
