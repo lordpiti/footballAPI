@@ -78,6 +78,7 @@ namespace footballRebuildAPI
                     "http://localhost:3000",
                     "https://piti-react-test.herokuapp.com",
                     "https://footballpitiangular.herokuapp.com",
+                    "https://piti-football-react.netlify.app",
                     "https://top-squad.herokuapp.com");
             }));
 
