@@ -25,7 +25,7 @@ namespace Futbol.Model.Jugador.DAO
                      command.Transaction = transaction;
                  }
                  
-                 command.CommandText = "INSERT INTO Jugador (cod_Integrante,cod_Equipo,version_Integrante,altura,posicion,pierna) values (@cod_Integrante,@cod_Equipo,@version_Integrante,@altura,@posicion,@pierna)";
+                 command.CommandText = "INSERT INTO Jugador (cod_Integrante,cod_Equipo,version_Integrante,altura,posicion,pierna, married) values (@cod_Integrante,@cod_Equipo,@version_Integrante,@altura,@posicion,@pierna, 1)";
 
                  DbParameter cod_IntegranteParam = command.CreateParameter();
                  cod_IntegranteParam.ParameterName = "@cod_Integrante";

@@ -20,9 +20,9 @@ namespace Futbol.Model.FachadaAdmin.Actions
     class CrearEquipoTotalAction : TransactionalPlainAction
     {
 
-        private EquipoTotalCO<JugadorCO> equipoTotal;
+        private EquipoTotalCO equipoTotal;
 
-        public CrearEquipoTotalAction(EquipoTotalCO<JugadorCO> equipoTotal)
+        public CrearEquipoTotalAction(EquipoTotalCO equipoTotal)
         {
             this.equipoTotal = equipoTotal;
         }
@@ -33,8 +33,8 @@ namespace Futbol.Model.FachadaAdmin.Actions
             var equipoVO = equipoTotal.Equipo;
             var estadioVO = equipoTotal.Estadio;
             var listaJugadores = equipoTotal.ListaJugadores;
-            var listaEntrenadores = equipoTotal.ListaEntrenadoresCreate;
-            var listaDirectivos = equipoTotal.ListaDirectivosCreate;
+            var listaEntrenadores = equipoTotal.ListaEntrenadores;
+            var listaDirectivos = equipoTotal.ListaDirectivos;
 
 
             
@@ -186,8 +186,8 @@ namespace Futbol.Model.FachadaAdmin.Actions
 
                 }
             }
-            return (new EquipoTotalCO<JugadorCO>(equipoVO, listaJugadores, listaEntrenadores,null,  listaDirectivos, null,
-                estadioVO));
+            return new EquipoTotalCO(equipoVO, listaJugadores, listaEntrenadores,  listaDirectivos,
+                estadioVO);
 
         }
     }

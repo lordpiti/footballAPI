@@ -132,13 +132,13 @@ namespace Futbol.Model.FachadaDatos
          }
 
 
-         public EquipoTotalCO<JugadorVO> verEquipoTotal(int cod_Equipo)
+         public EquipoTotalCO verEquipoTotal(int cod_Equipo)
          {
              try
              {
                  VerEquipoTotalAction action = new VerEquipoTotalAction(cod_Equipo);
 
-                 return (EquipoTotalCO<JugadorVO>)PlainActionProcessor.process(dbFactory, action);
+                 return (EquipoTotalCO)PlainActionProcessor.process(dbFactory, action);
              }
              catch (InternalErrorException e) { throw e; }
              catch (Exception e) { throw new InternalErrorException(e); }
