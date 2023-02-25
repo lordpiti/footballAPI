@@ -7,41 +7,45 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Football.DataAccessEFCore3.Migrations
 {
     [DbContext(typeof(FootballContext))]
-    [Migration("20200709183013_InitialCreate")]
+    [Migration("20230225033502_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Abono", b =>
                 {
                     b.Property<int>("IdAbono")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id_abono")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("id_abono");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdAbono"), 1L, 1);
 
                     b.Property<int?>("CodCompeticion")
-                        .HasColumnName("cod_competicion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_competicion");
 
                     b.Property<int?>("CodZona")
-                        .HasColumnName("cod_zona")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_zona");
 
                     b.Property<string>("LoginName")
-                        .HasColumnName("loginName")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("loginName");
 
                     b.HasKey("IdAbono")
                         .HasName("PK__abono__1E6B9583BC7B6591");
@@ -50,84 +54,86 @@ namespace Football.DataAccessEFCore3.Migrations
 
                     b.HasIndex("LoginName", "CodCompeticion")
                         .IsUnique()
-                        .HasName("UQ__abono__4A62EF7D0F85E508")
+                        .HasDatabaseName("UQ__abono__4A62EF7D0F85E508")
                         .HasFilter("[loginName] IS NOT NULL AND [cod_competicion] IS NOT NULL");
 
-                    b.ToTable("abono");
+                    b.ToTable("abono", (string)null);
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Agenda", b =>
                 {
                     b.Property<int>("IdEvento")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id_evento")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("id_evento");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEvento"), 1L, 1);
 
                     b.Property<int?>("CodCalendario")
-                        .HasColumnName("cod_calendario")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_calendario");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnName("descripcion")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("descripcion");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnName("fecha")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnName("nombre")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("nombre");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasColumnName("tipo")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("tipo");
 
                     b.HasKey("IdEvento")
                         .HasName("PK__agenda__AF150CA507B5EB6B");
 
-                    b.ToTable("agenda");
+                    b.ToTable("agenda", (string)null);
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Arbitro", b =>
                 {
                     b.Property<int>("CodArbitro")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Arbitro")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Arbitro");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodArbitro"), 1L, 1);
 
                     b.Property<int?>("AnosActivo")
-                        .HasColumnName("Anos_Activo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Anos_Activo");
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Colegio")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Foto")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("CodArbitro")
                         .HasName("PK__Arbitro__C117B4EE6864E33C");
@@ -138,57 +144,58 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Asiento", b =>
                 {
                     b.Property<int>("CodCompeticion")
-                        .HasColumnName("cod_competicion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_competicion");
 
                     b.Property<int>("RefZona")
-                        .HasColumnName("ref_zona")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ref_zona");
 
                     b.Property<int?>("Libres")
-                        .HasColumnName("libres")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("libres");
 
                     b.Property<float?>("Precio")
-                        .HasColumnName("precio")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("precio");
 
                     b.HasKey("CodCompeticion", "RefZona")
                         .HasName("PK__asiento__2DDFBB74B7935AF9");
 
-                    b.ToTable("asiento");
+                    b.ToTable("asiento", (string)null);
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Calendario", b =>
                 {
                     b.Property<int>("CodCalendario")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("cod_calendario")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("cod_calendario");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodCalendario"), 1L, 1);
 
                     b.Property<int>("CodCompeticion")
-                        .HasColumnName("cod_Competicion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_Competicion");
 
                     b.Property<int>("CodLocal")
-                        .HasColumnName("cod_Local")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_Local");
 
                     b.Property<int>("CodVisitante")
-                        .HasColumnName("cod_Visitante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_Visitante");
 
                     b.Property<DateTime?>("Fecha")
-                        .HasColumnName("fecha")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha");
 
                     b.Property<string>("Jornada")
                         .IsRequired()
-                        .HasColumnName("jornada")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("jornada");
 
                     b.Property<int?>("MatchCodPartido")
                         .HasColumnType("int");
@@ -205,21 +212,22 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodCambio")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Cambio")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Cambio");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodCambio"), 1L, 1);
 
                     b.Property<int>("CodJugadorEntra")
-                        .HasColumnName("Cod_Jugador_Entra")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Jugador_Entra");
 
                     b.Property<int>("CodJugadorSale")
-                        .HasColumnName("Cod_Jugador_Sale")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Jugador_Sale");
 
                     b.Property<int>("CodPartido")
-                        .HasColumnName("Cod_Partido")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Partido");
 
                     b.Property<int>("Minuto")
                         .HasColumnType("int");
@@ -239,44 +247,44 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Clasificacion", b =>
                 {
                     b.Property<int>("CodCompeticion")
-                        .HasColumnName("Cod_Competicion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Competicion");
 
                     b.Property<int>("Jornada")
-                        .HasColumnName("jornada")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("jornada");
 
                     b.Property<int>("CodEquipo")
-                        .HasColumnName("Cod_Equipo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo");
 
                     b.Property<int>("Posicion")
-                        .HasColumnName("posicion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("posicion");
 
                     b.Property<int?>("Empatados")
-                        .HasColumnName("empatados")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("empatados");
 
                     b.Property<int?>("Ganados")
-                        .HasColumnName("ganados")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ganados");
 
                     b.Property<int?>("GolesContra")
-                        .HasColumnName("goles_contra")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("goles_contra");
 
                     b.Property<int?>("GolesFavor")
-                        .HasColumnName("goles_favor")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("goles_favor");
 
                     b.Property<int?>("Perdidos")
-                        .HasColumnName("perdidos")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("perdidos");
 
                     b.Property<int?>("Puntos")
-                        .HasColumnName("puntos")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("puntos");
 
                     b.HasKey("CodCompeticion", "Jornada", "CodEquipo", "Posicion")
                         .HasName("PK__Clasific__38DD26DC8262AF4E");
@@ -290,33 +298,34 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodComentario")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Comentario")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Comentario");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodComentario"), 1L, 1);
 
                     b.Property<string>("Autor")
-                        .HasColumnName("autor")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("autor");
 
                     b.Property<int>("CodNoticia")
-                        .HasColumnName("cod_Noticia")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_Noticia");
 
                     b.Property<DateTime?>("Fecha")
-                        .HasColumnName("fecha")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha");
 
                     b.Property<string>("Texto")
-                        .HasColumnName("texto")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("texto");
 
                     b.Property<string>("Titulo")
-                        .HasColumnName("titulo")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("titulo");
 
                     b.HasKey("CodComentario")
                         .HasName("PK__Comentar__A48D582F2347E01F");
@@ -328,51 +337,52 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodCompeticion")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Competicion")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Competicion");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodCompeticion"), 1L, 1);
 
                     b.Property<string>("Campeon")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int?>("CompetitionLogoGlobalMediaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("FechaFin")
-                        .HasColumnName("Fecha_Fin")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Fin");
 
                     b.Property<DateTime?>("FechaInicio")
-                        .HasColumnName("Fecha_Inicio")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Inicio");
 
                     b.Property<string>("Foto")
-                        .HasColumnName("foto")
-                        .HasColumnType("varchar(100)")
                         .HasMaxLength(100)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("foto");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnName("nombre")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("nombre");
 
                     b.Property<string>("Temporada")
                         .IsRequired()
-                        .HasColumnName("temporada")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("temporada");
 
                     b.Property<string>("Tipo")
-                        .HasColumnName("tipo")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("tipo");
 
                     b.HasKey("CodCompeticion")
                         .HasName("PK__Competic__EFAD7B6AC59DC2E9");
@@ -385,23 +395,23 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Countries", b =>
                 {
                     b.Property<string>("CountryCode")
-                        .HasColumnName("countryCode")
+                        .HasMaxLength(2)
                         .HasColumnType("nchar(2)")
-                        .IsFixedLength(true)
-                        .HasMaxLength(2);
+                        .HasColumnName("countryCode")
+                        .IsFixedLength();
 
                     b.Property<string>("LanguageCode")
-                        .HasColumnName("languageCode")
+                        .HasMaxLength(2)
                         .HasColumnType("nchar(2)")
-                        .IsFixedLength(true)
-                        .HasMaxLength(2);
+                        .HasColumnName("languageCode")
+                        .IsFixedLength();
 
                     b.Property<string>("CountryName")
                         .IsRequired()
-                        .HasColumnName("countryName")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("countryName");
 
                     b.HasKey("CountryCode", "LanguageCode");
 
@@ -413,33 +423,34 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Directivo", b =>
                 {
                     b.Property<int>("CodIntegrante")
-                        .HasColumnName("Cod_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Integrante");
 
                     b.Property<int>("CodEquipo")
-                        .HasColumnName("Cod_Equipo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo");
 
                     b.Property<int>("VersionIntegrante")
-                        .HasColumnName("Version_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Version_Integrante");
 
                     b.Property<string>("Cargo")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int>("CodDirectivo")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Directivo")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Directivo");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodDirectivo"), 1L, 1);
 
                     b.Property<string>("Profesion")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("CodIntegrante", "CodEquipo", "VersionIntegrante")
                         .HasName("PK__Directiv__80B369C491BE850F");
@@ -452,32 +463,33 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Entrenador", b =>
                 {
                     b.Property<int>("CodIntegrante")
-                        .HasColumnName("Cod_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Integrante");
 
                     b.Property<int>("CodEquipo")
-                        .HasColumnName("Cod_Equipo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo");
 
                     b.Property<int>("VersionIntegrante")
-                        .HasColumnName("Version_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Version_Integrante");
 
                     b.Property<string>("Cargo")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
                         .HasMaxLength(100)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("CodEntrenador")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Entrenador")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Entrenador");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodEntrenador"), 1L, 1);
 
                     b.Property<DateTime?>("FechaProfesional")
-                        .HasColumnName("Fecha_Profesional")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Profesional");
 
                     b.HasKey("CodIntegrante", "CodEquipo", "VersionIntegrante")
                         .HasName("PK__Entrenad__80B369C4C98831BD");
@@ -491,32 +503,33 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodEquipo")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Equipo")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Equipo");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodEquipo"), 1L, 1);
 
                     b.Property<int?>("CodEstadio")
-                        .HasColumnName("Cod_Estadio")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Estadio");
 
                     b.Property<string>("FotoEscudo")
-                        .HasColumnName("Foto_Escudo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Foto_Escudo");
 
                     b.Property<string>("FotoPlantilla")
-                        .HasColumnName("Foto_Plantilla")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Foto_Plantilla");
 
                     b.Property<string>("Localidad")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int?>("TeamPictureGlobalMediaId")
                         .HasColumnType("int");
@@ -534,12 +547,12 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.EquiposParticipan", b =>
                 {
                     b.Property<int>("CodCompeticion")
-                        .HasColumnName("Cod_Competicion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Competicion");
 
                     b.Property<int>("CodEquipo")
-                        .HasColumnName("Cod_Equipo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo");
 
                     b.HasKey("CodCompeticion", "CodEquipo")
                         .HasName("PK__EquiposP__D04CEB7DEB21C6E3");
@@ -553,35 +566,36 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodEstadio")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Estadio")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Estadio");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodEstadio"), 1L, 1);
 
                     b.Property<int>("Capacidad")
                         .HasColumnType("int");
 
                     b.Property<string>("Direccion")
-                        .HasColumnType("varchar(100)")
                         .HasMaxLength(100)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Foto")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<int?>("PictureGlobalMediaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Tipo")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("CodEstadio")
                         .HasName("PK__Estadio__7517D2A58A94C613");
@@ -595,8 +609,9 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("GlobalMediaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GlobalMediaId"), 1L, 1);
 
                     b.Property<string>("BlobStorageContainer")
                         .HasColumnType("nvarchar(max)");
@@ -616,30 +631,31 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodGol")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Gol")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Gol");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodGol"), 1L, 1);
 
                     b.Property<int>("CodJugador")
-                        .HasColumnName("Cod_Jugador")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Jugador");
 
                     b.Property<int>("CodPartido")
-                        .HasColumnName("Cod_Partido")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Partido");
 
                     b.Property<int>("Minuto")
                         .HasColumnType("int");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Video")
-                        .HasColumnName("video")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("video");
 
                     b.HasKey("CodGol")
                         .HasName("PK__Gol__0604040C0A22D869");
@@ -654,31 +670,31 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.HcoIntegrante", b =>
                 {
                     b.Property<int>("CodIntegrante")
-                        .HasColumnName("Cod_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Integrante");
 
                     b.Property<int>("CodEquipo")
-                        .HasColumnName("Cod_Equipo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo");
 
                     b.Property<int>("VersionIntegrante")
-                        .HasColumnName("Version_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Version_Integrante");
 
                     b.Property<int?>("Dorsal")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("FechaFin")
-                        .HasColumnName("Fecha_Fin")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Fin");
 
                     b.Property<DateTime?>("FechaFinContrato")
-                        .HasColumnName("Fecha_Fin_Contrato")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Fin_Contrato");
 
                     b.Property<DateTime>("FechaInicio")
-                        .HasColumnName("Fecha_Inicio")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Inicio");
 
                     b.Property<float?>("Sueldo")
                         .HasColumnType("real");
@@ -688,38 +704,38 @@ namespace Football.DataAccessEFCore3.Migrations
 
                     b.HasIndex("CodEquipo");
 
-                    b.ToTable("Hco_Integrante");
+                    b.ToTable("Hco_Integrante", (string)null);
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Integrante", b =>
                 {
                     b.Property<int>("CodInt")
-                        .HasColumnName("Cod_Int")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Int");
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("BirthPlace")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("FechaNac")
-                        .HasColumnName("Fecha_Nac")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Nac");
 
                     b.Property<string>("Foto")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int?>("PictureGlobalMediaId")
                         .HasColumnType("int");
@@ -736,38 +752,42 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodJugador")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Jugador")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Jugador");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodJugador"), 1L, 1);
 
                     b.Property<float?>("Altura")
                         .HasColumnType("real");
 
                     b.Property<int?>("CodEquipo")
-                        .HasColumnName("Cod_Equipo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo");
 
                     b.Property<int?>("CodIntegrante")
-                        .HasColumnName("Cod_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Integrante");
 
                     b.Property<bool>("Married")
                         .HasColumnType("bit");
 
                     b.Property<string>("Pierna")
-                        .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Posicion")
                         .IsRequired()
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<int?>("Position")
+                        .HasColumnType("int");
 
                     b.Property<int?>("VersionIntegrante")
-                        .HasColumnName("Version_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Version_Integrante");
 
                     b.HasKey("CodJugador")
                         .HasName("PK__Jugador__311588804F56E76B");
@@ -782,17 +802,17 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Languages", b =>
                 {
                     b.Property<string>("LanguageCode")
-                        .HasColumnName("languageCode")
+                        .HasMaxLength(2)
                         .HasColumnType("nchar(2)")
-                        .IsFixedLength(true)
-                        .HasMaxLength(2);
+                        .HasColumnName("languageCode")
+                        .IsFixedLength();
 
                     b.Property<string>("LanguageName")
                         .IsRequired()
-                        .HasColumnName("languageName")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("languageName");
 
                     b.HasKey("LanguageCode");
 
@@ -802,28 +822,28 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.LineaPedido", b =>
                 {
                     b.Property<int>("Idpedido")
-                        .HasColumnName("idpedido")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idpedido");
 
                     b.Property<int>("Idlinea")
-                        .HasColumnName("idlinea")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idlinea");
 
                     b.Property<int>("Cantidad")
-                        .HasColumnName("cantidad")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cantidad");
 
                     b.Property<int>("Disp")
-                        .HasColumnName("disp")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("disp");
 
                     b.Property<int>("IdProducto")
-                        .HasColumnName("idProducto")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idProducto");
 
                     b.Property<float>("Pvp")
-                        .HasColumnName("pvp")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("pvp");
 
                     b.HasKey("Idpedido", "Idlinea")
                         .HasName("PK__LineaPed__3565A2260C680D70");
@@ -835,31 +855,32 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodMedico")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Medico")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Medico");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodMedico"), 1L, 1);
 
                     b.Property<int>("CodEquipo")
-                        .HasColumnName("Cod_Equipo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo");
 
                     b.Property<int>("CodIntegrante")
-                        .HasColumnName("Cod_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Integrante");
 
                     b.Property<string>("Especialidad")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime?>("FechaProfesional")
-                        .HasColumnName("Fecha_Profesional")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Profesional");
 
                     b.Property<int>("VersionIntegrante")
-                        .HasColumnName("Version_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Version_Integrante");
 
                     b.HasKey("CodMedico")
                         .HasName("PK__Medico__18937FE2AD662269");
@@ -873,44 +894,45 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodNoticia")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Noticia")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Noticia");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodNoticia"), 1L, 1);
 
                     b.Property<string>("Autor")
-                        .HasColumnName("autor")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("autor");
 
                     b.Property<string>("Categoria")
                         .IsRequired()
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<int?>("CodPartido")
-                        .HasColumnName("cod_Partido")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cod_Partido");
 
                     b.Property<string>("Cuerpo")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnName("fecha")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha");
 
                     b.Property<string>("Foto")
-                        .HasColumnName("foto")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("foto");
 
                     b.Property<string>("Resumen")
                         .HasColumnType("text");
 
                     b.Property<string>("SubCategoria")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Titulo")
                         .HasColumnType("text");
@@ -925,77 +947,78 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodPartido")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Partido")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Partido");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodPartido"), 1L, 1);
 
                     b.Property<int?>("Asistencia")
                         .HasColumnType("int");
 
                     b.Property<string>("Clima")
-                        .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<int>("CodArbitro")
-                        .HasColumnName("Cod_Arbitro")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Arbitro");
 
                     b.Property<int>("CodCompeticion")
-                        .HasColumnName("Cod_Competicion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Competicion");
 
                     b.Property<int>("CodEstadio")
-                        .HasColumnName("Cod_Estadio")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Estadio");
 
                     b.Property<int>("CodLocal")
-                        .HasColumnName("Cod_Local")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Local");
 
                     b.Property<int>("CodVisitante")
-                        .HasColumnName("Cod_Visitante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Visitante");
 
                     b.Property<int>("CornersLocal")
-                        .HasColumnName("Corners_Local")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Corners_Local");
 
                     b.Property<int>("CornersVisitante")
-                        .HasColumnName("Corners_Visitante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Corners_Visitante");
 
                     b.Property<DateTime?>("Fecha")
                         .HasColumnType("datetime");
 
                     b.Property<int>("FuerasJuegoLocal")
-                        .HasColumnName("Fueras_Juego_Local")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Fueras_Juego_Local");
 
                     b.Property<int>("FuerasJuegoVisitante")
-                        .HasColumnName("Fueras_Juego_Visitante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Fueras_Juego_Visitante");
 
                     b.Property<int>("GolesLocal")
-                        .HasColumnName("Goles_Local")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Goles_Local");
 
                     b.Property<int>("GolesVisitante")
-                        .HasColumnName("Goles_Visitante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Goles_Visitante");
 
                     b.Property<string>("Jornada")
-                        .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<float>("PosesionLocal")
-                        .HasColumnName("Posesion_Local")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("Posesion_Local");
 
                     b.Property<float>("PosesionVisitante")
-                        .HasColumnName("Posesion_Visitante")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("Posesion_Visitante");
 
                     b.HasKey("CodPartido")
                         .HasName("PK__Partido__7E512A7A7524CB5D");
@@ -1016,200 +1039,202 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.PartidoJugado", b =>
                 {
                     b.Property<int>("CodJugador")
-                        .HasColumnName("Cod_Jugador")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Jugador");
 
                     b.Property<int>("CodPartido")
-                        .HasColumnName("Cod_Partido")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Partido");
 
                     b.Property<int>("Asistencias")
                         .HasColumnType("int");
 
                     b.Property<int>("AsistenciasGol")
-                        .HasColumnName("Asistencias_Gol")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Asistencias_Gol");
 
                     b.Property<int>("BalonesPerdidos")
-                        .HasColumnName("balones_perdidos")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("balones_perdidos");
 
                     b.Property<int>("BalonesRecuperados")
-                        .HasColumnName("balones_recuperados")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("balones_recuperados");
 
                     b.Property<int>("Corners")
-                        .HasColumnName("corners")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("corners");
 
                     b.Property<int>("FaltasCometidas")
-                        .HasColumnName("Faltas_Cometidas")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Faltas_Cometidas");
 
                     b.Property<int>("FaltasRecibidas")
-                        .HasColumnName("Faltas_Recibidas")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Faltas_Recibidas");
 
                     b.Property<int>("FuerasJuego")
-                        .HasColumnName("fueras_Juego")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("fueras_Juego");
 
                     b.Property<int>("Minutos")
                         .HasColumnType("int");
 
                     b.Property<int>("PenaltisCometidos")
-                        .HasColumnName("penaltis_cometidos")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("penaltis_cometidos");
 
                     b.Property<int>("PenaltisRecibidos")
-                        .HasColumnName("penaltis_recibidos")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("penaltis_recibidos");
 
                     b.Property<int>("Remates")
-                        .HasColumnName("remates")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("remates");
 
                     b.Property<int>("RematesPorteria")
-                        .HasColumnName("remates_Porteria")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("remates_Porteria");
 
                     b.Property<int>("RematesPoste")
-                        .HasColumnName("remates_Poste")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("remates_Poste");
 
                     b.Property<int>("TarjetasAmarillasProvocadas")
-                        .HasColumnName("tarjetas_Amarillas_Provocadas")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("tarjetas_Amarillas_Provocadas");
 
                     b.Property<int>("TarjetasRojasProvocadas")
-                        .HasColumnName("tarjetas_Rojas_Provocadas")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("tarjetas_Rojas_Provocadas");
 
                     b.Property<string>("Titular")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("CodJugador", "CodPartido")
                         .HasName("PK__Partido___86F09A27E3058A54");
 
                     b.HasIndex("CodPartido");
 
-                    b.ToTable("Partido_Jugado");
+                    b.ToTable("Partido_Jugado", (string)null);
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Pedidos", b =>
                 {
                     b.Property<int>("IdPedido")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("idPedido")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("idPedido");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPedido"), 1L, 1);
 
                     b.Property<string>("Calle")
                         .IsRequired()
-                        .HasColumnName("calle")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("calle");
 
                     b.Property<int>("Cp")
-                        .HasColumnName("cp")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cp");
 
                     b.Property<string>("Estado")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("estado")
-                        .HasColumnType("varchar(10)")
-                        .HasDefaultValueSql("('Pendiente')")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("estado")
+                        .HasDefaultValueSql("('Pendiente')");
 
                     b.Property<DateTime?>("Fecha")
-                        .HasColumnName("fecha")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("fecha");
 
                     b.Property<DateTime>("Fechatarjeta")
-                        .HasColumnName("fechatarjeta")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("fechatarjeta");
 
                     b.Property<string>("IdUsuario")
-                        .HasColumnName("idUsuario")
-                        .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("idUsuario");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnName("nombre")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("nombre");
 
                     b.Property<int>("Numero")
-                        .HasColumnName("numero")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("numero");
 
                     b.Property<string>("Puerta")
-                        .HasColumnName("puerta")
-                        .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("puerta");
 
                     b.Property<string>("Tarjeta")
                         .IsRequired()
-                        .HasColumnName("tarjeta")
-                        .HasColumnType("varchar(17)")
                         .HasMaxLength(17)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(17)")
+                        .HasColumnName("tarjeta");
 
                     b.HasKey("IdPedido")
                         .HasName("PK__pedidos__A9F619B737664567");
 
-                    b.ToTable("pedidos");
+                    b.ToTable("pedidos", (string)null);
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Producto", b =>
                 {
                     b.Property<int>("ProdId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("prodId")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("prodId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProdId"), 1L, 1);
 
                     b.Property<string>("Categoria")
-                        .HasColumnName("categoria")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("categoria");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnName("descripcion")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("descripcion");
 
                     b.Property<DateTime?>("FechaAlta")
-                        .HasColumnName("fechaAlta")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("fechaAlta");
 
                     b.Property<string>("Foto")
-                        .HasColumnName("foto")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("foto");
 
                     b.Property<string>("Nombre")
-                        .HasColumnName("nombre")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("nombre");
 
                     b.Property<float?>("Precio")
-                        .HasColumnName("precio")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("precio");
 
                     b.Property<int?>("Stock")
-                        .HasColumnName("stock")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("stock");
 
                     b.HasKey("ProdId")
                         .HasName("PK__Producto__319F67F18283D8BE");
@@ -1221,32 +1246,33 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodTarjeta")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Tarjeta")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Tarjeta");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodTarjeta"), 1L, 1);
 
                     b.Property<int>("CodJugador")
-                        .HasColumnName("Cod_Jugador")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Jugador");
 
                     b.Property<int>("CodPartido")
-                        .HasColumnName("Cod_Partido")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Partido");
 
                     b.Property<int>("Minuto")
                         .HasColumnType("int");
 
                     b.Property<string>("Motivo")
                         .IsRequired()
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("CodTarjeta")
                         .HasName("PK__Tarjeta__D5EE15398F60B8AF");
@@ -1262,21 +1288,22 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodTranspaso")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Transpaso")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Transpaso");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodTranspaso"), 1L, 1);
 
                     b.Property<int>("CodEquipoDestino")
-                        .HasColumnName("Cod_Equipo_Destino")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo_Destino");
 
                     b.Property<int>("CodEquipoOrigen")
-                        .HasColumnName("Cod_Equipo_Origen")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Equipo_Origen");
 
                     b.Property<int>("CodIntegrante")
-                        .HasColumnName("Cod_Integrante")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Integrante");
 
                     b.Property<float>("Coste")
                         .HasColumnType("real");
@@ -1298,30 +1325,31 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("CodTratamiento")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Cod_Tratamiento")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Cod_Tratamiento");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodTratamiento"), 1L, 1);
 
                     b.Property<int>("CodJugador")
-                        .HasColumnName("Cod_Jugador")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Jugador");
 
                     b.Property<int>("CodMedico")
-                        .HasColumnName("Cod_Medico")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Cod_Medico");
 
                     b.Property<DateTime?>("FechaFin")
-                        .HasColumnName("Fecha_Fin")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Fin");
 
                     b.Property<DateTime>("FechaInicio")
-                        .HasColumnName("Fecha_Inicio")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("Fecha_Inicio");
 
                     b.Property<string>("Lesion")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("CodTratamiento")
                         .HasName("PK__Trata__17B0DB894F867B70");
@@ -1336,93 +1364,93 @@ namespace Football.DataAccessEFCore3.Migrations
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.UserProfile", b =>
                 {
                     b.Property<string>("LoginName")
-                        .HasColumnName("loginName")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("loginName");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnName("country")
-                        .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("country");
 
                     b.Property<int?>("Cp")
-                        .HasColumnName("cp")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("cp");
 
                     b.Property<string>("Direccion")
-                        .HasColumnName("direccion")
-                        .HasColumnType("varchar(100)")
                         .HasMaxLength(100)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("direccion");
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasColumnName("dni")
-                        .HasColumnType("varchar(40)")
                         .HasMaxLength(40)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("dni");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnName("email")
-                        .HasColumnType("varchar(60)")
                         .HasMaxLength(60)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(60)")
+                        .HasColumnName("email");
 
                     b.Property<string>("EnPassword")
                         .IsRequired()
-                        .HasColumnName("enPassword")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("enPassword");
 
                     b.Property<string>("FechaTarjeta")
-                        .HasColumnName("fechaTarjeta")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("fechaTarjeta");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnName("firstName")
-                        .HasColumnType("varchar(30)")
                         .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("firstName");
 
                     b.Property<string>("Language")
                         .IsRequired()
-                        .HasColumnName("language")
-                        .HasColumnType("varchar(2)")
                         .HasMaxLength(2)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(2)")
+                        .HasColumnName("language");
 
                     b.Property<string>("Localidad")
-                        .HasColumnName("localidad")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("localidad");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnName("surname")
-                        .HasColumnType("varchar(40)")
                         .HasMaxLength(40)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("surname");
 
                     b.Property<string>("Tarjeta")
-                        .HasColumnName("tarjeta")
-                        .HasColumnType("varchar(60)")
                         .HasMaxLength(60)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(60)")
+                        .HasColumnName("tarjeta");
 
                     b.Property<string>("Telefono")
-                        .HasColumnName("telefono")
-                        .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("telefono");
 
                     b.HasKey("LoginName");
 
@@ -1433,30 +1461,31 @@ namespace Football.DataAccessEFCore3.Migrations
                 {
                     b.Property<int>("IdZona")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id_zona")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("id_zona");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdZona"), 1L, 1);
 
                     b.Property<int?>("Capacidad")
-                        .HasColumnName("capacidad")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("capacidad");
 
                     b.Property<string>("Cubierto")
-                        .HasColumnName("cubierto")
-                        .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("cubierto");
 
                     b.Property<string>("Nombre")
-                        .HasColumnName("nombre")
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("nombre");
 
                     b.HasKey("IdZona")
                         .HasName("PK__zonaEsta__67C93611F159F2D3");
 
-                    b.ToTable("zonaEstadio");
+                    b.ToTable("zonaEstadio", (string)null);
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Abono", b =>
@@ -1465,6 +1494,8 @@ namespace Football.DataAccessEFCore3.Migrations
                         .WithMany("Abono")
                         .HasForeignKey("CodZona")
                         .HasConstraintName("FK__abono__cod_zona__06CD04F7");
+
+                    b.Navigation("CodZonaNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Calendario", b =>
@@ -1472,6 +1503,8 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Partido", "MatchCodPartidoNavigation")
                         .WithMany("Calendario")
                         .HasForeignKey("MatchCodPartido");
+
+                    b.Navigation("MatchCodPartidoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Cambio", b =>
@@ -1479,20 +1512,26 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Jugador", "CodJugadorEntraNavigation")
                         .WithMany("CambioCodJugadorEntraNavigation")
                         .HasForeignKey("CodJugadorEntra")
-                        .HasConstraintName("FK__Cambio__Cod_Juga__08B54D69")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Cambio__Cod_Juga__08B54D69");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Jugador", "CodJugadorSaleNavigation")
                         .WithMany("CambioCodJugadorSaleNavigation")
                         .HasForeignKey("CodJugadorSale")
-                        .HasConstraintName("FK__Cambio__Cod_Juga__09A971A2")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Cambio__Cod_Juga__09A971A2");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Partido", "CodPartidoNavigation")
                         .WithMany("Cambio")
                         .HasForeignKey("CodPartido")
-                        .HasConstraintName("FK__Cambio__Cod_Part__07C12930")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Cambio__Cod_Part__07C12930");
+
+                    b.Navigation("CodJugadorEntraNavigation");
+
+                    b.Navigation("CodJugadorSaleNavigation");
+
+                    b.Navigation("CodPartidoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Clasificacion", b =>
@@ -1500,14 +1539,18 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Competicion", "CodCompeticionNavigation")
                         .WithMany("Clasificacion")
                         .HasForeignKey("CodCompeticion")
-                        .HasConstraintName("FK__Clasifica__Cod_C__0A9D95DB")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Clasifica__Cod_C__0A9D95DB");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoNavigation")
                         .WithMany("Clasificacion")
                         .HasForeignKey("CodEquipo")
-                        .HasConstraintName("FK__Clasifica__Cod_E__0B91BA14")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Clasifica__Cod_E__0B91BA14");
+
+                    b.Navigation("CodCompeticionNavigation");
+
+                    b.Navigation("CodEquipoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Competicion", b =>
@@ -1515,6 +1558,8 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.GlobalMedia", "CompetitionLogoGlobalMedia")
                         .WithMany("Competicion")
                         .HasForeignKey("CompetitionLogoGlobalMediaId");
+
+                    b.Navigation("CompetitionLogoGlobalMedia");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Countries", b =>
@@ -1522,8 +1567,10 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Languages", "LanguageCodeNavigation")
                         .WithMany("Countries")
                         .HasForeignKey("LanguageCode")
-                        .HasConstraintName("FK_Languages")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Languages");
+
+                    b.Navigation("LanguageCodeNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Directivo", b =>
@@ -1531,8 +1578,10 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoNavigation")
                         .WithMany("Directivo")
                         .HasForeignKey("CodEquipo")
-                        .HasConstraintName("FK__Directivo__Cod_E__0D7A0286")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Directivo__Cod_E__0D7A0286");
+
+                    b.Navigation("CodEquipoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Entrenador", b =>
@@ -1540,8 +1589,10 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoNavigation")
                         .WithMany("Entrenador")
                         .HasForeignKey("CodEquipo")
-                        .HasConstraintName("FK__Entrenado__Cod_E__0E6E26BF")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Entrenado__Cod_E__0E6E26BF");
+
+                    b.Navigation("CodEquipoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Equipo", b =>
@@ -1553,6 +1604,10 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.GlobalMedia", "TeamPictureGlobalMedia")
                         .WithMany("Equipo")
                         .HasForeignKey("TeamPictureGlobalMediaId");
+
+                    b.Navigation("CodEstadioNavigation");
+
+                    b.Navigation("TeamPictureGlobalMedia");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.EquiposParticipan", b =>
@@ -1566,8 +1621,12 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoNavigation")
                         .WithMany("EquiposParticipan")
                         .HasForeignKey("CodEquipo")
-                        .HasConstraintName("FK__EquiposPa__Cod_E__0F624AF8")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__EquiposPa__Cod_E__0F624AF8");
+
+                    b.Navigation("CodCompeticionNavigation");
+
+                    b.Navigation("CodEquipoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Estadio", b =>
@@ -1575,6 +1634,8 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.GlobalMedia", "PictureGlobalMedia")
                         .WithMany("Estadio")
                         .HasForeignKey("PictureGlobalMediaId");
+
+                    b.Navigation("PictureGlobalMedia");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Gol", b =>
@@ -1582,14 +1643,18 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Jugador", "CodJugadorNavigation")
                         .WithMany("Gol")
                         .HasForeignKey("CodJugador")
-                        .HasConstraintName("FK__Gol__Cod_Jugador__114A936A")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Gol__Cod_Jugador__114A936A");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Partido", "CodPartidoNavigation")
                         .WithMany("Gol")
                         .HasForeignKey("CodPartido")
-                        .HasConstraintName("FK__Gol__Cod_Partido__10566F31")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Gol__Cod_Partido__10566F31");
+
+                    b.Navigation("CodJugadorNavigation");
+
+                    b.Navigation("CodPartidoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.HcoIntegrante", b =>
@@ -1597,14 +1662,18 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoNavigation")
                         .WithMany("HcoIntegrante")
                         .HasForeignKey("CodEquipo")
-                        .HasConstraintName("FK__Hco_Integ__Cod_E__1332DBDC")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Hco_Integ__Cod_E__1332DBDC");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Integrante", "CodIntegranteNavigation")
                         .WithMany("HcoIntegrante")
                         .HasForeignKey("CodIntegrante")
-                        .HasConstraintName("FK__Hco_Integ__Cod_I__123EB7A3")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Hco_Integ__Cod_I__123EB7A3");
+
+                    b.Navigation("CodEquipoNavigation");
+
+                    b.Navigation("CodIntegranteNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Integrante", b =>
@@ -1612,6 +1681,8 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.GlobalMedia", "PictureGlobalMedia")
                         .WithMany("Integrante")
                         .HasForeignKey("PictureGlobalMediaId");
+
+                    b.Navigation("PictureGlobalMedia");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Jugador", b =>
@@ -1625,6 +1696,10 @@ namespace Football.DataAccessEFCore3.Migrations
                         .WithMany("Jugador")
                         .HasForeignKey("CodIntegrante")
                         .HasConstraintName("FK_Jugador_Integrante");
+
+                    b.Navigation("CodEquipoNavigation");
+
+                    b.Navigation("CodIntegranteNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.LineaPedido", b =>
@@ -1632,8 +1707,10 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Pedidos", "IdpedidoNavigation")
                         .WithMany("LineaPedido")
                         .HasForeignKey("Idpedido")
-                        .HasConstraintName("FK__LineaPedi__idped__160F4887")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__LineaPedi__idped__160F4887");
+
+                    b.Navigation("IdpedidoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Medico", b =>
@@ -1641,8 +1718,10 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoNavigation")
                         .WithMany("Medico")
                         .HasForeignKey("CodEquipo")
-                        .HasConstraintName("FK__Medico__Cod_Equi__17036CC0")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Medico__Cod_Equi__17036CC0");
+
+                    b.Navigation("CodEquipoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Partido", b =>
@@ -1650,32 +1729,42 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Arbitro", "CodArbitroNavigation")
                         .WithMany("Partido")
                         .HasForeignKey("CodArbitro")
-                        .HasConstraintName("FK__Partido__Cod_Arb__1AD3FDA4")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Partido__Cod_Arb__1AD3FDA4");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Competicion", "CodCompeticionNavigation")
                         .WithMany("Partido")
                         .HasForeignKey("CodCompeticion")
-                        .HasConstraintName("FK__Partido__Cod_Com__17F790F9")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Partido__Cod_Com__17F790F9");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Estadio", "CodEstadioNavigation")
                         .WithMany("Partido")
                         .HasForeignKey("CodEstadio")
-                        .HasConstraintName("FK__Partido__Cod_Est__1BC821DD")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Partido__Cod_Est__1BC821DD");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodLocalNavigation")
                         .WithMany("PartidoCodLocalNavigation")
                         .HasForeignKey("CodLocal")
-                        .HasConstraintName("FK__Partido__Cod_Loc__18EBB532")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Partido__Cod_Loc__18EBB532");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodVisitanteNavigation")
                         .WithMany("PartidoCodVisitanteNavigation")
                         .HasForeignKey("CodVisitante")
-                        .HasConstraintName("FK__Partido__Cod_Vis__19DFD96B")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Partido__Cod_Vis__19DFD96B");
+
+                    b.Navigation("CodArbitroNavigation");
+
+                    b.Navigation("CodCompeticionNavigation");
+
+                    b.Navigation("CodEstadioNavigation");
+
+                    b.Navigation("CodLocalNavigation");
+
+                    b.Navigation("CodVisitanteNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.PartidoJugado", b =>
@@ -1683,14 +1772,18 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Jugador", "CodJugadorNavigation")
                         .WithMany("PartidoJugado")
                         .HasForeignKey("CodJugador")
-                        .HasConstraintName("FK__Partido_J__Cod_J__1CBC4616")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Partido_J__Cod_J__1CBC4616");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Partido", "CodPartidoNavigation")
                         .WithMany("PartidoJugado")
                         .HasForeignKey("CodPartido")
-                        .HasConstraintName("FK__Partido_J__Cod_P__1DB06A4F")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Partido_J__Cod_P__1DB06A4F");
+
+                    b.Navigation("CodJugadorNavigation");
+
+                    b.Navigation("CodPartidoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Tarjeta", b =>
@@ -1698,14 +1791,18 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Jugador", "CodJugadorNavigation")
                         .WithMany("Tarjeta")
                         .HasForeignKey("CodJugador")
-                        .HasConstraintName("FK__Tarjeta__Cod_Jug__1F98B2C1")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Tarjeta__Cod_Jug__1F98B2C1");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Partido", "CodPartidoNavigation")
                         .WithMany("Tarjeta")
                         .HasForeignKey("CodPartido")
-                        .HasConstraintName("FK__Tarjeta__Cod_Par__1EA48E88")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Tarjeta__Cod_Par__1EA48E88");
+
+                    b.Navigation("CodJugadorNavigation");
+
+                    b.Navigation("CodPartidoNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Transpaso", b =>
@@ -1713,14 +1810,18 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoDestinoNavigation")
                         .WithMany("TranspasoCodEquipoDestinoNavigation")
                         .HasForeignKey("CodEquipoDestino")
-                        .HasConstraintName("FK__Transpaso__Cod_E__2180FB33")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Transpaso__Cod_E__2180FB33");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Equipo", "CodEquipoOrigenNavigation")
                         .WithMany("TranspasoCodEquipoOrigenNavigation")
                         .HasForeignKey("CodEquipoOrigen")
-                        .HasConstraintName("FK__Transpaso__Cod_E__208CD6FA")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Transpaso__Cod_E__208CD6FA");
+
+                    b.Navigation("CodEquipoDestinoNavigation");
+
+                    b.Navigation("CodEquipoOrigenNavigation");
                 });
 
             modelBuilder.Entity("Football.DataAccessEFCore3.Models.Trata", b =>
@@ -1728,14 +1829,130 @@ namespace Football.DataAccessEFCore3.Migrations
                     b.HasOne("Football.DataAccessEFCore3.Models.Jugador", "CodJugadorNavigation")
                         .WithMany("Trata")
                         .HasForeignKey("CodJugador")
-                        .HasConstraintName("FK__Trata__Cod_Jugad__236943A5")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Trata__Cod_Jugad__236943A5");
 
                     b.HasOne("Football.DataAccessEFCore3.Models.Medico", "CodMedicoNavigation")
                         .WithMany("Trata")
                         .HasForeignKey("CodMedico")
-                        .HasConstraintName("FK__Trata__Cod_Medic__22751F6C")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__Trata__Cod_Medic__22751F6C");
+
+                    b.Navigation("CodJugadorNavigation");
+
+                    b.Navigation("CodMedicoNavigation");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Arbitro", b =>
+                {
+                    b.Navigation("Partido");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Competicion", b =>
+                {
+                    b.Navigation("Clasificacion");
+
+                    b.Navigation("EquiposParticipan");
+
+                    b.Navigation("Partido");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Equipo", b =>
+                {
+                    b.Navigation("Clasificacion");
+
+                    b.Navigation("Directivo");
+
+                    b.Navigation("Entrenador");
+
+                    b.Navigation("EquiposParticipan");
+
+                    b.Navigation("HcoIntegrante");
+
+                    b.Navigation("Jugador");
+
+                    b.Navigation("Medico");
+
+                    b.Navigation("PartidoCodLocalNavigation");
+
+                    b.Navigation("PartidoCodVisitanteNavigation");
+
+                    b.Navigation("TranspasoCodEquipoDestinoNavigation");
+
+                    b.Navigation("TranspasoCodEquipoOrigenNavigation");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Estadio", b =>
+                {
+                    b.Navigation("Equipo");
+
+                    b.Navigation("Partido");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.GlobalMedia", b =>
+                {
+                    b.Navigation("Competicion");
+
+                    b.Navigation("Equipo");
+
+                    b.Navigation("Estadio");
+
+                    b.Navigation("Integrante");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Integrante", b =>
+                {
+                    b.Navigation("HcoIntegrante");
+
+                    b.Navigation("Jugador");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Jugador", b =>
+                {
+                    b.Navigation("CambioCodJugadorEntraNavigation");
+
+                    b.Navigation("CambioCodJugadorSaleNavigation");
+
+                    b.Navigation("Gol");
+
+                    b.Navigation("PartidoJugado");
+
+                    b.Navigation("Tarjeta");
+
+                    b.Navigation("Trata");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Languages", b =>
+                {
+                    b.Navigation("Countries");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Medico", b =>
+                {
+                    b.Navigation("Trata");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Partido", b =>
+                {
+                    b.Navigation("Calendario");
+
+                    b.Navigation("Cambio");
+
+                    b.Navigation("Gol");
+
+                    b.Navigation("PartidoJugado");
+
+                    b.Navigation("Tarjeta");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.Pedidos", b =>
+                {
+                    b.Navigation("LineaPedido");
+                });
+
+            modelBuilder.Entity("Football.DataAccessEFCore3.Models.ZonaEstadio", b =>
+                {
+                    b.Navigation("Abono");
                 });
 #pragma warning restore 612, 618
         }
