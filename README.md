@@ -1,7 +1,7 @@
 # Football test API
 
 ## Overview
-This is a .NET Core project which host both an API and a service (Task runner) to manage a Football database with fake data.
+This is a .NET project which host both an API and a service (Task runner) to manage a Football database with fake data.
 Its used as a sandbox to try out some features of .NET Core.
 
 The structure of the API implementation follows a classic 3-layer architecture (Presentation->Service->Data), while the service runs
@@ -17,7 +17,7 @@ https://footballsandbox.azurewebsites.net/graphiql
 
 ## Main features
 
-* Developed on C# under ASP.NET Core 6
+* Developed on C# under ASP.NET 7
 * API authentication via tokens using Facebook and Google APIs
 * File storage management via Azure Blob Storage API
 * Entity Framework Core 6 to access an SQL Server database
