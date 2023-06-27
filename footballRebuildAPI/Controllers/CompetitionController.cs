@@ -9,6 +9,7 @@ using Football.Crosscutting.ViewModels;
 using Football.Crosscutting.ViewModels.Match;
 using Football.Crosscutting.ViewModels.Reports;
 using Football.API.Cache;
+using FluentValidation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,11 +25,13 @@ namespace Football.API.Controllers
     {
         private readonly ICompetitionService _competitionService;
         private readonly IReportService _reportService;
+        private readonly IValidator<Competition> _validator;
 
-        public CompetitionController(ICompetitionService competitionService, IReportService reportService)
+        public CompetitionController(ICompetitionService competitionService, IReportService reportService, IValidator<Competition> competitionValidator)
         {
             _competitionService = competitionService;
             _reportService = reportService;
+            _validator = competitionValidator;
         }
 
         /// <summary>
@@ -96,9 +99,20 @@ namespace Football.API.Controllers
 
         [Route("SaveCompetitionDetails")]
         [HttpPost]
-        public async Task<bool> SaveCompetitionDetails([FromBody]Competition competition)
+        public async Task<ActionResult> SaveCompetitionDetails([FromBody]Competition competition)
         {
-            return await _competitionService.SaveCompetitionDetails(competition);
+            var validationResult = _validator.Validate(competition);
+
+            if (validationResult.IsValid)
+            {
+                var result = await _competitionService.SaveCompetitionDetails(competition);
+                return Ok(result);
+            }
+            else
+            {
+                var errors = validationResult.Errors.Select(e => new Error(e.PropertyName, e.ErrorMessage));
+                return BadRequest(errors);
+            }
         }
 
         /// <summary>
@@ -144,4 +158,6 @@ namespace Football.API.Controllers
         //    return File(ms, System.Net.Mime.MediaTypeNames.Application.Octet, "MatchReport.pdf");
         //}
     }
+
+    public record Error(string Code, string Description);
 }

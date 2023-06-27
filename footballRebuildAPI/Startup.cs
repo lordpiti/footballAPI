@@ -21,6 +21,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using FluentValidation;
+using Football.Crosscutting.Validators;
 
 namespace footballRebuildAPI
 {
@@ -85,11 +87,13 @@ namespace footballRebuildAPI
             #endregion
 
             // Add framework services.
-
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .AddOData(option => option.Select().Filter().Count().OrderBy().Expand());
+
+            // Fluent Validator
+            services.AddValidatorsFromAssemblyContaining<CompetitionValidator>();
 
             #region OData
 

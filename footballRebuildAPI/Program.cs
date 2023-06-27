@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Football.API.Config;
+using Football.API.TaskRunner;
+using Football.API.TaskRunner.Interfaces;
+using Football.API.TaskRunner.Services;
+using Football.MigrationTool.DataMigrations;
+using Football.Services.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore;
-using System.Threading;
-using Football.API.Config;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Football.API.TaskRunner.Interfaces;
-using Football.API.TaskRunner;
-using Football.API.TaskRunner.Services;
-using Football.MigrationTool;
-using Services.Interface;
-using Football.Services.Interface;
 using Microsoft.Extensions.Hosting;
-using Football.MigrationTool.DataMigrations;
+using Services.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace footballRebuildAPI
 {
@@ -24,9 +21,6 @@ namespace footballRebuildAPI
     {
         public static void Main(string[] args)
         {
-            var serviceProvider = ServiceConfiguration.ConfigureConsoleServices();
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
-
             new Thread(() =>
             {
                 Thread.Sleep(10000);
@@ -56,6 +50,7 @@ namespace footballRebuildAPI
         public static void Start()
         {
             var serviceProvider = ServiceConfiguration.ConsoleProvider;
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             //var logger = serviceProvider.GetService<ILoggerService>();
 
             #region add here code to run data migration custom code
@@ -128,13 +123,6 @@ namespace footballRebuildAPI
                 })
                 .UseStartup<Startup>();
             });
-        //WebHost.CreateDefaultBuilder(args)
-        //    .UseStartup<Startup>()
-        //    .UseKestrel(options =>
-        //    {
-        //        options.Limits.MaxRequestBodySize = null;
-        //    })
-        //    .Build();
 
         public static void RunMigrationDataCode(IServiceProvider serviceProvider)
         {
