@@ -10,7 +10,7 @@ namespace Football.DataAccessEFCore3.Interface
 {
     public interface IPlayerRepository
     {
-        Task<List<Player>> GetAllPlayers();
+        Task<List<Player>> GetAllPlayers(int pageNumber = 1, int pageSize = 0);
 
         List<MatchPlayedInfo> GetMatchesPlayed(int id);
 

@@ -22,7 +22,7 @@ namespace Football.MigrationTool.DataMigrations
         {
             try
             {
-                var players = await _playerService.GetPlayers();
+                var players = await _playerService.GetPlayers(0, 0);
 
                 foreach (var player in players)
                 {

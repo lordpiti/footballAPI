@@ -1,13 +1,11 @@
 ﻿using Crosscutting.ViewModels;
-using Football.DataAccessEFCore3.Interface;
 using Football.BlobStorage.Interfaces;
-using Football.Crosscutting.ViewModels.Match;
-using Services.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Football.Crosscutting.ViewModels.Competition;
+using Football.Crosscutting.ViewModels.Match;
+using Football.DataAccessEFCore3.Interface;
+using Services.Interface;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services.Concrete
 {
@@ -23,9 +21,9 @@ namespace Services.Concrete
         }
 
 
-        public async Task<List<Player>> GetPlayers()
+        public async Task<List<Player>> GetPlayers(int skip, int take)
         {
-            return await _playerRepository.GetAllPlayers();
+            return await _playerRepository.GetAllPlayers(skip, take);
         }
 
         public List<MatchPlayedInfo> GetMatchesPlayed(int id )

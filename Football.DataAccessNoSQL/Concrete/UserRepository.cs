@@ -1,24 +1,19 @@
-﻿using Crosscutting.ViewModels;
-using Football.Crosscutting.Enums;
-using Football.Crosscutting.ViewModels.User;
+﻿using Football.Crosscutting.ViewModels.User;
 using Football.DataAccessNoSQL.Interface;
-using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using Spacehive.DataCollection.DataAccess.Concrete;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Football.DataAccessNoSQL.Concrete
 {
     public class UserRepository: MongoBaseRepository, IUserRepository
     {
-        public UserRepository(IOptions<AppSettings> settings) : base(settings)
+        public UserRepository(IMongoContext context) : base(context)
         {
-
+         
         }
 
         public List<UserData> UserList()
@@ -54,12 +49,12 @@ namespace Football.DataAccessNoSQL.Concrete
 
             #endregion
 
-            var allUsers = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
+            var allUsers = _mongoContext.Users.AsQueryable().ToList();
 
             return allUsers;
         }
 
-        public UserData FindOrCreateUser(LoginResponse loginResponse)
+        public async Task<UserData> FindOrCreateUser(LoginResponse loginResponse)
         {
             //var document = BsonSerializer.Deserialize<BsonDocument>(item);
 
@@ -68,9 +63,7 @@ namespace Football.DataAccessNoSQL.Concrete
                 TypeNameHandling = TypeNameHandling.Auto
             };
 
-            var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
-
-            var user = users.FirstOrDefault(x => x.Email == loginResponse.Email && x.AuthenticationType == loginResponse.AuthenticationType);
+            var user = await _mongoContext.Users.Find(x => x.Email == loginResponse.Email && x.AuthenticationType == loginResponse.AuthenticationType).FirstOrDefaultAsync();
 
             if (user != null)
             {
@@ -88,7 +81,7 @@ namespace Football.DataAccessNoSQL.Concrete
                     Token = loginResponse.Token
                 };
 
-                var collection = _mongoDb.GetCollection<UserData>("users");
+                var collection = _mongoContext.Database.GetCollection<UserData>("users");
 
                 collection.InsertOne(newUser);
 
@@ -96,20 +89,9 @@ namespace Football.DataAccessNoSQL.Concrete
             }
         }
 
-        public UserData FindUserByFacebookUserId(LoginTypeEnum authenticationType, string userId)
+        public async Task<UserData> FindUserByToken(string token)
         {
-            var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
-
-            var user = users.FirstOrDefault(x => x.UserId == userId);
-
-            return user;
-        }
-
-        public UserData FindUserByToken(string token)
-        {
-            var users = _mongoDb.GetCollection<UserData>("users").AsQueryable().ToList();
-
-            var user = users.FirstOrDefault(x => x.Token == token);
+            var user = await _mongoContext.Users.Find(x => x.Token == token).FirstOrDefaultAsync();
 
             return user;
         }

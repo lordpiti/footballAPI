@@ -38,9 +38,9 @@ namespace footballRebuildAPI.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IEnumerable<Player>> List()
+        public async Task<IEnumerable<Player>> List(int skip, int take)
         {
-            return await _playerService.GetPlayers();
+            return await _playerService.GetPlayers(skip, take);
         }
 
         [HttpGet]

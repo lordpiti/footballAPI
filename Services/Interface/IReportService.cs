@@ -11,6 +11,6 @@ namespace Football.Services.Interface
     {
         Task<ReportData> GenerateReport(int matchId);
 
-        ReportData GetReportSnapshot(int matchId);
+        Task<ReportData> GetReportSnapshot(int matchId);
     }
 }

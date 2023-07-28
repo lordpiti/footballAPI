@@ -9,8 +9,8 @@ namespace Football.DataAccessNoSQL.Interface
 {
     public interface IReportNoSQLRepository
     {
-        void CreateReport(ReportData reportData);
+        Task CreateReport(ReportData reportData);
 
-        ReportData GetReportSnapshot(int matchId);
+        Task<ReportData> GetReportSnapshot(int matchId);
     }
 }

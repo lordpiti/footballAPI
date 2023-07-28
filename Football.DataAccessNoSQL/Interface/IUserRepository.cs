@@ -3,6 +3,7 @@ using Football.Crosscutting.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Football.DataAccessNoSQL.Interface
 {
@@ -10,10 +11,8 @@ namespace Football.DataAccessNoSQL.Interface
     {
         List<UserData> UserList();
 
-        UserData FindOrCreateUser(LoginResponse facebookResponse);
+        Task<UserData> FindOrCreateUser(LoginResponse facebookResponse);
 
-        UserData FindUserByFacebookUserId(LoginTypeEnum authenticationType, string facebookUserId);
-
-        UserData FindUserByToken(string token);
+        Task<UserData> FindUserByToken(string token);
     }
 }

@@ -19,18 +19,30 @@ namespace Football.DataAccessEFCore3.Concrete
         {
         }
 
-        public async Task<List<Player>> GetAllPlayers()
+        public async Task<List<Player>> GetAllPlayers(int pageNumber = 1, int pageSize = 0)
         {
-            return await _context.Jugador.Include(x => x.CodIntegranteNavigation).Include(x=>x.CodEquipoNavigation).Select(x => new Player()
+            var query = _context.Jugador
+                .Include(x => x.CodIntegranteNavigation)
+                .Include(x => x.CodEquipoNavigation)
+                .Select(x => new Player()
+                {
+                    Name = x.CodIntegranteNavigation.Nombre,
+                    Surname = x.CodIntegranteNavigation.Apellidos,
+                    TeamName = x.CodEquipoNavigation.Nombre,
+                    PlayerId = x.CodJugador,
+                    TeamId = (int)x.CodEquipo,
+                    Position = x.Posicion,
+                    PositionCode = x.Position
+                });
+
+            if (pageSize > 0 && pageNumber > 0)
             {
-                Name = x.CodIntegranteNavigation.Nombre,
-                Surname = x.CodIntegranteNavigation.Apellidos,
-                TeamName = x.CodEquipoNavigation.Nombre,
-                PlayerId = x.CodJugador,
-                TeamId = (int)x.CodEquipo,
-                Position = x.Posicion,
-                PositionCode = x.Position
-            }).ToListAsync();
+                query = query
+                    .Skip(pageSize * (pageNumber -1))
+                    .Take(pageSize);
+            }
+
+            return await query.ToListAsync();
         }
 
         public List<MatchPlayedInfo> GetMatchesPlayed(int id)

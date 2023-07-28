@@ -3,21 +3,15 @@
     using MongoDB.Driver;
     using Microsoft.Extensions.Options;
     using Crosscutting.ViewModels;
+    using Football.DataAccessNoSQL.Interface;
 
     public class MongoBaseRepository
     {
-        protected readonly IMongoDatabase _mongoDb;
+        protected readonly IMongoContext _mongoContext;
 
-        public MongoBaseRepository(IOptions<AppSettings> settings)
+        public MongoBaseRepository(IMongoContext context)
         {
-            var connectionString = settings.Value.MongoConnection;
-
-            var databaseName = "haha";
-
-            var _client = new MongoClient(connectionString);
-            var db = _client.GetDatabase(databaseName);
-
-            _mongoDb = db;
+            _mongoContext = context;
         }
     }
 }

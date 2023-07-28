@@ -32,17 +32,18 @@ namespace Football.Services.Concrete
             var report = new ReportData()
             {
                 ReportItems = reportItems,
-                MatchGeneralInfo = matchInfo
+                MatchGeneralInfo = matchInfo,
+                MatchId = matchId
             };
 
-            _reportNoSQLRepository.CreateReport(report);
+            await _reportNoSQLRepository.CreateReport(report);
 
             return report;
         }
 
-        public ReportData GetReportSnapshot(int matchId)
+        public async Task<ReportData> GetReportSnapshot(int matchId)
         {
-            return _reportNoSQLRepository.GetReportSnapshot(matchId);
+            return await _reportNoSQLRepository.GetReportSnapshot(matchId);
         }
     }
 }

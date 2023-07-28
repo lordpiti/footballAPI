@@ -1,46 +1,44 @@
-﻿using Crosscutting.ViewModels;
-using Football.Crosscutting.ViewModels.Reports;
+﻿using Football.Crosscutting.ViewModels.Reports;
 using Football.DataAccessNoSQL.Interface;
-using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Spacehive.DataCollection.DataAccess.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Football.DataAccessNoSQL.Concrete
 {
     public class ReportNoSQLRepository : MongoBaseRepository, IReportNoSQLRepository
     {
-        public ReportNoSQLRepository(IOptions<AppSettings> settings) : base(settings)
+        public ReportNoSQLRepository(IMongoContext context) : base(context)
         {
-
+         
         }
 
-        public void CreateReport(ReportData reportData)
+        public async Task CreateReport(ReportData reportData)
         {
-            var collection = _mongoDb.GetCollection<BsonDocument>("matches");
-
-            if (reportData != null)
+            var options = new ReplaceOptions
             {
-                collection.DeleteOne(Builders<BsonDocument>.Filter.Eq("MatchId", reportData.MatchId));
-            }
+                IsUpsert = true
+            };
 
-            var document = reportData.ToBsonDocument();
+            await _mongoContext.ReportDatas.ReplaceOneAsync(x => x.MatchId == reportData.MatchId, reportData, options);
 
-            collection.InsertOne(document);
+            //var collection = _mongoContext.Database.GetCollection<BsonDocument>("matches");
+
+            //if (reportData != null)
+            //{
+            //    collection.DeleteOne(Builders<BsonDocument>.Filter.Eq("MatchId", reportData.MatchId));
+            //}
+
+            //var document = reportData.ToBsonDocument();
+
+            //collection.InsertOne(document);
         }
 
-        public ReportData GetReportSnapshot(int matchId)
+        public async Task<ReportData> GetReportSnapshot(int matchId)
         {
-            var matchSnapshots = _mongoDb.GetCollection<ReportData>("matches").AsQueryable().ToList();
+            var matchSnapshot = await _mongoContext.ReportDatas.Find(x => x.MatchId == matchId).FirstOrDefaultAsync();
 
-            var data = matchSnapshots.FirstOrDefault(x => x.MatchId == matchId);
-
-            return data;
+            return matchSnapshot;
         }
     }
 }

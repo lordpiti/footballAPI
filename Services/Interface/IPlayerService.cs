@@ -10,7 +10,7 @@ namespace Services.Interface
 {
     public interface IPlayerService
     {
-        Task<List<Player>> GetPlayers();
+        Task<List<Player>> GetPlayers(int skip, int take);
 
         List<MatchPlayedInfo> GetMatchesPlayed(int id);
 

@@ -48,7 +48,7 @@ namespace Football.Services.Concrete
                         me.Role = "User";
                         me.Token = Guid.NewGuid().ToString();
 
-                        var user = _userRepository.FindOrCreateUser(me);
+                        var user = await _userRepository.FindOrCreateUser(me);
                         me.Role = user.Role;
                         me.Token = user.Token;
 
@@ -57,7 +57,7 @@ namespace Football.Services.Concrete
                 }
                 else
                 {
-                    var user = _userRepository.FindUserByToken(accessToken);
+                    var user = await _userRepository.FindUserByToken(accessToken);
 
                     if (user != null && user.AuthenticationType == LoginTypeEnum.Google)
                     {
@@ -110,7 +110,7 @@ namespace Football.Services.Concrete
                         me.Role = "User";
                         me.Token = Guid.NewGuid().ToString();
 
-                        var userData = _userRepository.FindOrCreateUser(me);
+                        var userData = await _userRepository.FindOrCreateUser(me);
                         me.Role = userData.Role;
                         me.Token = userData.Token;
 
@@ -120,7 +120,7 @@ namespace Football.Services.Concrete
                 }
                 else
                 {
-                    var user = _userRepository.FindUserByToken(accessToken);
+                    var user = await _userRepository.FindUserByToken(accessToken);
 
                     if (user != null && user.AuthenticationType == LoginTypeEnum.Facebook)
                     {
