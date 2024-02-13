@@ -17,7 +17,7 @@ https://footballsandbox.azurewebsites.net/graphiql
 
 ## Main features
 
-* Developed on C# under ASP.NET 7
+* Developed on C# under ASP.NET 8
 * API authentication via tokens using Facebook and Google APIs
 * File storage management via Azure Blob Storage API
 * Entity Framework Core 6 to access an SQL Server database
