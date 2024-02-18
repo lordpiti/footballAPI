@@ -43,7 +43,8 @@ namespace Football.Services.Concrete
 
         public async Task<ReportData> GetReportSnapshot(int matchId)
         {
-            return await _reportNoSQLRepository.GetReportSnapshot(matchId);
+            //return await _reportNoSQLRepository.GetReportSnapshot(matchId);
+            return await _reportNoSQLRepository.FindByExpression(x => x.MatchId == matchId);
         }
     }
 }

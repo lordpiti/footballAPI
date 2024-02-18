@@ -1,4 +1,5 @@
 ﻿using Football.Crosscutting.ViewModels.Reports;
+using Football.DataAccessNoSQL.Constants;
 using Football.DataAccessNoSQL.Interface;
 using MongoDB.Driver;
 using Spacehive.DataCollection.DataAccess.Concrete;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Football.DataAccessNoSQL.Concrete
 {
-    public class ReportNoSQLRepository : MongoBaseRepository, IReportNoSQLRepository
+    public class ReportNoSQLRepository : MongoBaseRepository<ReportData>, IReportNoSQLRepository
     {
-        public ReportNoSQLRepository(IMongoContext context) : base(context)
+        public ReportNoSQLRepository(IMongoDatabase mongoDatabase) : base(mongoDatabase, MongoCollections.Reports)
         {
          
         }
@@ -20,7 +21,7 @@ namespace Football.DataAccessNoSQL.Concrete
                 IsUpsert = true
             };
 
-            await _mongoContext.ReportDatas.ReplaceOneAsync(x => x.MatchId == reportData.MatchId, reportData, options);
+            await Collection.ReplaceOneAsync(x => x.MatchId == reportData.MatchId, reportData, options);
 
             //var collection = _mongoContext.Database.GetCollection<BsonDocument>("matches");
 
@@ -36,7 +37,7 @@ namespace Football.DataAccessNoSQL.Concrete
 
         public async Task<ReportData> GetReportSnapshot(int matchId)
         {
-            var matchSnapshot = await _mongoContext.ReportDatas.Find(x => x.MatchId == matchId).FirstOrDefaultAsync();
+            var matchSnapshot = await Collection.Find(x => x.MatchId == matchId).FirstOrDefaultAsync();
 
             return matchSnapshot;
         }

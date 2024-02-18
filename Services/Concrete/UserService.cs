@@ -57,7 +57,8 @@ namespace Football.Services.Concrete
                 }
                 else
                 {
-                    var user = await _userRepository.FindUserByToken(accessToken);
+                    //var user = await _userRepository.FindUserByToken(accessToken);
+                    var user = await _userRepository.FindByExpression(x =>x.Token == accessToken);
 
                     if (user != null && user.AuthenticationType == LoginTypeEnum.Google)
                     {
@@ -120,7 +121,8 @@ namespace Football.Services.Concrete
                 }
                 else
                 {
-                    var user = await _userRepository.FindUserByToken(accessToken);
+                    //var user = await _userRepository.FindUserByToken(accessToken);
+                    var user = await _userRepository.FindByExpression(x => x.Token == accessToken);
 
                     if (user != null && user.AuthenticationType == LoginTypeEnum.Facebook)
                     {
@@ -138,9 +140,9 @@ namespace Football.Services.Concrete
             }
         }
 
-        public List<UserData> UserList()
+        public async Task<List<UserData>> UserList()
         {
-            return _userRepository.UserList();
+            return await _userRepository.FindManyByExpression(x => true);
         }
 
         public object TryApiCall(string locationIdentifier, string sortType, int index, string tenure)

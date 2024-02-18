@@ -24,8 +24,6 @@ using Microsoft.AspNetCore.Http;
 using FluentValidation;
 using Football.Crosscutting.Validators;
 using MongoDB.Driver;
-using Football.DataAccessNoSQL.Interface;
-using Football.DataAccessNoSQL.Concrete;
 
 namespace footballRebuildAPI
 {
@@ -125,8 +123,9 @@ namespace footballRebuildAPI
 
             ServiceConfiguration.ConfigureAPIServices(services, Configuration);
 
-            services.AddSingleton<IMongoClient>(new MongoClient(Configuration["AppSettings:MongoConnection"]));
-            services.AddSingleton<IMongoContext, MongoContext>();
+            var mongoConnectionString = Configuration["AppSettings:MongoConnection"];
+            var database = new MongoClient(mongoConnectionString).GetDatabase("haha");
+            services.AddSingleton(database);
 
             //Since the filters will be used as a ServiceType (Because they use DI), the different custom filters need to be registered with the framework IoC. 
             //If the action filters were used directly, this would not be required.

@@ -23,9 +23,9 @@ namespace Football.API.Controllers
 
         // GET: api/values
         [HttpGet]
-        public List<UserData> Get()
+        public async Task<List<UserData>> Get()
         {
-            return _userService.UserList();
+            return await _userService.UserList();
         }
 
         [HttpPost]

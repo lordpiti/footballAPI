@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Football.DataAccessNoSQL.Interface
 {
-    public interface IReportNoSQLRepository
+    public interface IReportNoSQLRepository : IMongoRepository<ReportData>
     {
         Task CreateReport(ReportData reportData);
 
-        Task<ReportData> GetReportSnapshot(int matchId);
+        //Task<ReportData> GetReportSnapshot(int matchId);
     }
 }

@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Football.DataAccessNoSQL.Interface
 {
-    public interface IUserRepository
+    public interface IUserRepository : IMongoRepository<UserData> 
     {
-        List<UserData> UserList();
-
         Task<UserData> FindOrCreateUser(LoginResponse facebookResponse);
-
-        Task<UserData> FindUserByToken(string token);
     }
 }
