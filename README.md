@@ -7,7 +7,7 @@ Its used as a sandbox to try out some features of .NET Core.
 The structure of the API implementation follows a classic 3-layer architecture (Presentation->Service->Data), while the service runs
 on a separate thread in parallel with it.
 
-All class library projects have been migrated to .NET Standard 2.1. The API itself targets .NET 8
+All class library projects have been migrated to .NET Standard 2.1. The API itself targets .NET 9
 
 ## API Specification
 https://footballsandbox.azurewebsites.net/swagger/index.html
@@ -17,7 +17,7 @@ https://footballsandbox.azurewebsites.net/graphiql
 
 ## Main features
 
-* Developed on C# under ASP.NET 8
+* Developed on C# under ASP.NET 9
 * API authentication via tokens using Facebook and Google APIs
 * File storage management via Azure Blob Storage API
 * Entity Framework Core 6 to access an SQL Server database
