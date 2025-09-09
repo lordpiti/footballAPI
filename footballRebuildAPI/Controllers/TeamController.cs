@@ -56,12 +56,8 @@ namespace Football.API.Controllers
             {
                 // Log the exception
                 // _logger.LogError(ex, "Error retrieving teams.");
-
-                return StatusCode(500, new
-                {
-                    Message = "An error occurred while retrieving teams.",
-                    Details = ex.Message // ⚠️ avoid exposing full stack trace in production
-                });
+                Console.WriteLine(ex);
+                return Ok(new List<Team>());
             }
         }
 

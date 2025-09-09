@@ -5,6 +5,7 @@ using Football.DataAccessEFCore3.Concrete;
 using Football.DataAccessEFCore3.Models;
 using Football.Services.Interface;
 using Football.Services.Mappers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,16 +44,25 @@ namespace Football.Services.Concrete
 
         public async Task<IEnumerable<Team>> GetAllTeams(int? competitionId = null)
         {
-            var teamsFromBD = await _footballUnitOfWork.TeamRepository.GetAllTeams(competitionId);
-
-            var teams = TeamMapper.Map(teamsFromBD);
-
-            foreach (var team in teams)
+            try
             {
-                _blobStorageService.PopulateUrlForBlob(team.PictureLogo);
-            }
+                var teamsFromBD = await _footballUnitOfWork.TeamRepository.GetAllTeams(competitionId);
 
-            return teams;
+                var teams = TeamMapper.Map(teamsFromBD);
+
+                foreach (var team in teams)
+                {
+                    _blobStorageService.PopulateUrlForBlob(team.PictureLogo);
+                }
+
+                return teams;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("error in service");
+                Console.WriteLine(ex);
+                return new List<Team>();
+            }
         }
 
         public async Task<int> UpdateTeam(Team team)
