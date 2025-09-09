@@ -16,7 +16,7 @@ namespace Football.API.Controllers
 {
     [Route("api/[controller]")]
 
-    public class TeamController
+    public class TeamController : ControllerBase
     {
         //IOptions<AppSettings> settings
         private readonly ITeamService _teamService;
@@ -37,10 +37,32 @@ namespace Football.API.Controllers
 
         [HttpGet]
         [Route("Teams/{competitionId?}")]
-        public async Task<IEnumerable<Team>> GetAllTeams(int? competitionId=null)
+        public async Task<ActionResult<IEnumerable<Team>>> GetAllTeams(int? competitionId=null)
         {
             //api/Team/teams?$filter=Id%20eq%201
-            return await _teamService.GetAllTeams(competitionId);
+            //return await _teamService.GetAllTeams(competitionId);
+            try
+            {
+                var teams = await _teamService.GetAllTeams(competitionId);
+
+                if (teams == null || !teams.Any())
+                {
+                    return NotFound("No teams found.");
+                }
+
+                return Ok(teams); // 200 OK with data
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // _logger.LogError(ex, "Error retrieving teams.");
+
+                return StatusCode(500, new
+                {
+                    Message = "An error occurred while retrieving teams.",
+                    Details = ex.Message // ⚠️ avoid exposing full stack trace in production
+                });
+            }
         }
 
         [Route("SaveTeamDetails")]
