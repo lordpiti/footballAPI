@@ -87,6 +87,8 @@ namespace footballRebuildAPI
 
             #endregion
 
+            services.AddApplicationInsightsTelemetry();
+
             // Add framework services.
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
