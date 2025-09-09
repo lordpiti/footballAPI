@@ -61,6 +61,32 @@ namespace Football.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("test")]
+        public async Task<ActionResult<IEnumerable<Team>>> Testgaga()
+        {
+            //api/Team/teams?$filter=Id%20eq%201
+            //return await _teamService.GetAllTeams(competitionId);
+            try
+            {
+                var teams = await _teamService.GetAllTeams(null);
+
+                if (teams == null || !teams.Any())
+                {
+                    return NotFound("No teams found.");
+                }
+
+                return Ok(teams); // 200 OK with data
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // _logger.LogError(ex, "Error retrieving teams.");
+                Console.WriteLine(ex);
+                return Ok(new List<Team>());
+            }
+        }
+
         [Route("SaveTeamDetails")]
         [HttpPost]
         public async Task<int> SaveTeamDetails([FromBody]Team teamDetails)
