@@ -23,8 +23,8 @@ namespace Services
                 .AddScoped<IReportRepository, ReportRepository>()
                 .AddScoped<IGlobalMediaRepository, GlobalMediaRepository>()
                 .AddSingleton<TopSquadApiConfiguration>()
-                .AddScoped<ITopSquadApiClient, TopSquadApiClient>()
-                .AddScoped<IFootballUnitOfWork, FootballUnitOfWork>();
+                .AddScoped<ITopSquadApiClient, TopSquadApiClient>();
+                
 
             if (transient)
             {
@@ -35,7 +35,8 @@ namespace Services
             else
             {
                 servicesOutput.AddScoped<IPlayerRepository, PlayerRepository>()
-                                .AddScoped<ITeamRepository, TeamRepository>();
+                                .AddScoped<ITeamRepository, TeamRepository>()
+                                .AddScoped<IFootballUnitOfWork, FootballUnitOfWork>();
             }
 
             return servicesOutput;
